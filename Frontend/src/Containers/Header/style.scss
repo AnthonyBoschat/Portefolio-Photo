@@ -1,0 +1,32 @@
+@use "@Constants/color.scss" as v;
+@use "@Sass/animation.scss" as a;
+
+header{
+    background-color: v.$light;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position:fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    padding: 1.5rem; // res
+    transition: box-shadow 0.1s linear;
+
+    &.active{
+        box-shadow: 0px 4px 8px v.$darkHeaderShadow;
+    }
+    
+    
+
+    #menu{
+        width: 1.5rem;
+        height: auto;
+        path{
+            stroke: v.$dark;
+            stroke-width: 2;
+            stroke-linejoin: round;
+            stroke-linecap: round;
+        }
+    }
+}

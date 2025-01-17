@@ -14,6 +14,7 @@ export default defineConfig({
       "@Layout":path.resolve(__dirname, "./src/Layout"),
       "@Pages":path.resolve(__dirname, "./src/Pages"),
 
+      "@Assets":path.resolve(__dirname, "./src/Physics/Assets"),
       "@Constants":path.resolve(__dirname, "./src/Physics/Constants"),
       "@Query":path.resolve(__dirname, "./src/Physics/GraphQL/Query"),
       "@Mutation":path.resolve(__dirname, "./src/Physics/GraphQL/Mutation"),

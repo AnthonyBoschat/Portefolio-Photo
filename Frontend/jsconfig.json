@@ -9,6 +9,7 @@
         "@Pages/*": ["Pages/*"],
         
         
+        "@Assets/*": ["Physics/Assets/*"],
         "@Constants/*": ["Physics/Constants/*"],
         "@Query/*": ["Physics/GraphQL/Query/*"],
         "@Mutation/*": ["Physics/GraphQL/Mutation/*"],
