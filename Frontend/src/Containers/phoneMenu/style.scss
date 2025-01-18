@@ -1,0 +1,33 @@
+@use "@Sass/constants.scss" as v;
+
+
+div.overlay{
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    z-index: 2000;
+    // background-color: rgba(0, 0, 0, 0.1);    
+    &.pointerNone{
+        pointer-events: none;
+    }
+
+    nav.phone-menu-container{
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 60%;
+        height: 100%;
+        background-color: v.$dark;
+        z-index: 2000;
+        transform: translateX(100%);
+        transition: transform 0.2s ease-in-out;
+
+        &.open{
+        box-shadow: -4px 0 16px v.$boxShadowPhoneMenu;
+
+            transform: translateX(0);
+        }
+    }
+}
