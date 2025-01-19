@@ -2,43 +2,45 @@ import { useDispatch, useSelector } from "react-redux";
 import "./style.scss";
 import { useEffect, useState } from "react";
 import { setOpenPhoneMenu } from "@Redux/Slices/phoneState";
+import { Link } from "react-router-dom";
+import ROUTES from "@Constants/Routes";
 
 export default function PhoneMenuContainer(){
 
-  const phoneMenuOpen = useSelector(store => store.phoneState.menuOpen)
-  const dispatch = useDispatch()
+    const phoneMenuOpen = useSelector(store => store.phoneState.menuOpen)
+    const dispatch = useDispatch()
 
-  useEffect(() => {
-    if(phoneMenuOpen){
-        
-        const closePhoneMenu = (e) => {
-            if(e.target.classList.contains("overlay")){
-                dispatch(setOpenPhoneMenu(false))
+    useEffect(() => {
+        if(phoneMenuOpen){
+            
+            const closePhoneMenu = (e) => {
+                if(e.target.classList.contains("overlay")){
+                    dispatch(setOpenPhoneMenu(false))
+                }
+            }
+
+            window.addEventListener("click", closePhoneMenu)
+
+            return () => {
+                window.removeEventListener("click", closePhoneMenu)
             }
         }
+    }, [phoneMenuOpen])
 
-        window.addEventListener("click", closePhoneMenu)
-
-        return () => {
-            window.removeEventListener("click", closePhoneMenu)
-        }
-    }
-  }, [phoneMenuOpen])
-
-  const [routes, setRoutes] = useState([
-    {label:"Accueil", link:"", subMenu:false},
-    {label:"Portefolio", subMenu:true, open:false, children:[
-        {label:"Portrait", link:""},
-        {label:"Nu", link:""},
-        {label:"Noir et blanc", link:""},
-    ]},
-    {label:"Prestations", subMenu:true, open:false, children:[
-        {label:"Portrait", link:""},
-        {label:"Artisan", link:""},
-        {label:"Boudoir", link:""},
-    ]},
-    {label:"Contact", link:"", subMenu:false},
-  ])
+    const [routes, setRoutes] = useState([
+        {label:"Accueil", link:ROUTES.HOME, subMenu:false},
+        {label:"Portefolio", subMenu:true, open:false, children:[
+            {label:"Portrait", link:ROUTES.PORTEFOLIOS},
+            {label:"Nu", link:ROUTES.PORTEFOLIOS},
+            {label:"Noir et blanc", link:ROUTES.PORTEFOLIOS},
+        ]},
+        {label:"Prestations", subMenu:true, open:false, children:[
+            {label:"Portrait", link:ROUTES.PRESTATIONS.PORTRAIT},
+            {label:"Artisan", link:ROUTES.PRESTATIONS.ARTISAN},
+            {label:"Boudoir", link:ROUTES.PRESTATIONS.BOUDOIR},
+        ]},
+        {label:"Contact", link:ROUTES.CONTACT, subMenu:false},
+    ])
 
   
 
@@ -64,7 +66,7 @@ export default function PhoneMenuContainer(){
                         if(!route.subMenu){
                             return(
                                 <li key={index}>
-                                    <a href="">{route.label}</a>
+                                    <Link to={route.link}>{route.label}</Link>
                                 </li>
                             )
                         }
@@ -79,8 +81,8 @@ export default function PhoneMenuContainer(){
 
                                     <ul className={`childrenList ${route.open ? "open" : ""}`}>
                                         {route.children.map((childRoute, index) => (
-                                            <li>
-                                                <a href="">{childRoute.label}</a>
+                                            <li key={index}>
+                                                <Link to={childRoute.link}>{childRoute.label}</Link>
                                             </li>
                                         ))}
                                     </ul>

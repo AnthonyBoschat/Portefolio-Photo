@@ -26,11 +26,13 @@ export default function Header(){
 
     return(
         <header className={scrolling ? "active" : ""} ref={headerRef}>
-            <img src={logo} alt="Logo du site internet" />
+            <div className="container">
+                <img src={logo} alt="Logo du site internet" />
 
-            <svg onClick={() => dispatch(setOpenPhoneMenu(true))} id="menu" viewBox="0 0 22 18" xmlns="http://www.w3.org/2000/svg">
-                <path d="M1 1.5H21M4.75 9H21M8.5 16.5H21"/>
-            </svg>
+                <svg onClick={() => dispatch(setOpenPhoneMenu(true))} id="menu" viewBox="0 0 22 18" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 1.5H21M4.75 9H21M8.5 16.5H21"/>
+                </svg>
+            </div>
 
         </header>
     )
