@@ -2,13 +2,26 @@ import { useDispatch, useSelector } from "react-redux";
 import "./style.scss";
 import { useEffect, useState } from "react";
 import { setOpenPhoneMenu } from "@Redux/Slices/phoneState";
-import { Link } from "react-router-dom";
-import ROUTES from "@Constants/Routes";
+import { Link, useLocation } from "react-router-dom";
+import { openSubMenu } from "@Redux/Slices/routes";
 
 export default function PhoneMenuContainer(){
 
     const phoneMenuOpen = useSelector(store => store.phoneState.menuOpen)
+    const currentRoute = useSelector(store => store.routes.currentRoute)
     const dispatch = useDispatch()
+    const routes = useSelector(store => store.routes.routes)
+
+
+
+    const isSelectedRoute = (link) => {
+        if(currentRoute === link ){
+            return true
+        }else{
+            return false
+        }
+    }
+
 
     useEffect(() => {
         if(phoneMenuOpen){
@@ -27,32 +40,9 @@ export default function PhoneMenuContainer(){
         }
     }, [phoneMenuOpen])
 
-    const [routes, setRoutes] = useState([
-        {label:"Accueil", link:ROUTES.HOME, subMenu:false},
-        {label:"Portefolio", subMenu:true, open:false, children:[
-            {label:"Portrait", link:ROUTES.PORTEFOLIOS},
-            {label:"Nu", link:ROUTES.PORTEFOLIOS},
-            {label:"Noir et blanc", link:ROUTES.PORTEFOLIOS},
-        ]},
-        {label:"Prestations", subMenu:true, open:false, children:[
-            {label:"Portrait", link:ROUTES.PRESTATIONS.PORTRAIT},
-            {label:"Artisan", link:ROUTES.PRESTATIONS.ARTISAN},
-            {label:"Boudoir", link:ROUTES.PRESTATIONS.BOUDOIR},
-        ]},
-        {label:"Contact", link:ROUTES.CONTACT, subMenu:false},
-    ])
-
   
 
-  const toggleSubMenu = (routeLabel) => {
-    const newRoutesState = routes.map(route => {
-        if(route.label === routeLabel){
-            route.open = !route.open
-        }
-        return route
-    })
-    setRoutes(newRoutesState)
-  }
+
   
 
     return(
@@ -65,14 +55,14 @@ export default function PhoneMenuContainer(){
                     {routes.map((route, index) => {
                         if(!route.subMenu){
                             return(
-                                <li key={index}>
+                                <li className={`${isSelectedRoute(route.link) ? "focus" : ""}`} key={index}>
                                     <Link to={route.link}>{route.label}</Link>
                                 </li>
                             )
                         }
                         if(route.subMenu){
                             return(
-                                <li className={`${route.open ? "focus" : ""}`} onClick={() => toggleSubMenu(route.label)} key={index}>
+                                <li className={`${currentRoute.includes(route.label) ? "focus" : ""}`} onClick={() => dispatch(openSubMenu(route.label))} key={index}>
                                     <span>
                                         {route.label}
                                         <i className={`fa-solid fa-angle-up ${route.open ? "reverse" : ""}`}></i>
@@ -81,7 +71,7 @@ export default function PhoneMenuContainer(){
 
                                     <ul className={`childrenList ${route.open ? "open" : ""}`}>
                                         {route.children.map((childRoute, index) => (
-                                            <li key={index}>
+                                            <li className={`${isSelectedRoute(childRoute.link) ? "focus" : ""}`} key={index}>
                                                 <Link to={childRoute.link}>{childRoute.label}</Link>
                                             </li>
                                         ))}

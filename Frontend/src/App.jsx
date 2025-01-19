@@ -8,10 +8,12 @@ import PrestationArtisanPage from "@Pages/Prestations/Artisan";
 import PrestationBoudoirPage from "@Pages/Prestations/Boudoir";
 import PrestationPortraitPage from "@Pages/Prestations/Portrait";
 import PortefoliosPage from "@Pages/Portefolios";
+import useRoute from "@Services/useRoute";
 
 
 export default function App() {
 
+  useRoute()
 
   return (
       <>
