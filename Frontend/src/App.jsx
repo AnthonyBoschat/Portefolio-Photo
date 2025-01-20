@@ -18,14 +18,16 @@ export default function App() {
   return (
       <>
         <Header/>
-        <Routes>
-          <Route path="/" element={<HomePage/>}/>
-          <Route path="/Contact" element={<ContactPage/>}/>
-          <Route path="/Prestations/Artisan" element={<PrestationArtisanPage/>}/>
-          <Route path="/Prestations/Boudoir" element={<PrestationBoudoirPage/>}/>
-          <Route path="/Prestations/Portrait" element={<PrestationPortraitPage/>}/>
-          <Route path="/Portefolios" element={<PortefoliosPage/>}/>
-        </Routes>
+        <main>
+          <Routes>
+            <Route path="/" element={<HomePage/>}/>
+            <Route path="/Contact" element={<ContactPage/>}/>
+            <Route path="/Prestations/Artisan" element={<PrestationArtisanPage/>}/>
+            <Route path="/Prestations/Boudoir" element={<PrestationBoudoirPage/>}/>
+            <Route path="/Prestations/Portrait" element={<PrestationPortraitPage/>}/>
+            <Route path="/Portefolios" element={<PortefoliosPage/>}/>
+          </Routes>
+        </main>
         <PhoneMenuContainer/>
       </>
   )

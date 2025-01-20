@@ -1,0 +1,114 @@
+@use "@Sass/constants.scss" as v;
+
+#home-main-layout{
+    // background-color: rgba(0, 0, 0, 0.148);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 4rem 21px 2rem 21px;
+    font-family: v.$font;
+
+
+    // PRESTATION
+    section#prestation{
+        display: flex;
+        flex-direction: column;
+        
+        // SEPARATOR SECTION
+        .title{
+            position: relative;
+            width: 100%;
+            height: 5rem;
+            display: flex;
+            align-items: center;
+            &::after{
+                position: absolute;
+                top: 50%;
+                left: 0;
+                transform: translateY(-50%);
+                content: "";
+                width: 100%;
+                height: 1px;
+                opacity: 0.5;
+                background-color: v.$dark;
+            }
+
+            span.label{
+                z-index: 2;
+                left: 15%;
+                position: relative;
+                color: v.$dark;
+                font-size: 20px;
+                // outline: 1px solid blue;
+                background-color: v.$light;
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+        }
+
+        // SPECIFIC CONTENT
+
+        .content{
+            // outline: 1px solid red;
+            display: flex;
+            flex-direction: column;
+
+            .buttons{
+                color: v.$dark;
+                padding-left: 1rem;
+                width: 100%;
+                display: flex;
+                gap: 1rem;
+                font-size: 16px;
+                button{
+                    opacity: 0.4;
+                    &.focus{
+                        opacity: 1;
+                    }
+                }
+            }
+        }
+        picture{
+            position: relative;
+            overflow: hidden;
+            width: 100vw;
+            height: 100vw; // GGGG
+            // height: fit-content;
+            background-color: grey;
+            border-radius: 6px;
+            &::after{
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                box-shadow: inset 0px 8px 16px rgba(0, 0, 0, 0.25);
+                border-radius: 6px;
+                pointer-events: none; 
+            }
+            img{
+                // object-position: bottom;
+                object-fit: cover;
+            }
+        }
+        .redirect-button-container{
+            margin-top: 1rem;
+            display: flex;
+            justify-content: flex-end;
+            button{
+                position: relative;
+                &::after{
+                    position: absolute;
+                    content: "";
+                    right: 0;
+                    bottom: -0.3rem;
+                    width: 55%;
+                    height: 0.5px;
+                    background-color: v.$dark;
+                }
+            }
+        }
+    }
+}
