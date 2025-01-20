@@ -3,54 +3,17 @@
 #home-main-layout{
     // background-color: rgba(0, 0, 0, 0.148);
     width: 100%;
-    height: 100%;
     display: flex;
     flex-direction: column;
-    padding: 4rem 21px 2rem 21px;
+    gap: 4rem;
+    padding: 3rem 21px 4rem 21px;
+    // margin-bottom: 4rem;
     font-family: v.$font;
 
 
     // PRESTATION
-    section#prestation{
-        display: flex;
-        flex-direction: column;
-        
-        // SEPARATOR SECTION
-        .title{
-            position: relative;
-            width: 100%;
-            height: 5rem;
-            display: flex;
-            align-items: center;
-            &::after{
-                position: absolute;
-                top: 50%;
-                left: 0;
-                transform: translateY(-50%);
-                content: "";
-                width: 100%;
-                height: 1px;
-                opacity: 0.5;
-                background-color: v.$dark;
-            }
-
-            span.label{
-                z-index: 2;
-                left: 15%;
-                position: relative;
-                color: v.$dark;
-                font-size: 20px;
-                // outline: 1px solid blue;
-                background-color: v.$light;
-                padding-left: 1rem;
-                padding-right: 1rem;
-            }
-        }
-
-        // SPECIFIC CONTENT
-
+    section.home-prestation{
         .content{
-            // outline: 1px solid red;
             display: flex;
             flex-direction: column;
 
@@ -70,6 +33,7 @@
             }
         }
         picture{
+            z-index: 0;
             position: relative;
             overflow: hidden;
             width: 100vw;
@@ -110,5 +74,10 @@
                 }
             }
         }
+    }
+
+
+    section.home-apropos{
+        outline: 1px solid red;
     }
 }

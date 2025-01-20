@@ -4,6 +4,7 @@ import BoudoirPhoto from "@Assets/Photos/Home/Prestations/Boudoir.jpg"
 import ArtisanPhoto from "@Assets/Photos/Home/Prestations/Artisan.jpg"
 import PortraitPhoto from "@Assets/Photos/Home/Prestations/Portrait.jpg"
 import ROUTES from "@Constants/Routes";
+import SectionComponent from "@Components/Section";
 
 export default function HomeLayout(){
 
@@ -32,11 +33,8 @@ export default function HomeLayout(){
 
     return(
         <div id="home-main-layout">
-            <section id="prestation">
-                <div className="title">
-                    <span className="label">Prestations</span>
-                </div>
 
+            <SectionComponent label="Prestations" customClass="home-prestation">
                 <div className="content">
                     <div className="buttons">
                         {prestationsButtons.map(button => (
@@ -50,8 +48,13 @@ export default function HomeLayout(){
                         <button>En savoir plus</button>
                     </div>
                 </div>
-
-            </section>
+            </SectionComponent>
+            
+            <SectionComponent label="À propos" customClass="home-apropos">
+                <div className="content">
+                    
+                </div>
+            </SectionComponent>
         </div>
     )
 }

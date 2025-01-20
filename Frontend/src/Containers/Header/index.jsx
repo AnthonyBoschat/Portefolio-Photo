@@ -27,8 +27,8 @@ export default function Header(){
 
 
     return(
-        <header className={scrolling ? "active" : ""} ref={headerRef}>
-            <div className="container">
+        <header ref={headerRef}>
+            <div className={`container ${scrolling ? "active" : ""}`}>
                 <Link to={ROUTES.HOME}>
                     <img src={logo} alt="Logo du site internet" />
                 </Link>
