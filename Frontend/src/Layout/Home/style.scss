@@ -6,9 +6,28 @@
     display: flex;
     flex-direction: column;
     gap: 4rem;
-    padding: 3rem 21px 4rem 21px;
+    padding: 2rem 21px 4rem 21px;
     // margin-bottom: 4rem;
     font-family: v.$font;
+
+    // REDIRECTION BUTTON "En savoir plus"
+    .redirect-button-container{
+        margin-top: 1rem;
+        display: flex;
+        justify-content: flex-end;
+        button{
+            position: relative;
+            &::after{
+                position: absolute;
+                content: "";
+                right: 0;
+                bottom: -0.3rem;
+                width: 55%;
+                height: 0.5px;
+                background-color: v.$dark;
+            }
+        }
+    }
 
 
     // PRESTATION
@@ -53,31 +72,98 @@
                 pointer-events: none; 
             }
             img{
+                position: absolute;
+                left: 0;
+                top: 0;
                 // object-position: bottom;
                 object-fit: cover;
+                opacity: 0;
+                transition: all 0.3s linear;
+                // transform: translateX(-100%);
+                &.selected{
+                    // transform: translateX(0);
+                    opacity: 1;
+                }
             }
         }
-        .redirect-button-container{
-            margin-top: 1rem;
+        
+    }
+
+
+    // A PROPOS
+    section.home-apropos{
+        // outline: 1px solid red;
+
+        .content{
+            // outline: 1px solid blue;
             display: flex;
-            justify-content: flex-end;
-            button{
+            gap: 1rem;
+            justify-content: space-between;
+            height: 22rem;
+            picture{
+                width: 50%;
+                height: 100%;
+                overflow: hidden;
                 position: relative;
-                &::after{
+                img{
                     position: absolute;
-                    content: "";
-                    right: 0;
-                    bottom: -0.3rem;
-                    width: 55%;
-                    height: 0.5px;
-                    background-color: v.$dark;
+                    left: 0;
+                    top: 0;
+                    height: 100%;
+                    object-fit: cover;
+                    border-top-left-radius: 6px;
+                    border-bottom-right-radius: 6px;
+
+                }
+            }
+            p.presentation{
+                color: v.$dark;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                // outline: 1px solid red;
+                width: 50%;
+                letter-spacing: 0.5px;
+                font-size: 14px;
+                .long{
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.5rem;
                 }
             }
         }
     }
 
 
-    section.home-apropos{
-        outline: 1px solid red;
+    // PORTEFOLIO
+    section.home-portefolio{
+        .content{
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+
+            picture{
+                // outline: 1px solid red;
+                height: 16rem;
+                position: relative;
+                overflow: hidden;
+                img{
+                    box-shadow: inset 0px 8px 16px rgba(0, 0, 0, 0.25);
+                    border-radius: 6px;
+                    position: absolute;
+                    object-fit: cover;
+                    object-position: top;
+                    top: 0;
+                    left: 0;
+                    height: 100%;
+                    width: 100%;
+                }
+            }
+        }
+    }
+
+    // CONTACT
+    section#home-contact{
+
     }
 }
