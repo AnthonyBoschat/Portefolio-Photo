@@ -1,12 +1,12 @@
 import "./style.scss";
 
-export default function ExploreButton({text}){
+export default function ExploreButton({text, onClick}){
 
 
 
     return(
         <div id="redirect-button-container">
-            <button>{text}</button>
+            <button onClick={() => onClick()}>{text}</button>
         </div>
     )
 }
