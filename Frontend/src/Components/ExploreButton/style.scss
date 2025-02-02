@@ -1,0 +1,19 @@
+@use "@Sass/constants.scss" as v;
+
+div#redirect-button-container{
+    margin-top: 1rem;
+    display: flex;
+    justify-content: flex-end;
+    button{
+        position: relative;
+        &::after{
+            position: absolute;
+            content: "";
+            right: 0;
+            bottom: -0.3rem;
+            width: 55%;
+            height: 0.5px;
+            background-color: v.$dark;
+        }
+    }
+}

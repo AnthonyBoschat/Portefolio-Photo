@@ -1,0 +1,43 @@
+@use "@Sass/constants.scss" as v;
+
+section.home-apropos{
+    .presentation{
+        display: flex;
+        gap: 1rem;
+        height: 22rem;
+        justify-content: space-between;
+
+        picture{
+            width: 50%;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+            img{
+                position: absolute;
+                left: 0;
+                top: 0;
+                height: 100%;
+                object-fit: cover;
+                border-top-left-radius: 6px;
+                border-bottom-right-radius: 6px;
+    
+            }
+        }
+        p.presentation{
+            color: v.$dark;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            // outline: 1px solid red;
+            width: 50%;
+            font-size: 14px;
+            line-height: 24px;
+            .long{
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+        }
+    }
+}

@@ -1,0 +1,20 @@
+@use "@Sass/constants.scss" as v;
+
+div#medias-container{
+    // outline: 1px solid red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    font-size: 20px;
+
+    a{
+
+        &.dark{
+            color: v.$dark;
+        }
+        &.light{
+            color: v.$light;
+        }
+    }
+}

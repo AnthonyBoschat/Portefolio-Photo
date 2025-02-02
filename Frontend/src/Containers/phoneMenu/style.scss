@@ -73,8 +73,9 @@ div.overlay{
                 font-size: 0.7rem;
                 margin-left: 0.3rem;
                 transition: transform 0.1s linear;
+                transform: rotate(180deg);
                 &.reverse{
-                    transform: rotate(180deg);
+                    transform: rotate(0deg);
                 }
             }
 

@@ -1,0 +1,55 @@
+@use "@Sass/constants.scss" as v;
+
+section.home-prestation{
+
+    .buttons{
+        color: v.$dark;
+        padding-left: 1rem;
+        width: 100%;
+        display: flex;
+        gap: 1rem;
+        font-size: 16px;
+        button{
+            opacity: 0.4;
+            &.focus{
+                opacity: 1;
+            }
+        }
+    }
+
+
+    picture{
+        z-index: 0;
+        position: relative;
+        overflow: hidden;
+        width: 100vw;
+        // height: 100vw; // GGGG
+        height: fit-content;
+        background-color: grey;
+        border-radius: 6px;
+        &::after{
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            box-shadow: inset 0px 8px 16px rgba(0, 0, 0, 0.25);
+            border-radius: 6px;
+            pointer-events: none; 
+        }
+        img{
+            height: fit-content;
+            position: absolute;
+            left: 0;
+            top: 0;
+            object-fit: cover;
+            opacity: 0;
+            transition: all 0.3s linear;
+            &.selected{
+                position: relative;
+                opacity: 1;
+            }
+        }
+    }
+}
