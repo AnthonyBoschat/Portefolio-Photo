@@ -6,7 +6,7 @@ div.overlay{
     height: 100%;
     top: 0;
     left: 0;
-    position: absolute;
+    position: fixed;
     z-index: 2000;
     &.pointerNone{
         pointer-events: none;
