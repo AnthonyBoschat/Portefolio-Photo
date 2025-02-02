@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import BoudoirPhoto from "@Assets/Photos/Home/Prestations/Boudoir.jpg"
 import ArtisanPhoto from "@Assets/Photos/Home/Prestations/Artisan.jpg"
 import PortraitPhoto from "@Assets/Photos/Home/Prestations/Portrait.jpg"
+import CarouselIndicator from "@Components/CarouselIndicator";
 
 export default function PrestationsHome(){
 
@@ -39,6 +40,8 @@ export default function PrestationsHome(){
                 {prestationsButtons.map((button, index) => (
                     <img key={index} className={`${selectedPrestation === button ? "selected" : "unselected"}`} src={button.img} alt={`Photo de présentation de la prestation ${button.label}`}/>
                 ))}
+                
+                <CarouselIndicator array={prestationsButtons} condition={(element) => selectedPrestation === element }/>
             </picture>
         </>
     )
