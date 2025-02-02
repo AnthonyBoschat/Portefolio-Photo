@@ -6,7 +6,7 @@ import ExploreButton from "@Components/ExploreButton";
 import PrestationsHome from "@Containers/Prestations/Home";
 import AProposHome from "@Containers/A propos/Home";
 import PortefoliosHome from "@Containers/Portefolios/Home";
-import Medias from "@Containers/Media/Home";
+import Medias from "@Containers/Media";
 
 
 

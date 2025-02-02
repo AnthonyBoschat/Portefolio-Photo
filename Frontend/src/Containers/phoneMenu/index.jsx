@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { setOpenPhoneMenu } from "@Redux/Slices/phoneState";
 import { Link, useLocation } from "react-router-dom";
 import { openSubMenu } from "@Redux/Slices/routes";
+import Medias from "@Containers/Media";
 
 export default function PhoneMenuContainer(){
 
@@ -81,6 +82,7 @@ export default function PhoneMenuContainer(){
                         }
                     })}
                 </ul>
+                    <Medias color={"light"}/>
             </nav>
         </div>
     )
