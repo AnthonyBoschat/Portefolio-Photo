@@ -9,9 +9,11 @@ export const routesSlice = createSlice({
     routes:[
         {label:"Accueil", link:ROUTES.HOME, subMenu:false},
         {label:"Portefolio", link:"/Portefolios", subMenu:true, open:false, children:[
-            {label:"Portrait", link:ROUTES.PORTEFOLIOS},
-            {label:"Nu", link:ROUTES.PORTEFOLIOS},
-            {label:"Noir et blanc", link:ROUTES.PORTEFOLIOS},
+            {label:"Collaboration Artistique", link:ROUTES.PORTEFOLIOS},
+            {label:"Fantastique", link:ROUTES.PORTEFOLIOS},
+            {label:"Lumière Naturelle", link:ROUTES.PORTEFOLIOS},
+            {label:"Nu - Lingerie", link:ROUTES.PORTEFOLIOS},
+            {label:"Studio", link:ROUTES.PORTEFOLIOS},
         ]},
         {label:"Prestations", link:"/Prestations", subMenu:true, open:false, children:[
             {label:"Portrait", link:ROUTES.PRESTATIONS.PORTRAIT},
