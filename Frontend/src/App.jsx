@@ -10,6 +10,7 @@ import PrestationPortraitPage from "@Pages/Prestations/Portrait";
 import PortefoliosPage from "@Pages/Portefolios";
 import useRoute from "@Services/useRoute";
 import ROUTES from "@Constants/Routes";
+import AProposPage from "@Pages/APropos";
 
 
 export default function App() {
@@ -22,11 +23,12 @@ export default function App() {
         <main>
           <Routes>
             <Route path={ROUTES.HOME} element={<HomePage/>}/>
-            <Route path={ROUTES.CONTACT} element={<ContactPage/>}/>
             <Route path={ROUTES.PRESTATIONS.ARTISAN} element={<PrestationArtisanPage/>}/>
             <Route path={ROUTES.PRESTATIONS.BOUDOIR} element={<PrestationBoudoirPage/>}/>
             <Route path={ROUTES.PRESTATIONS.PORTRAIT} element={<PrestationPortraitPage/>}/>
             <Route path={ROUTES.PORTEFOLIOS} element={<PortefoliosPage/>}/>
+            <Route path={ROUTES.APROPOS} element={<AProposPage/>}/>
+            <Route path={ROUTES.CONTACT} element={<ContactPage/>}/>
           </Routes>
         </main>
         <PhoneMenuContainer/>
