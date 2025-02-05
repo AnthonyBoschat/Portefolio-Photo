@@ -1,7 +1,7 @@
 import "./style.scss";
 import SectionComponent from "@Components/Section";
 
-import ContactForm from "@Containers/Contact/Home";
+import ContactForm from "@Containers/Contact/Form";
 import ExploreButton from "@Components/ExploreButton";
 import PrestationsHome from "@Containers/Prestations/Home";
 import AProposHome from "@Containers/A propos/Home";
@@ -10,14 +10,14 @@ import Medias from "@Containers/Media";
 import { useSelector } from "react-redux";
 import { sendMessage } from "@Services/ContactService";
 import { useRef } from "react";
+import ContactContainer from "@Containers/Contact";
 
 
 
 export default function HomeLayout(){
 
 
-    const formData = useSelector(store => store.contact.formData)
-    const formRef = useRef()
+   
 
 
 
@@ -48,8 +48,7 @@ export default function HomeLayout(){
 
             <SectionComponent label="Contact" customClass="home-contact">
                 <div className="content">
-                    <ContactForm formRef={formRef} formData={formData}/>
-                    <ExploreButton onClick={() => sendMessage(formRef, formData)} text={"Transmettre"}/>
+                    <ContactContainer/>
                 </div>
             </SectionComponent>
 
