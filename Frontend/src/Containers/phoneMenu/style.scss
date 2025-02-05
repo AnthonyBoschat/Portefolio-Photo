@@ -83,7 +83,7 @@ div.overlay{
             &.childrenList{
                 position: relative;
                 max-height: 0;
-                transition: all 0.3s ease-in-out;
+                transition: all 0.3s linear;
                 &.open{
                     padding-top: 1rem;
                     max-height: 13rem; // FIX - Possiblement à corriger, trop précis ( voir exemple avec 10 rem )

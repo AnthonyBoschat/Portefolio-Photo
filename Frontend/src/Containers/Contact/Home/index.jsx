@@ -33,7 +33,7 @@ export default function ContactForm({formRef, formData}){
                 <div className="field">
                     <label htmlFor="subject">Sujet</label>
                     <div id="select">
-                        <select onChange={(e) => dispatch(setFormData({key:"subject", value:parseInt(e.target.value)}))} defaultValue={formData.subject} className="focus" name="" id="">
+                        <select onChange={(e) => dispatch(setFormData({key:"subject", value:parseInt(e.target.value)}))} defaultValue={formData.subject} name="" id="">
                             <option value={0}>Prise de contact</option>
                             <option value={1}>Devis</option>
                             <option value={2}>Proposition d'évènement</option>

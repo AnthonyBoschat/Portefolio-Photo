@@ -25,11 +25,22 @@ form#contact-form{
                 outline: 1px solid v.$inputContactOutlineUnfocus;
                 background-color: v.$inputBackgroundUnfocus;
                 font-size: 16px;
-                // padding-left: 1rem;
-                &.focus{
+                transition: all 0.1s linear;
+
+                select{
                     outline: 1px solid v.$inputContactOutlineFocus;
                     box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
-                    background-color:v.$inputBackgroundFocus
+                    background-color:v.$inputBackgroundFocus;
+                }
+                &:valid{
+                    outline: 1px solid v.$inputContactOutlineFocus;
+                    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
+                    background-color:v.$inputBackgroundFocus;
+                }
+                &:focus{
+                    outline: 1px solid v.$inputContactOutlineFocus;
+                    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
+                    background-color:v.$inputBackgroundFocus;
                 }
             }
 
