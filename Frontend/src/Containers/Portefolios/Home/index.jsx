@@ -1,14 +1,14 @@
 import "./style.scss";
-import RoussePhoto from "@Assets/Photos/Home/Portefolio/Rousse.jpg"
-import HommePhoto from "@Assets/Photos/Home/Portefolio/Homme.jpg"
-import GrillePhoto from "@Assets/Photos/Home/Portefolio/Grille.jpg"
+import Photo1 from "@Assets/Photos/Home/Portefolio/1.jpg"
+import Photo2 from "@Assets/Photos/Home/Portefolio/2.jpg"
+import Photo3 from "@Assets/Photos/Home/Portefolio/3.jpg"
 
 export default function PortefoliosHome(){
 
     const portefolioPhotos = [
-        HommePhoto,
-        RoussePhoto,
-        GrillePhoto,
+        Photo3,
+        Photo1,
+        Photo2,
     ]
 
     return(
