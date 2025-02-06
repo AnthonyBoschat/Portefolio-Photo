@@ -10,7 +10,7 @@ export const phoneStateSlice = createSlice({
   reducers: {
     setOpenPhoneMenu:(state,action) => {
         state.menuOpen = action.payload
-    }
+    },
   },
 });
 

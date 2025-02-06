@@ -1,6 +1,6 @@
 import "./style.scss";
 import ROUTES from "@Constants/Routes"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import BoudoirPhoto from "@Assets/Photos/Home/Prestations/Boudoir.jpg"
 import ArtisanPhoto from "@Assets/Photos/Home/Prestations/Artisan.jpg"
 import PortraitPhoto from "@Assets/Photos/Home/Prestations/Portrait.jpg"
@@ -8,6 +8,8 @@ import CarouselIndicator from "@Components/CarouselIndicator";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
+
+
 
 export default function PrestationsHome(){
     
@@ -19,16 +21,18 @@ export default function PrestationsHome(){
         slidesToShow: 1,
         slidesToScroll: 1,
         swipe: true,
+        lazyLoad: false,
         beforeChange: (current, next) => {
             setPrestationsState(current => current.map((photo, index) => ({...photo, selected: index === next})))
         }
       };
 
-    const [prestationsState, setPrestationsState] = useState([
+    const initialPrestationsState = useMemo(() => ([
         {label:"Boudoir", selected:true, link:ROUTES.PRESTATIONS.BOUDOIR, img:BoudoirPhoto},
         {label:"Portrait", selected:false, link:ROUTES.PRESTATIONS.PORTRAIT, img:PortraitPhoto},
         {label:"Artisan", selected:false, link:ROUTES.PRESTATIONS.BOUDOIR, img:ArtisanPhoto},
-    ])
+    ]), [])
+    const [prestationsState, setPrestationsState] = useState(initialPrestationsState)
     const [selectedPrestation, setSelectedPrestation] = useState(prestationsState[0])
 
     useEffect(() => {
@@ -48,12 +52,6 @@ export default function PrestationsHome(){
         }
     }
 
-    // const goToSlide = (index) => {
-    //     if (sliderRef.current) {
-    //         sliderRef.current.slickGoTo(index);
-    //     }
-    // }
-
     return(
         <>
             <div className="buttons">
@@ -66,7 +64,7 @@ export default function PrestationsHome(){
                     <Slider ref={sliderRef} {...sliderSettings}>
                         {prestationsState.map((element, index) => (
                         <div key={index}>
-                            <img src={element.img} alt={`Photo de présentation de la prestation ${element.label}`} />
+                            <img loading="eager" src={element.img} alt={`Photo de présentation de la prestation ${element.label}`} />
                         </div>
                         ))}
                     </Slider>

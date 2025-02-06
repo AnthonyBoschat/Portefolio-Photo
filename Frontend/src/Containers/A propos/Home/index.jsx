@@ -1,10 +1,11 @@
+import { useMemo } from "react";
 import "./style.scss";
-import JesahelPhoto from "@Assets/Photos/Home/aPropos/Jesahel.jpg"
+import photo from "@Assets/Photos/Home/aPropos/Jesahel.jpg"
 
 
 export default function AProposHome(){
 
-
+    const JesahelPhoto = useMemo(() => photo, [])
 
     return(
         <div className="presentation">

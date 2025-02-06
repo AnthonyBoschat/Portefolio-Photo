@@ -42,13 +42,20 @@ export const routesSlice = createSlice({
         }
         return route
       })
+    },
+    openSubMenuForce:(state,action) => {
+      state.routes = state.routes.map(route => {
+          route.open = route.label === action.payload
+          return route
+      })
     }
   },
 });
 
 export const { 
   openSubMenu,
-  setCurrentRoute
+  openSubMenuForce,
+  setCurrentRoute,
 } = routesSlice.actions;
 
 export const routesReducer = routesSlice.reducer;
