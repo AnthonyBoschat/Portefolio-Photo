@@ -16,12 +16,22 @@ export const ContactSlice = createSlice({
   reducers: {
     setFormData:(state, action) => {
         state.formData[action.payload.key] = action.payload.value
+    },
+    resetFormData:(state,action) => {
+        state.formData = {
+            lastname:"",
+            firstname:"",
+            email:"",
+            subject:0,
+            message:"",
+        }
     }
   },
 });
 
 export const { 
-    setFormData
+    setFormData,
+    resetFormData
 } = ContactSlice.actions;
 
 export const ContactReducer = ContactSlice.reducer;

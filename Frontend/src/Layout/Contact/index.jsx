@@ -6,6 +6,8 @@ export default function ContactLayout(){
     
 
     return(
-        <ContactContainer/>
+        <div id="contact-main-container">
+            <ContactContainer/>
+        </div>
     )
 }
