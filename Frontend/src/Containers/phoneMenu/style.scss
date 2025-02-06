@@ -73,7 +73,7 @@ div.overlay{
             i{
                 font-size: 0.7rem;
                 margin-left: 0.3rem;
-                transition: transform 0.1s linear;
+                transition: transform 0.2s linear;
                 transform: rotate(180deg);
                 &.reverse{
                     transform: rotate(0deg);
@@ -83,7 +83,7 @@ div.overlay{
             &.childrenList{
                 position: relative;
                 max-height: 0;
-                transition: all 0.3s linear;
+                transition: all 0.2s ease-in-out;
                 &.open{
                     padding-top: 1rem;
                     max-height: 13rem; // FIX - Possiblement à corriger, trop précis ( voir exemple avec 10 rem )
