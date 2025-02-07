@@ -12,8 +12,8 @@ export default function Header(){
     const headerRef = useRef()
     const currentRoute = useSelector(store => store.routes.currentRoute)
     const routes = useSelector(store => store.routes.routes)
-    
-    
+
+
     const [scrolling, setScrolling] = useState(false)
     // Gère l'animation dû au scroll
     useEffect(() => {
@@ -22,10 +22,9 @@ export default function Header(){
         }
         window.addEventListener("scroll", handleScroll);
         return () => {
-          window.removeEventListener("scroll", handleScroll);
+            window.removeEventListener("scroll", handleScroll);
         };
-      }, []);
-
+        }, []);
 
     // Gère le fil d'ariane
     const [roadmap, setRoadmap] = useState({

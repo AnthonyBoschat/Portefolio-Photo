@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import ROUTES from '@Constants/Routes';
-import { Navigate } from 'react-router-dom';
 
 
 export const routesSlice = createSlice({
@@ -9,11 +8,11 @@ export const routesSlice = createSlice({
     routes:[
         {label:"Accueil", link:ROUTES.HOME, subMenu:false},
         {label:"Portefolio", link:"/Portefolios", subMenu:true, open:false, children:[
-            {label:"Collaboration Artistique", link:ROUTES.PORTEFOLIOS},
-            {label:"Fantastique", link:ROUTES.PORTEFOLIOS},
-            {label:"Lumière Naturelle", link:ROUTES.PORTEFOLIOS},
-            {label:"Nu - Lingerie", link:ROUTES.PORTEFOLIOS},
-            {label:"Studio", link:ROUTES.PORTEFOLIOS},
+            {label:"Collaboration Artistique", link:ROUTES.PORTEFOLIOS.COLLABORATION_ARTISTIQUE},
+            {label:"Fantastique", link:ROUTES.PORTEFOLIOS.FANTASTIQUE},
+            {label:"Lumière Naturelle", link:ROUTES.PORTEFOLIOS.LUMIERE_NATURELLE},
+            {label:"Nu - Lingerie", link:ROUTES.PORTEFOLIOS.NU_LINGERIE},
+            {label:"Studio", link:ROUTES.PORTEFOLIOS.STUDIO},
         ]},
         {label:"Prestations", link:"/Prestations", subMenu:true, open:false, children:[
             {label:"Portrait", link:ROUTES.PRESTATIONS.PORTRAIT},
@@ -48,6 +47,12 @@ export const routesSlice = createSlice({
           route.open = route.label === action.payload
           return route
       })
+    },
+    closeSubMenu:(state,action) => {
+      state.routes = state.routes.map(route => {
+          route.open = false
+          return route
+      })
     }
   },
 });
@@ -56,6 +61,7 @@ export const {
   openSubMenu,
   openSubMenuForce,
   setCurrentRoute,
+  closeSubMenu
 } = routesSlice.actions;
 
 export const routesReducer = routesSlice.reducer;

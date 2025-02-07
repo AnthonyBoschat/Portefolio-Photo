@@ -5,7 +5,13 @@ const ROUTES = {
         BOUDOIR:"/Prestations/Boudoir",
         PORTRAIT:"/Prestations/Portrait",
     },
-    PORTEFOLIOS:"/Portefolios",
+    PORTEFOLIOS:{
+        STUDIO:"/Portefolios/Studio",
+        FANTASTIQUE:"/Portefolios/Fantastique",
+        COLLABORATION_ARTISTIQUE:"/Portefolios/CollaborationArtistique",
+        LUMIERE_NATURELLE:"/Portefolios/LumiereNaturelle",
+        NU_LINGERIE:"/Portefolios/NuLingerie",
+    },
     APROPOS:"/APropos",
     CONTACT:"/Contact",
 }
