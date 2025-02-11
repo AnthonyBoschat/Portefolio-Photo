@@ -8,6 +8,7 @@ import Slider from "react-slick";
 import { useRef } from "react";
 import CarouselIndicator from "@Components/CarouselIndicator";
 import ROUTES from "@Constants/Routes";
+import ExploreButton from "@Components/ExploreButton";
 
 
 export default function PrestationsLayout({
@@ -79,6 +80,7 @@ export default function PrestationsLayout({
                     ))}
                 </p>
             </div>
+            <ExploreButton text={"Contact"}/>
 
 
 

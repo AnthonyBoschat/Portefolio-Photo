@@ -28,9 +28,9 @@ export default function PrestationsHome(){
       };
 
     const initialPrestationsState = useMemo(() => ([
-        {label:"Boudoir", selected:true, link:ROUTES.PRESTATIONS.BOUDOIR, img:BoudoirPhoto},
-        {label:"Portrait", selected:false, link:ROUTES.PRESTATIONS.PORTRAIT, img:PortraitPhoto},
+        {label:"Portrait", selected:true, link:ROUTES.PRESTATIONS.PORTRAIT, img:PortraitPhoto},
         {label:"Artisan", selected:false, link:ROUTES.PRESTATIONS.BOUDOIR, img:ArtisanPhoto},
+        {label:"Boudoir", selected:false, link:ROUTES.PRESTATIONS.BOUDOIR, img:BoudoirPhoto},
     ]), [])
     const [prestationsState, setPrestationsState] = useState(initialPrestationsState)
     const [selectedPrestation, setSelectedPrestation] = useState(prestationsState[0])
