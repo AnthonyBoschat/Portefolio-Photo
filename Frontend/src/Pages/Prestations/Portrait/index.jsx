@@ -1,13 +1,10 @@
-// import "./style.scss";
+import PrestationsLayout from "@Layout/Prestations";
 
 export default function PrestationPortraitPage(){
 
 
 
     return(
-        <>
-            <h1>PrestationPortraitPage</h1>
-            
-        </>
+        <PrestationsLayout/>
     )
 }

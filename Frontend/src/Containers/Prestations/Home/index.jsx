@@ -68,7 +68,7 @@ export default function PrestationsHome(){
                         </div>
                         ))}
                     </Slider>
-                        <CarouselIndicator array={prestationsState} condition={(element) => selectedPrestation === element }/>
+                    <CarouselIndicator array={prestationsState} condition={(element) => element.selected }/>
 
             </div>
         </>

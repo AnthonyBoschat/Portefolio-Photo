@@ -1,0 +1,94 @@
+div#prestations-main-container{
+    padding: 2rem 21px 1rem 21px;
+
+
+
+    div.photos_presentation-details-container{
+
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        ul{
+            display: flex;
+            gap: 0.3rem;
+        
+            &.photos_presentation{
+                li{
+                    width: 100%;
+                }
+                img{
+                    border-top-left-radius: 4px;
+                    border-bottom-right-radius: 4px;
+                    width: 100%;
+                    object-position:center;
+                    object-fit: cover;
+                    height: 22rem;
+                }
+            }
+    
+            &.details-container{
+
+                li{
+                    font-size: 12px;
+                    width: 100%;
+                    text-align: center;
+                    // outline: 1px solid red;
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                    flex-direction: column;
+                    img{
+                        height: 1.5rem;
+                    }
+
+                    span{
+                        display: inline-block;
+                        width: 70%;
+                        // outline: 1px solid red;
+                    }
+                }
+            }
+        }
+    }
+
+    div.prestation-description-container{
+        margin-top: 2rem;
+        display: flex;
+        justify-content: center;
+
+        p{
+            font-style: italic;
+            font-size: 14px;
+            letter-spacing: 1px;
+            // outline: 1px solid red;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            width: 80%;
+            align-self: center;
+        }
+    }
+
+
+    div.photos-carousel-container{
+        // display: flex;
+        // overflow: hidden;
+        width: 100%;
+        position: relative;
+        margin-top: 2rem;
+        // outline: 1px solid red;
+
+        div{
+            // height: 35rem;
+            // width: 100%;
+            img{
+                width: 100%;
+                object-position:center;
+                object-fit: cover;
+                height: 35rem;
+            }
+            
+        }
+    }
+
+}
