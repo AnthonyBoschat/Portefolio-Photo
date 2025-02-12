@@ -94,8 +94,6 @@ const artisanResponse = {
         "Cette formule flexible est parfaite pour refléter votre univers professionnel.",
         "Des options comme le maquillage ou la location d’un lieu peuvent être ajoutées en supplément."
     ]
-    
-    
 }
 
 export default function PrestationPage(){

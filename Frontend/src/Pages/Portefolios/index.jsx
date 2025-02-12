@@ -18,7 +18,7 @@ export default function PortefoliosPage() {
     <div id="portefolios-main-container">
 
         {photoPaths.map((path, index) => (
-            <img key={index} src={path} alt={`Photo ${index}`} />
+            <img loading="lazy" key={index} src={path} alt={`Photo ${index}`} />
         ))}
 
     </div>

@@ -1,16 +1,8 @@
 import "./style.scss";
-import Photo1 from "@Assets/Photos/Home/Portefolio/1.jpg"
-import Photo2 from "@Assets/Photos/Home/Portefolio/2.jpg"
-import Photo3 from "@Assets/Photos/Home/Portefolio/3.jpg"
-import { useMemo } from "react";
 
-export default function PortefoliosHome(){
+export default function PortefoliosHome({portefolioPhotos}){
 
-    const portefolioPhotos = useMemo(() => ([
-        Photo3,
-        Photo1,
-        Photo2,
-    ]), [])
+    
 
     return(
         <>

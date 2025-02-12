@@ -1,16 +1,13 @@
-import { useMemo } from "react";
 import "./style.scss";
-import photo from "@Assets/Photos/Home/aPropos/Jesahel.jpg"
 
 
-export default function AProposHome(){
+export default function AProposHome({aproposPhoto}){
 
-    const JesahelPhoto = useMemo(() => photo, [])
 
     return(
         <div className="presentation">
             <picture>
-                <img src={JesahelPhoto} alt="" />
+                <img src={aproposPhoto} alt="" />
             </picture>
             <p className="presentation">
                 <span className="long">

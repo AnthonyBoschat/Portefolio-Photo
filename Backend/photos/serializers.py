@@ -9,8 +9,11 @@ class PhotoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Photo
-        fields = ['id', 'path', 'page', 'role', 'type', 'position', 'url']
+        fields = ['id', 'image', 'page', 'role', 'orientation', 'position', 'url']
 
     def get_url(self, obj):
+        print("\n\n\n")
+        print(f"obj.image_______________{obj.image}")
+        print("\n\n\n")
         # On suppose que le champ 'path' contient le chemin relatif par rapport à MEDIA_ROOT, par exemple "photos/image1.jpg"
-        return f"{settings.BASE_DOMAIN}{settings.MEDIA_URL}{obj.path}"
+        return f"{settings.BASE_DOMAIN}{settings.MEDIA_URL}{obj.image.url}"

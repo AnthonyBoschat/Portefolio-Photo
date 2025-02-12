@@ -1,9 +1,5 @@
 import "./style.scss";
-import ROUTES from "@Constants/Routes"
-import { useEffect, useMemo, useRef, useState } from "react"
-import BoudoirPhoto from "@Assets/Photos/Home/Prestations/Boudoir.jpg"
-import ArtisanPhoto from "@Assets/Photos/Home/Prestations/Artisan.jpg"
-import PortraitPhoto from "@Assets/Photos/Home/Prestations/Portrait.jpg"
+import { useEffect, useRef, useState } from "react"
 import CarouselIndicator from "@Components/CarouselIndicator";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
@@ -11,9 +7,12 @@ import Slider from "react-slick";
 
 
 
-export default function PrestationsHome(){
+export default function PrestationsHome({prestationsPhotos}){
     
+    // reference du slider
     const sliderRef = useRef()
+
+    // Paramètre du slider
     const sliderSettings = {
         dots: false,
         infinite: false,
@@ -26,19 +25,18 @@ export default function PrestationsHome(){
             setPrestationsState(current => current.map((photo, index) => ({...photo, selected: index === next})))
         }
       };
+    
+    // Listen des prestations
+    const [prestationsState, setPrestationsState] = useState(prestationsPhotos)
+    // Prestation en cours de visualisation
+    const [selectedPrestation, setSelectedPrestation] = useState(prestationsPhotos[0])
 
-    const initialPrestationsState = useMemo(() => ([
-        {label:"Portrait", selected:true, link:ROUTES.PRESTATIONS.PORTRAIT, img:PortraitPhoto},
-        {label:"Artisan", selected:false, link:ROUTES.PRESTATIONS.BOUDOIR, img:ArtisanPhoto},
-        {label:"Boudoir", selected:false, link:ROUTES.PRESTATIONS.BOUDOIR, img:BoudoirPhoto},
-    ]), [])
-    const [prestationsState, setPrestationsState] = useState(initialPrestationsState)
-    const [selectedPrestation, setSelectedPrestation] = useState(prestationsState[0])
-
+    // Quand une prestation devient selected, on set cette prestation dans selectedPrestation
     useEffect(() => {
-        setSelectedPrestation(prestationsState.find(element => element.selected === true))
+        setSelectedPrestation(prestationsPhotos.find(element => element.selected === true))
     }, [prestationsState])
 
+    // Quand l'utilisateur clique sur le nom d'une prestation, modifie en conséquence la liste des prestations et le statut selected et fait se déplacer le slider
     const switchPrestationPhoto = (userChoicePrestation, index) => {
         if(!userChoicePrestation !== selectedPrestation){
             const newPrestations = [...prestationsState].map(element => {
