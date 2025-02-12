@@ -3,10 +3,17 @@ import PrestationsLayout from "@Layout/Prestations";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-import photo1 from "./photos/1.jpg";
-import photo2 from "./photos/2.jpg";
-import photo3 from "./photos/3.jpg";
-import photo4 from "./photos/4.jpg";
+import portraitBanner1 from "./photos/portrait/banner/1.jpg"
+import portraitBanner2 from "./photos/portrait/banner/2.jpg"
+import portraitBanner3 from "./photos/portrait/banner/3.jpg"
+
+import boudoirBanner1 from "./photos/boudoir/banner/1.jpg"
+import boudoirBanner2 from "./photos/boudoir/banner/2.jpg"
+import boudoirBanner3 from "./photos/boudoir/banner/3.jpg"
+
+import artisanBanner1 from "./photos/artisan/banner/1.jpg"
+import artisanBanner2 from "./photos/artisan/banner/2.jpg"
+import artisanBanner3 from "./photos/artisan/banner/3.jpg"
 
 
 import carous1 from "./photos/carousel/1.jpg";
@@ -15,15 +22,12 @@ import carous3 from "./photos/carousel/3.jpg";
 import carous4 from "./photos/carousel/4.jpg";
 import carous5 from "./photos/carousel/5.jpg";
 
-import artisan1 from "./photos/artisan1.jpg";
-import artisan2 from "./photos/artisan2.jpg";
-import artisan3 from "./photos/artisan3.jpg";
 
 const boudoirResponse = {
     banner:[
-        {img:photo1, type:"portrait"},
-        {img:photo2, type:"portrait"},
-        {img:photo3, type:"portrait"},
+        {img:boudoirBanner1, type:"portrait"},
+        {img:boudoirBanner2, type:"portrait"},
+        {img:boudoirBanner3, type:"portrait"},
     ],
     presentation:[
         {img:carous1, type:"portrait"},
@@ -47,15 +51,18 @@ const boudoirResponse = {
 
 const portraitResponse = {
     banner:[
-        {img:photo1, type:"portrait"},
-        {img:photo2, type:"portrait"},
-        {img:photo3, type:"portrait"},
+        {img:portraitBanner1, type:"portrait"},
+        {img:portraitBanner2, type:"portrait"},
+        {img:portraitBanner3, type:"portrait"},
     ],
     presentation:[
         {img:carous1, type:"portrait"},
         {img:carous2, type:"portrait"},
         {img:carous3, type:"paysage"},
         {img:carous4, type:"portrait"},
+        {img:carous5, type:"paysage"},
+        {img:carous5, type:"paysage"},
+        {img:carous5, type:"paysage"},
         {img:carous5, type:"paysage"},
     ],
     informations:{
@@ -72,12 +79,12 @@ const portraitResponse = {
 
 const artisanResponse = {
     banner:[
-        {img:artisan1, type:"portrait"},
-        {img:artisan2, type:"portrait"},
-        {img:artisan3, type:"portrait"},
+        {img:artisanBanner1, type:"portrait"},
+        {img:artisanBanner2, type:"portrait"},
+        {img:artisanBanner3, type:"portrait"},
     ],
     presentation:[
-        {img:artisan1, type:"portrait", label:"Atelier By Lau"},
+        {img:artisanBanner1, type:"portrait", label:"Atelier By Lau"},
         {img:carous1, type:"portrait", label:"L'orée Sucrée"},
         {img:carous2, type:"paysage", label: "Le Grain d'Or"},
         {img:carous3, type:"portrait", label: "Délice de paris"},

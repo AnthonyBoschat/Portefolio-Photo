@@ -3,6 +3,7 @@ import HomeLayout from "@Layout/Home";
 import prestation1 from "./photos/prestation/1.webp"
 import prestation2 from "./photos/prestation/2.webp"
 import prestation3 from "./photos/prestation/3.webp"
+import prestationhighquality from "./photos/prestation/4.jpg"
 
 import portefolio1 from "./photos/portefolio/1.jpg"
 import portefolio2 from "./photos/portefolio/2.jpg"
@@ -21,7 +22,8 @@ export default function HomePage(){
 
     const prestationsPhotos = useMemo(() => [
         {label:"Portrait", selected:true, link:ROUTES.PRESTATIONS.PORTRAIT, img:prestation1},
-        {label:"Artisan", selected:false, link:ROUTES.PRESTATIONS.BOUDOIR, img:prestation2},
+        // {label:"Artisan", selected:false, link:ROUTES.PRESTATIONS.BOUDOIR, img:prestation2},
+        {label:"Artisan", selected:false, link:ROUTES.PRESTATIONS.BOUDOIR, img:prestationhighquality},
         {label:"Boudoir", selected:false, link:ROUTES.PRESTATIONS.BOUDOIR, img:prestation3},
     ], [])
 

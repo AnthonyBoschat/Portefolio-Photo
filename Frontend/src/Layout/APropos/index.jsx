@@ -1,24 +1,16 @@
 import "./style.scss";
-import jesahelPhoto from "@Assets/Photos/APropos/Jesahel.jpg";
-import artisanPhoto from "@Assets/Photos/APropos/artisan.jpg";
-import naturalLight from "@Assets/Photos/APropos/naturalLight.jpg";
 import Medias from "@Containers/Media";
-import { useMemo } from "react";
 
 
-export default function AProposLayout(){
+export default function AProposLayout({aproposPhoto}){
 
-    const photos = useMemo(() => ({
-        jesahelPhoto:jesahelPhoto,
-        artisanPhoto:artisanPhoto,
-        naturalLight:naturalLight
-    }), [])
+    
 
     return(
         <div id="apropos-main-container">
             <div className="section white">
                 <picture>
-                    <img src={photos.jesahelPhoto} alt="" />
+                    <img src={aproposPhoto.jesahelPhoto} alt="" />
                 </picture>
                 <p>
                     <span>Je m'appelle Jésahel, et je suis photographe, maquilleuse professionnelle et artisane textile.</span>
@@ -34,7 +26,7 @@ export default function AProposLayout(){
             </div>
             <div className="section white">
                 <picture>
-                    <img src={photos.naturalLight} alt="" />
+                    <img src={aproposPhoto.naturalLight} alt="" />
                 </picture>
                 <p>
                     <span>Je privilégie la lumière naturelle pour la spontanéité et les surprises qu’elle offre.</span>
@@ -50,7 +42,7 @@ export default function AProposLayout(){
             </div>
             <div className="section white">
                 <picture>
-                    <img src={photos.artisanPhoto} alt="" />
+                    <img src={aproposPhoto.artisanPhoto} alt="" />
                 </picture>
                 <p>
                     <span>Ce qui me motive chaque jour, c’est l’envie d’apprendre, de rencontrer de nouvelles histoires, et de sublimer les moments et les personnes que je photographie.</span>
