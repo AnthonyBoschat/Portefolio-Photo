@@ -43,7 +43,7 @@ export default function HomeLayout({
             <SectionComponent label="À propos" customClass="home-apropos">
                 <div className="content">
                     <AProposHome aproposPhoto={aproposPhoto}/>
-                    <ExploreButton onClick={() => navigate(ROUTES.APROPOS)} text={"Lire plus"}/>
+                    <ExploreButton navigate={ROUTES.APROPOS} text={"Lire plus"}/>
                 </div>
 
             </SectionComponent>

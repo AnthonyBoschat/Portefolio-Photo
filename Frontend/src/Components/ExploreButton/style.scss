@@ -4,7 +4,7 @@ div#redirect-button-container{
     margin-top: 1rem;
     display: flex;
     justify-content: flex-end;
-    button{
+    button, a{
         position: relative;
         &::after{
             position: absolute;

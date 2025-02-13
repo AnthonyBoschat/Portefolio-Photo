@@ -9,7 +9,7 @@ class PhotoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Photo
-        fields = ['id', 'image', 'page', 'role', 'orientation', 'position', 'url']
+        fields = ['id', 'image', 'type', 'subject', 'orientation', 'position', 'url']
 
     def get_url(self, obj):
         print("\n\n\n")

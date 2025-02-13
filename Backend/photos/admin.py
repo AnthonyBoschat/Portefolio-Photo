@@ -3,14 +3,15 @@ from .models import Photo
 
 
 class PhotoAdmin(admin.ModelAdmin):
+
     # Définir les colonnes à afficher dans la liste
-    list_display = ('id', 'image', 'page', 'context', 'role', 'orientation', 'position', 'image_preview')
+    list_display = ('id', 'image', 'type', 'subject', 'orientation', 'position', 'image_preview')
     
     # Permettre la recherche sur certains champs
-    search_fields = ('path', 'page', 'context', 'role', 'orientation')
+    search_fields = ('type', 'subject', 'orientation')
     
     # Ajouter des filtres sur les colonnes
-    list_filter = ('page', 'context', 'role', 'orientation')
+    list_filter = ('type', 'subject', 'orientation')
 
     def image_preview(self, obj):
         if obj.image:

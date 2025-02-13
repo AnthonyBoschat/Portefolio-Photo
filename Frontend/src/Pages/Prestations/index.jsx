@@ -151,6 +151,10 @@ export default function PrestationPage(){
         setDescriptionPrestation(description)
     }, [currentRoute])
 
+    useEffect(() => {
+        console.table(presentationPhotos)
+    }, [presentationPhotos])
+
     return(
         <PrestationsLayout 
             descriptionPrestation={descriptionPrestation}

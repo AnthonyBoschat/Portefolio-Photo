@@ -5,10 +5,11 @@ import clockIcon from "@Assets/icons/clock.svg";
 import dollarsIcon from "@Assets/icons/dollars.svg";
 
 import Slider from "react-slick";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import CarouselIndicator from "@Components/CarouselIndicator";
 import ROUTES from "@Constants/Routes";
 import ExploreButton from "@Components/ExploreButton";
+import { useNavigate } from "react-router-dom";
 
 
 export default function PrestationsLayout({
@@ -34,8 +35,15 @@ export default function PrestationsLayout({
         lazyLoad: false,
         beforeChange: (current, next) => {
             setPresentationPhotos(current => current.map((photo, index) => ({...photo, selected: index === next})))
-        }
+        },
     }
+
+    // Réinitialise le slider à la première slide quand currentRoute change
+    useEffect(() => {
+        if (sliderRef.current) {
+        sliderRef.current.slickGoTo(0);
+        }
+    }, [currentRoute]);
 
 
     return(
@@ -80,7 +88,7 @@ export default function PrestationsLayout({
                     ))}
                 </p>
             </div>
-            <ExploreButton text={"Contact"}/>
+            <ExploreButton navigate={ROUTES.CONTACT} text={"Contact"}/>
 
 
 
