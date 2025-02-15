@@ -3,14 +3,9 @@ import "./style.scss";
 import cameraIcon from "@Assets/icons/camera.svg";
 import clockIcon from "@Assets/icons/clock.svg";
 import dollarsIcon from "@Assets/icons/dollars.svg";
-
-import Slider from "react-slick";
-import { useEffect, useRef } from "react";
-import CarouselIndicator from "@Components/CarouselIndicator";
 import ROUTES from "@Constants/Routes";
 import ExploreButton from "@Components/ExploreButton";
-import { useNavigate } from "react-router-dom";
-import Slide from "@Components/Slider";
+import Carousel from "@Components/Carousel";
 
 
 export default function PrestationsLayout({
@@ -98,7 +93,7 @@ export default function PrestationsLayout({
                 // Quand c'est une autre prestation
                 : (
                     <div className="photos-carousel-container">
-                        <Slide infinite photos={galeryPhotos} setPhotos={setGaleryPhotos}/>
+                        <Carousel infinite photos={galeryPhotos} setPhotos={setGaleryPhotos}/>
                     </div>
                 )}
             

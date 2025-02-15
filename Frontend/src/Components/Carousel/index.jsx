@@ -5,7 +5,7 @@ import CarouselIndicator from "@Components/CarouselIndicator";
 import { useSelector } from "react-redux";
 
 
-export default function Slide({photos, setPhotos, infinite=false}){
+export default function Carousel({photos, setPhotos, infinite=false}){
 
     const currentRoute = useSelector(store => store.routes.currentRoute)
 

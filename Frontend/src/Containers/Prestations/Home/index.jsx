@@ -1,10 +1,8 @@
 import "./style.scss";
-import { useEffect, useRef, useState } from "react"
-import CarouselIndicator from "@Components/CarouselIndicator";
+import { useState } from "react"
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
-import Slider from "react-slick";
-import Slide from "@Components/Slider";
+import Carousel from "@Components/Carousel";
 
 
 
@@ -28,7 +26,7 @@ export default function PrestationsHome({prestationsPhotos}){
                 ))}
             </div>
             <div id="picture-container">
-                <Slide photos={photos} setPhotos={setPhotos}/>
+                <Carousel photos={photos} setPhotos={setPhotos}/>
             </div>
         </>
     )
