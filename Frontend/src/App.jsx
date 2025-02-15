@@ -10,6 +10,7 @@ import useRoute from "@Services/useRoute";
 import ROUTES from "@Constants/Routes";
 import AProposPage from "@Pages/APropos";
 import { useEffect, useState } from "react";
+import AdminPage from "@Pages/Admin";
 
 
 export default function App() {
@@ -28,8 +29,11 @@ export default function App() {
         <Header/>
         <main>
           <Routes>
-            <Route path={ROUTES.HOME} element={<HomePage/>}/>
+            {/* Admin */}
+            <Route path={ROUTES.ADMIN} element={<AdminPage/>}/>
 
+
+            <Route path={ROUTES.HOME} element={<HomePage/>}/>
             <Route path={ROUTES.PRESTATIONS.ARTISAN} element={<PrestationPage/>}/>
             <Route path={ROUTES.PRESTATIONS.BOUDOIR} element={<PrestationPage/>}/>
             <Route path={ROUTES.PRESTATIONS.PORTRAIT} element={<PrestationPage/>}/>

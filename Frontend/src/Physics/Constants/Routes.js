@@ -14,6 +14,7 @@ const ROUTES = {
     },
     APROPOS:"/APropos",
     CONTACT:"/Contact",
+    ADMIN:"/Admin"
 }
 
 export default ROUTES

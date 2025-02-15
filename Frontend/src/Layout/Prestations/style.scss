@@ -126,17 +126,19 @@ div#prestations-main-container{
         position: relative;
         margin-top: 4rem;
         // outline: 1px solid red;
-
-        div{
-            // height: 35rem;
-            // width: 100%;
-            img{
-                width: 100%;
-                object-position:center;
-                object-fit: cover;
-                height: 35rem;
+        
+        position: relative;
+        .slider-container{
+            overflow: hidden;
+            div{
+                img{
+                    width: 100%;
+                    object-position:center;
+                    object-fit: cover;
+                    height: 35rem;
+                }
+                
             }
-            
         }
     }
 

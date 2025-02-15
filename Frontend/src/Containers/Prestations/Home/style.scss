@@ -19,6 +19,10 @@ section.home-prestation{
 
 
     #picture-container{
+        // position: relative;
         position: relative;
+        .slider-container{
+            overflow: hidden;
+        }
     }
 }

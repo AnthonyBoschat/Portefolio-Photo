@@ -58,15 +58,17 @@ export default function PrestationsHome({prestationsPhotos}){
                 ))}
             </div>
             <div id="picture-container">
+                    <div className="slider-container">
+                        <Slider ref={sliderRef} {...sliderSettings}>
+                            {prestationsState.map((element, index) => (
+                            <div key={index}>
+                                <img loading="eager" src={element.img} alt={`Photo de présentation de la prestation ${element.label}`} />
+                            </div>
+                            ))}
+                        </Slider>
+                        <CarouselIndicator array={prestationsState}/>
 
-                    <Slider ref={sliderRef} {...sliderSettings}>
-                        {prestationsState.map((element, index) => (
-                        <div key={index}>
-                            <img loading="eager" src={element.img} alt={`Photo de présentation de la prestation ${element.label}`} />
-                        </div>
-                        ))}
-                    </Slider>
-                    <CarouselIndicator array={prestationsState} condition={(element) => element.selected }/>
+                    </div>
 
             </div>
         </>

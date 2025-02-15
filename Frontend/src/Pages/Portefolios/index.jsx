@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import './style.scss';
 import { useSelector } from "react-redux";
 import ROUTES from "@Constants/Routes";
+import ENDPOINT from "@Constants/Endpoint";
 
 // const photos = import.meta.glob('./photos/studio/*.jpg', { eager: true });
 const photos = import.meta.glob('./photos/low/*.webp', { eager: true });
@@ -31,7 +32,7 @@ export default function PortefoliosPage() {
         
         return
     }
-    fetch(`http://127.0.0.1:8000/api/photos?type=portefolio&subject=${subject}`)
+    fetch(ENDPOINT.LOAD("portefolio", subject))
     .then(response => response.json())
     .then(result => {
       setPhotos(result)

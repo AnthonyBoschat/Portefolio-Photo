@@ -23,7 +23,6 @@ export default function HomeLayout({
 }){
 
 
-    const navigate = useNavigate();
     const dispatch = useDispatch()
 
     return(

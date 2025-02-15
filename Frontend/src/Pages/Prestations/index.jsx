@@ -21,6 +21,7 @@ import carous2 from "./photos/carousel/2.jpg";
 import carous3 from "./photos/carousel/3.jpg";
 import carous4 from "./photos/carousel/4.jpg";
 import carous5 from "./photos/carousel/5.jpg";
+import ENDPOINT from "@Constants/Endpoint";
 
 
 const boudoirResponse = {
@@ -116,36 +117,48 @@ export default function PrestationPage(){
     // Contient la description de la prestation
     const [descriptionPrestation, setDescriptionPrestation] = useState([])
 
+
     // Charge dans le state les photos de la réponse
     useEffect(() => {
         let presentationPhotos
         let bannerPhotos
         let informations
         let description
+
+        const type = "prestation"
+        let subject = "pre_"
         switch(currentRoute){
             
+            case ROUTES.PRESTATIONS.PORTRAIT:
+                subject += "portrait"
+                
+                bannerPhotos = portraitResponse.banner
+                informations = portraitResponse.informations
+                description = portraitResponse.description
+                break;
             case ROUTES.PRESTATIONS.ARTISAN:
+                subject += "artisan"
                 presentationPhotos = artisanResponse.presentation
                 bannerPhotos = artisanResponse.banner
                 informations = artisanResponse.informations
                 description = artisanResponse.description
                 break
             case ROUTES.PRESTATIONS.BOUDOIR:
+                subject += "boudoir"
                 presentationPhotos = boudoirResponse.presentation.map((photo, index) => ({...photo, selected: index === 0}))
                 bannerPhotos = boudoirResponse.banner
                 informations = boudoirResponse.informations
                 description = boudoirResponse.description
                 break
-            case ROUTES.PRESTATIONS.PORTRAIT:
-                presentationPhotos = portraitResponse.presentation.map((photo, index) => ({...photo, selected: index === 0}))
-                bannerPhotos = portraitResponse.banner
-                informations = portraitResponse.informations
-                description = portraitResponse.description
-                break;
             default:
                 break
         }
-        setPresentationPhotos(presentationPhotos)
+        console.log(subject)
+        fetch(ENDPOINT.LOAD(type, subject))
+        .then(response => response.json())
+        .then(result => {
+            setPresentationPhotos(result)
+        })
         setBannerPhotos(bannerPhotos)
         setInformationsPrestation(informations)
         setDescriptionPrestation(description)

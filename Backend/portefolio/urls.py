@@ -19,10 +19,11 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 from rest_framework import routers
-from photos.views import PhotoViewSet
+from photos.views import PhotoViewSet, UploadPhotoViewSet
 
 router = routers.DefaultRouter()
 router.register(r'photos', PhotoViewSet)
+router.register(r"upload", UploadPhotoViewSet, basename="upload")
 
 urlpatterns = [
     path('admin/', admin.site.urls),

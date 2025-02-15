@@ -1,19 +1,6 @@
 import HomeLayout from "@Layout/Home";
-
-import prestation1 from "./photos/prestation/1.webp"
-import prestation2 from "./photos/prestation/2.webp"
-import prestation3 from "./photos/prestation/3.webp"
-import prestationhighquality from "./photos/prestation/4.jpg"
-
-import portefolio1 from "./photos/portefolio/1.jpg"
-import portefolio2 from "./photos/portefolio/2.jpg"
-import portefolio3 from "./photos/portefolio/3.jpg"
-
-
-
-import apropos1 from "./photos/apropos/1.jpg"
-import ROUTES from "@Constants/Routes";
 import { useMemo } from "react";
+import STATIC_PHOTOS from "@Constants/StaticPhotos/StaticPhotos";
 
 
 export default function HomePage(){
@@ -21,19 +8,15 @@ export default function HomePage(){
     
 
     const prestationsPhotos = useMemo(() => [
-        {label:"Portrait", selected:true, link:ROUTES.PRESTATIONS.PORTRAIT, img:prestation1},
-        // {label:"Artisan", selected:false, link:ROUTES.PRESTATIONS.BOUDOIR, img:prestation2},
-        {label:"Artisan", selected:false, link:ROUTES.PRESTATIONS.BOUDOIR, img:prestationhighquality},
-        {label:"Boudoir", selected:false, link:ROUTES.PRESTATIONS.BOUDOIR, img:prestation3},
+        {label:"Portrait", selected:true, img:STATIC_PHOTOS.HOME.PRESTATION.PORTRAIT},
+        // {label:"Artisan", selected:false, img:STATIC_PHOTOS.HOME.PRESTATION.ARTISAN},
+        {label:"Artisan", selected:false, img:STATIC_PHOTOS.HOME.PRESTATION.PORTRAIT_HIGHTQUALITY},
+        {label:"Boudoir", selected:false, img:STATIC_PHOTOS.HOME.PRESTATION.BOUDOIR},
     ], [])
 
-    const portefolioPhotos = useMemo(() => [
-        portefolio1,
-        portefolio2,
-        portefolio3,
-    ], [])
+    const portefolioPhotos = useMemo(() => STATIC_PHOTOS.HOME.PORTEFOLIO, [])
 
-    const aproposPhoto = useMemo(() => apropos1, [])
+    const aproposPhoto = useMemo(() => STATIC_PHOTOS.HOME.APROPOS, [])
 
     return(
         <HomeLayout

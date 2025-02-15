@@ -105,7 +105,7 @@ export default function PrestationsLayout({
                             <div key={index} className={`picture ${photo.type}`}>
                                     <span>{photo.label}</span>
                                     <picture>
-                                        <img src={photo.img} alt="" />
+                                        <img src={photo.image} alt="" />
                                     </picture>
                             </div>
                         ))}
@@ -116,14 +116,16 @@ export default function PrestationsLayout({
                 // Quand c'est une autre prestation
                 : (
                     <div className="photos-carousel-container">
-                        <Slider ref={sliderRef} {...sliderSettings}>
-                            {presentationPhotos.map((photo, index) => (
-                                <div>
-                                    <img src={photo.img} alt="" />
-                                </div>
-                            ))}
-                        </Slider>
-                        <CarouselIndicator array={presentationPhotos} condition={(element) => element.selected} />
+                        <div className="slider-container">
+                            <Slider ref={sliderRef} {...sliderSettings}>
+                                {presentationPhotos.map((photo, index) => (
+                                    <div>
+                                        <img src={photo.image} alt="" />
+                                    </div>
+                                ))}
+                            </Slider>
+                            <CarouselIndicator array={presentationPhotos} condition={(element) => element.selected} />
+                        </div>
                     </div>
                 )}
             
