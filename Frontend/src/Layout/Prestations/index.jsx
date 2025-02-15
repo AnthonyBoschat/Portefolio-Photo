@@ -21,13 +21,15 @@ export default function PrestationsLayout({
     currentRoute,
 }){
 
+    console.log(presentationPhotos)
+
     // Référence du slider
     const sliderRef = useRef()
 
     // Configuration du slider
     const sliderSettings = {
         dots: false,
-        infinite: true,
+        infinite: presentationPhotos.length > 1,
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
@@ -124,7 +126,7 @@ export default function PrestationsLayout({
                                     </div>
                                 ))}
                             </Slider>
-                            <CarouselIndicator array={presentationPhotos} condition={(element) => element.selected} />
+                            <CarouselIndicator array={presentationPhotos} />
                         </div>
                     </div>
                 )}

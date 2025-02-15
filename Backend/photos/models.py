@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import Max
 from .choices import TYPE_CHOICES, ORIENTATION_CHOICES, SUBJECT_CHOICES
+from .utils import process_and_convert_image
 
 # Create your models here.
 class Photo(models.Model):
@@ -23,4 +24,10 @@ class Photo(models.Model):
             # Récupère la position maximale parmi les images existantes
             dernier_max = Photo.objects.aggregate(Max('position'))['position__max'] or 0
             self.position = dernier_max + 1
+
+        if self.image and not self.image.name.lower().endswith('.webp'):
+            # La fonction process_uploaded_image attend un InMemoryUploadedFile
+            # Elle renvoie un nouveau fichier en webp, compressé et redimensionné
+            self.image = process_and_convert_image(self.image)
+            
         super().save(*args, **kwargs)

@@ -126,26 +126,26 @@ export default function PrestationPage(){
         let description
 
         const type = "prestation"
-        let subject = "pre_"
+        let subject = false
         switch(currentRoute){
             
             case ROUTES.PRESTATIONS.PORTRAIT:
-                subject += "portrait"
+                subject = "pre_portrait"
                 
                 bannerPhotos = portraitResponse.banner
                 informations = portraitResponse.informations
                 description = portraitResponse.description
                 break;
             case ROUTES.PRESTATIONS.ARTISAN:
-                subject += "artisan"
+                subject += "pre_artisan"
                 presentationPhotos = artisanResponse.presentation
                 bannerPhotos = artisanResponse.banner
                 informations = artisanResponse.informations
                 description = artisanResponse.description
                 break
             case ROUTES.PRESTATIONS.BOUDOIR:
-                subject += "boudoir"
-                presentationPhotos = boudoirResponse.presentation.map((photo, index) => ({...photo, selected: index === 0}))
+                subject = "pre_boudoir"
+                // presentationPhotos = boudoirResponse.presentation.map((photo, index) => ({...photo, selected: index === 0}))
                 bannerPhotos = boudoirResponse.banner
                 informations = boudoirResponse.informations
                 description = boudoirResponse.description
@@ -153,20 +153,17 @@ export default function PrestationPage(){
             default:
                 break
         }
-        console.log(subject)
-        fetch(ENDPOINT.LOAD(type, subject))
-        .then(response => response.json())
-        .then(result => {
-            setPresentationPhotos(result)
-        })
-        setBannerPhotos(bannerPhotos)
-        setInformationsPrestation(informations)
-        setDescriptionPrestation(description)
+        if(subject){
+            fetch(ENDPOINT.LOAD(type, subject))
+            .then(response => response.json())
+            .then(galeriePhotos => {
+                setPresentationPhotos(galeriePhotos.map((photo, index) => ({...photo, selected: index === 0})))
+            })
+            setBannerPhotos(bannerPhotos)
+            setInformationsPrestation(informations)
+            setDescriptionPrestation(description)
+        }
     }, [currentRoute])
-
-    useEffect(() => {
-        console.table(presentationPhotos)
-    }, [presentationPhotos])
 
     return(
         <PrestationsLayout 

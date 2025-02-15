@@ -36,7 +36,7 @@ export default function AdminPage(){
         })
         .then(response => response.json())
         .then(result => {
-            if(response.success){
+            if(result.success){
                 window.alert(`Photo uploader avec succès : 'type:${type}, subject:${subject}'`)
             }
         })
