@@ -1,4 +1,5 @@
-const BACKURL = "http://127.0.0.1:8000/api"
+// const BACKURL = "http://127.0.0.1:8000/api"
+const BACKURL = "/api"
 
 const ENDPOINT = {
     UPLOAD:`${BACKURL}/upload/`,

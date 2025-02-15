@@ -10,42 +10,21 @@ import CarouselIndicator from "@Components/CarouselIndicator";
 import ROUTES from "@Constants/Routes";
 import ExploreButton from "@Components/ExploreButton";
 import { useNavigate } from "react-router-dom";
+import Slide from "@Components/Slider";
 
 
 export default function PrestationsLayout({
-    descriptionPrestation,
-    informationsPrestation,
-    presentationPhotos, 
-    setPresentationPhotos, 
+    description,
+    informations,
+    galeryPhotos, 
+    setGaleryPhotos, 
     bannerPhotos, 
     currentRoute,
 }){
 
-    console.log(presentationPhotos)
 
-    // Référence du slider
-    const sliderRef = useRef()
 
-    // Configuration du slider
-    const sliderSettings = {
-        dots: false,
-        infinite: presentationPhotos.length > 1,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        swipe: true,
-        lazyLoad: false,
-        beforeChange: (current, next) => {
-            setPresentationPhotos(current => current.map((photo, index) => ({...photo, selected: index === next})))
-        },
-    }
-
-    // Réinitialise le slider à la première slide quand currentRoute change
-    useEffect(() => {
-        if (sliderRef.current) {
-        sliderRef.current.slickGoTo(0);
-        }
-    }, [currentRoute]);
+    
 
 
     return(
@@ -64,18 +43,18 @@ export default function PrestationsLayout({
                 <ul className="details-container">
                     <li>
                         <img src={cameraIcon} alt="" />
-                        <span>{informationsPrestation?.photosProvide} photos retouchées</span>
+                        <span>{informations?.photosProvide} photos retouchées</span>
                     </li>
                     <li>
                         <img src={clockIcon} alt="" />
-                        {informationsPrestation?.duration?.length === 1 
-                            ? <span>{informationsPrestation?.duration?.[0]} heure{informationsPrestation?.duration?.[0] !== 1 && "s"} de prises de vue</span>
-                            : <span>{informationsPrestation?.duration?.[0]} à {informationsPrestation?.duration?.[1]} heures de prises de vue</span>
+                        {informations?.duration?.length === 1 
+                            ? <span>{informations?.duration?.[0]} heure{informations?.duration?.[0] !== 1 && "s"} de prises de vue</span>
+                            : <span>{informations?.duration?.[0]} à {informations?.duration?.[1]} heures de prises de vue</span>
                         }
                     </li>   
                     <li>
                         <img src={dollarsIcon} alt="" />
-                        <span>À partir de {informationsPrestation?.price} dollars</span>
+                        <span>À partir de {informations?.price} dollars</span>
                     </li>
                 </ul>
             </div>
@@ -85,8 +64,8 @@ export default function PrestationsLayout({
             {/* Deuxième section */}
             <div className="prestation-description-container">
                 <p>
-                    {descriptionPrestation.map(sentence => (
-                        <span>{sentence}</span>
+                    {description.map((sentence, index) => (
+                        <span key={index}>{sentence}</span>
                     ))}
                 </p>
             </div>
@@ -99,11 +78,12 @@ export default function PrestationsLayout({
 
 
             {/* Troisième section */}
+
             {currentRoute === ROUTES.PRESTATIONS.ARTISAN 
                 // Quand c'est la prestation artisan 
                 ? (
                     <div className="artisan-photos-container">
-                        {presentationPhotos.map((photo, index) => (
+                        {galeryPhotos.map((photo, index) => (
                             <div key={index} className={`picture ${photo.type}`}>
                                     <span>{photo.label}</span>
                                     <picture>
@@ -118,16 +98,7 @@ export default function PrestationsLayout({
                 // Quand c'est une autre prestation
                 : (
                     <div className="photos-carousel-container">
-                        <div className="slider-container">
-                            <Slider ref={sliderRef} {...sliderSettings}>
-                                {presentationPhotos.map((photo, index) => (
-                                    <div>
-                                        <img src={photo.image} alt="" />
-                                    </div>
-                                ))}
-                            </Slider>
-                            <CarouselIndicator array={presentationPhotos} />
-                        </div>
+                        <Slide infinite photos={galeryPhotos} setPhotos={setGaleryPhotos}/>
                     </div>
                 )}
             

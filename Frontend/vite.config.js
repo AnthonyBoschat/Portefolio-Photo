@@ -23,5 +23,17 @@ export default defineConfig({
       "@Services":path.resolve(__dirname, "./src/Physics/Services"),
 
     }
+  },
+  server:{
+    proxy:{
+      "/api":{
+        target:"http://127.0.0.1:8000",
+        changeOrigin:true
+      },
+      "/media":{
+        target:"http://127.0.0.1:8000",
+        changeOrigin:true
+      }
+    }
   }
 })

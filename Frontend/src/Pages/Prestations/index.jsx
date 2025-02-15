@@ -111,11 +111,11 @@ export default function PrestationPage(){
     // Contient les photo de bannière
     const [bannerPhotos, setBannerPhotos] = useState([])
     // Contient les photos de présentation
-    const [presentationPhotos, setPresentationPhotos] = useState([])
+    const [galeryPhotos, setGaleryPhotos] = useState([])
     // Contient les informations de la prestation
-    const [informationsPrestation, setInformationsPrestation] = useState({})
+    const [informations, setInformations] = useState({})
     // Contient la description de la prestation
-    const [descriptionPrestation, setDescriptionPrestation] = useState([])
+    const [description, setDescription] = useState([])
 
 
     // Charge dans le state les photos de la réponse
@@ -130,47 +130,52 @@ export default function PrestationPage(){
         switch(currentRoute){
             
             case ROUTES.PRESTATIONS.PORTRAIT:
+
                 subject = "pre_portrait"
-                
                 bannerPhotos = portraitResponse.banner
                 informations = portraitResponse.informations
                 description = portraitResponse.description
                 break;
+
             case ROUTES.PRESTATIONS.ARTISAN:
-                subject += "pre_artisan"
+
+                subject = "pre_artisan"
                 presentationPhotos = artisanResponse.presentation
                 bannerPhotos = artisanResponse.banner
                 informations = artisanResponse.informations
                 description = artisanResponse.description
                 break
+
             case ROUTES.PRESTATIONS.BOUDOIR:
+
                 subject = "pre_boudoir"
-                // presentationPhotos = boudoirResponse.presentation.map((photo, index) => ({...photo, selected: index === 0}))
                 bannerPhotos = boudoirResponse.banner
                 informations = boudoirResponse.informations
                 description = boudoirResponse.description
                 break
+
             default:
                 break
         }
+
         if(subject){
             fetch(ENDPOINT.LOAD(type, subject))
             .then(response => response.json())
             .then(galeriePhotos => {
-                setPresentationPhotos(galeriePhotos.map((photo, index) => ({...photo, selected: index === 0})))
+                setGaleryPhotos(galeriePhotos.map((photo, index) => ({...photo, selected: index === 0})))
             })
             setBannerPhotos(bannerPhotos)
-            setInformationsPrestation(informations)
-            setDescriptionPrestation(description)
+            setInformations(informations)
+            setDescription(description)
         }
     }, [currentRoute])
 
     return(
         <PrestationsLayout 
-            descriptionPrestation={descriptionPrestation}
-            informationsPrestation={informationsPrestation}
-            presentationPhotos={presentationPhotos} 
-            setPresentationPhotos={setPresentationPhotos} 
+            description={description}
+            informations={informations}
+            galeryPhotos={galeryPhotos} 
+            setGaleryPhotos={setGaleryPhotos}
             bannerPhotos={bannerPhotos}
             currentRoute={currentRoute}
         />
