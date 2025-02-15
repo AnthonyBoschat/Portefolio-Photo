@@ -3,7 +3,8 @@ const BACKURL = "/api"
 
 const ENDPOINT = {
     UPLOAD:`${BACKURL}/upload/`,
-    LOAD:(type, subject) => `${BACKURL}/photos?type=${type}&subject=${subject}`
+    LOAD:(type, subject) => `${BACKURL}/photos?type=${type}&subject=${subject}`,
+    getArtisans:`${BACKURL}/photos/get_artisans/`
 }
 
 export default ENDPOINT

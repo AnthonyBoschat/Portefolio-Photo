@@ -15,13 +15,32 @@ SUBJECT_CHOICES = (
     ("pre_portrait", "pre_portrait"),
     ("pre_artisan", "pre_artisan"),
     ("pre_boudoir", "pre_boudoir"),
-
-
-    ("ar_byLou", "ar_byLou"),
-
 )
+
+ROLE_CHOICES = {
+    ("representant", "representant"),
+    ("banner", "banner"),
+    ("galery", "galery"),
+}
+
 
 ORIENTATION_CHOICES = (
     ("portrait", "portrait"),
     ("paysage", "paysage"),
+)
+
+
+
+
+
+
+
+
+
+
+
+
+ARTISAN_CHOICES = (
+    ("Atelier by Lou", "Atelier by Lou"),
+    ("Autre", "Autre")
 )

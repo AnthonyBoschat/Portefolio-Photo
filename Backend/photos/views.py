@@ -1,10 +1,11 @@
 # photos/views.py
 from rest_framework import viewsets, status
-from .models import Photo
+from .models import Photo, Artisan
 from django_filters.rest_framework import DjangoFilterBackend
 from .serializers import PhotoSerializer
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
+from rest_framework.decorators import action
 
 class PhotoViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Photo.objects.all()
@@ -13,20 +14,32 @@ class PhotoViewSet(viewsets.ReadOnlyModelViewSet):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['type', 'subject']
     
+    @action(detail=False, methods=['get'], url_path='get_artisans')
+    def get_artisans(self, request):
+        artisans_photos = self.queryset.filter(type="artisan", role="representant")
+        artisans_photo_serialized = self.get_serializer(artisans_photos, many=True)
+        return Response(artisans_photo_serialized.data)
+        # queryset = Photo.objects.filter(type="artisan", role="representant")
+        # return queryset
+        # type = request.query_params.get('type', None)
+        # subject = request.query_params.get('subject', None)
+        # print("\n\n")
+        # print(f"queryset ______________{queryset}")
+        # # print(f"subject ______________{subject}")
+        # print("\n\n")
+    
 class UploadPhotoViewSet(viewsets.ViewSet):
     parser_classes = (MultiPartParser, FormParser)
 
     def create(self, request, *args, **kwargs):
-        print("\n\n")
-        print(f"request__FILES_______________{request.FILES}")
-        print(f"request___type_______________{request.data.get('type')}")
-        print(f"request___subject_______________{request.data.get('subject')}")
-        print("\n\n")
         files = request.FILES.getlist("files")
         type = request.data.get('type')
         subject = request.data.get('subject')
-        orientation = request.data.get('subject', 'portrait')
-        uploaded_files = []
+        artisan = request.data.get('artisan')
+        orientation = request.data.get('orientation', 'portrait')
+        print("\n\n")
+        print(f"artisan ______________{artisan}")
+        uploaded_photos = []
         for file in files:
             photo = Photo.objects.create(
                 image=file,
@@ -34,11 +47,21 @@ class UploadPhotoViewSet(viewsets.ViewSet):
                 subject=subject,
                 orientation=orientation
             )
-            uploaded_files.append({
-                "id": photo.id,
-                "image": photo.get_absolute_url(),
-                "type": photo.type,
-                "subject": photo.subject,
-            })
+            
+            uploaded_photos.append(photo)
+
+        # Si l'ajout de photo concerne la prestation artisan, il faut associer ces photos à cet artisan
+        if artisan != None and subject == "pre_artisan":
+            try:
+                this_artisan = Artisan.objects.get(pk=artisan)
+                print(f"this_artisan ______________{this_artisan}")
+                for photo in uploaded_photos:
+                    this_artisan.photos.add(photo)
+                
+                print(f"this_artisan.photo_______________{this_artisan.photos.all()}")
+            except Artisan.DoesNotExist:
+                return Response({"error": "Artisan non trouvé."}, status=status.HTTP_404_NOT_FOUND)
+            
+        print("\n\n")
             
         return Response({"success": True}, status=status.HTTP_201_CREATED)

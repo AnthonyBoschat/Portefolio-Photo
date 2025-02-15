@@ -120,35 +120,29 @@ export default function PrestationPage(){
 
     // Charge dans le state les photos de la réponse
     useEffect(() => {
-        let presentationPhotos
         let bannerPhotos
         let informations
         let description
 
-        const type = "prestation"
-        let subject = false
+        let endpoint = false
         switch(currentRoute){
             
             case ROUTES.PRESTATIONS.PORTRAIT:
-
-                subject = "pre_portrait"
+                endpoint = ENDPOINT.LOAD("prestation", "pre_portrait")
                 bannerPhotos = portraitResponse.banner
                 informations = portraitResponse.informations
                 description = portraitResponse.description
                 break;
 
             case ROUTES.PRESTATIONS.ARTISAN:
-
-                subject = "pre_artisan"
-                presentationPhotos = artisanResponse.presentation
+                endpoint = ENDPOINT.getArtisans
                 bannerPhotos = artisanResponse.banner
                 informations = artisanResponse.informations
                 description = artisanResponse.description
                 break
 
             case ROUTES.PRESTATIONS.BOUDOIR:
-
-                subject = "pre_boudoir"
+                endpoint = ENDPOINT.LOAD("prestation", "pre_boudoir")
                 bannerPhotos = boudoirResponse.banner
                 informations = boudoirResponse.informations
                 description = boudoirResponse.description
@@ -158,8 +152,8 @@ export default function PrestationPage(){
                 break
         }
 
-        if(subject){
-            fetch(ENDPOINT.LOAD(type, subject))
+        if(endpoint){
+            fetch(endpoint)
             .then(response => response.json())
             .then(galeriePhotos => {
                 setGaleryPhotos(galeriePhotos.map((photo, index) => ({...photo, selected: index === 0})))
