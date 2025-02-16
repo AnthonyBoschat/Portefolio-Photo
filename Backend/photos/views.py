@@ -2,7 +2,7 @@
 from rest_framework import viewsets, status
 from .models import Photo, Artisan
 from django_filters.rest_framework import DjangoFilterBackend
-from .serializers import PhotoSerializer
+from .serializers import ArtisanPhotoSerializer, PhotoSerializer
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from rest_framework.decorators import action
@@ -16,17 +16,19 @@ class PhotoViewSet(viewsets.ReadOnlyModelViewSet):
     
     @action(detail=False, methods=['get'], url_path='get_artisans')
     def get_artisans(self, request):
-        artisans_photos = self.queryset.filter(type="artisan", role="representant")
-        artisans_photo_serialized = self.get_serializer(artisans_photos, many=True)
-        return Response(artisans_photo_serialized.data)
-        # queryset = Photo.objects.filter(type="artisan", role="representant")
-        # return queryset
-        # type = request.query_params.get('type', None)
-        # subject = request.query_params.get('subject', None)
-        # print("\n\n")
-        # print(f"queryset ______________{queryset}")
-        # # print(f"subject ______________{subject}")
-        # print("\n\n")
+        # Filtrer les photos correspondant aux critères
+        artisans_photos = self.queryset.filter(
+            type="prestation", 
+            subject="pre_artisan", 
+            role="representant"
+        )
+        # Utiliser notre serializer personnalisé qui inclut les artisans
+        serializer = ArtisanPhotoSerializer(artisans_photos, many=True)
+        return Response(serializer.data)
+        
+        
+        
+
     
 class UploadPhotoViewSet(viewsets.ViewSet):
     parser_classes = (MultiPartParser, FormParser)

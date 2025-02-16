@@ -18,7 +18,7 @@ export default function PrestationsLayout({
 }){
 
 
-
+    console.log(galeryPhotos)
     
 
 
@@ -78,11 +78,11 @@ export default function PrestationsLayout({
                 // Quand c'est la prestation artisan 
                 ? (
                     <div className="artisan-photos-container">
-                        {galeryPhotos.map((photo, index) => (
-                            <div key={index} className={`picture ${photo.type}`}>
-                                    <span>{photo.label}</span>
+                        {galeryPhotos.map((element, index) => (
+                            <div key={index} className={`picture ${(index % 3 === 2 )? "paysage" : "portrait"}`}>
+                                    <span>{element.artisans[0].name}</span>
                                     <picture>
-                                        <img src={photo.image} alt="" />
+                                        <img src={element.image} alt="" />
                                     </picture>
                             </div>
                         ))}
