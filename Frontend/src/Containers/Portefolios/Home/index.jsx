@@ -1,3 +1,4 @@
+import LazyImage from "@Components/LazyImage";
 import "./style.scss";
 
 export default function PortefoliosHome({portefolioPhotos}){
@@ -8,7 +9,8 @@ export default function PortefoliosHome({portefolioPhotos}){
         <>
             {portefolioPhotos.map((photo, index) => (
                 <picture key={index}>
-                    <img src={photo} alt="Photo de présentation de la catégorie 'Portefolio'" />
+                    <LazyImage src={photo} alt="Photo de présentation de la catégorie 'Portefolio'"/>
+                    {/* <img src={photo} alt="Photo de présentation de la catégorie 'Portefolio'" /> */}
                 </picture>
             ))}
             

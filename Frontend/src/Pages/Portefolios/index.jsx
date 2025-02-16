@@ -3,33 +3,35 @@ import './style.scss';
 import { useSelector } from "react-redux";
 import ROUTES from "@Constants/Routes";
 import ENDPOINT from "@Constants/Endpoint";
-
-// const photos = import.meta.glob('./photos/studio/*.jpg', { eager: true });
-const photos = import.meta.glob('./photos/low/*.webp', { eager: true });
+import LazyImage from "@Components/LazyImage";
 
 export default function PortefoliosPage() {
-
-  // const paths = Object.values(photos).map(module => module.default);
-  // setPhotos(paths);
 
   const [photos, setPhotos] = useState([]);
   const currentRoute = useSelector(store => store.routes.currentRoute)
 
 
   useEffect(() => {
-    
     let subject
     switch(currentRoute){
 
-      case ROUTES.PORTEFOLIOS.STUDIO:
-        subject="po_studio"
+      case ROUTES.PORTEFOLIOS.COLLABORATION_ARTISTIQUE:
+        subject="po_collaborationArtistique"
         break
       case ROUTES.PORTEFOLIOS.FANTASTIQUE:
         subject="po_fantastique"
         break
+      case ROUTES.PORTEFOLIOS.LUMIERE_NATURELLE:
+        subject="po_lumiereNaturelle"
+        break
+      case ROUTES.PORTEFOLIOS.NU_LINGERIE:
+        subject="po_nuLingerie"
+        break
+      case ROUTES.PORTEFOLIOS.STUDIO:
+        subject="po_studio"
+        break
       
       default:
-        
         return
     }
     fetch(ENDPOINT.LOAD("portefolio", subject))
@@ -39,11 +41,18 @@ export default function PortefoliosPage() {
     })
   }, [currentRoute])
 
+
   return (
     <div id="portefolios-main-container">
 
         {photos.map((photo, index) => (
-            <img loading="lazy" key={index} src={photo.image} alt={`Photo ${index}`} />
+            // <img
+            //   key={index} 
+            //   src={photo.image}
+            //   loading="lazy" 
+            //   alt={`Photo ${index}`} 
+            // />
+            <LazyImage key={photo.image} src={photo.image}/>
         ))}
 
     </div>

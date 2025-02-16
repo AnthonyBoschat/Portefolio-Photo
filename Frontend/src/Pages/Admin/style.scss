@@ -4,10 +4,10 @@ form#admin-main-container{
     gap: 1rem;
     padding: 2rem;
     >div{
+        display: flex;
+        flex-direction: column;
         label{
             font-size: 20px;
         }
-        display: flex;
-        flex-direction: column;
     }
 }

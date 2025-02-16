@@ -1,17 +1,13 @@
 import AProposLayout from "@Layout/APropos";
-
-import jesahelPhoto from "./photos/jesahel.jpg";
-import naturalLight from "./photos/naturalLight.jpg";
-import artisanPhoto from "./photos/artisan.jpg";
-
 import { useMemo } from "react";
+import STATIC_PHOTOS from "@Constants/StaticPhotos/StaticPhotos";
 
 export default function AProposPage(){
 
     const aproposPhoto = useMemo(() => ({
-        jesahelPhoto:jesahelPhoto,
-        artisanPhoto:artisanPhoto,
-        naturalLight:naturalLight
+        jesahelPhoto:STATIC_PHOTOS.APROPOS.JESAHEL,
+        naturalLight:STATIC_PHOTOS.APROPOS.NATURAL_LIGHT,
+        artisanPhoto:STATIC_PHOTOS.APROPOS.ARTISAN,
     }), [])
 
     return(

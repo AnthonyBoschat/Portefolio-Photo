@@ -9,8 +9,9 @@ import PortefoliosPage from "@Pages/Portefolios";
 import useRoute from "@Services/useRoute";
 import ROUTES from "@Constants/Routes";
 import AProposPage from "@Pages/APropos";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import AdminPage from "@Pages/Admin";
+import { AnimatePresence, motion } from "framer-motion";
 
 
 export default function App() {
@@ -19,7 +20,7 @@ export default function App() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    window.scrollTo({top: 0, behavior: 'smooth'});
+    window.scrollTo({top: 0, behavior: 'instant'});
   }, [pathname]);
 
   
@@ -28,30 +29,38 @@ export default function App() {
       <>
         <Header/>
         <main>
-          <Routes>
-            {/* Admin */}
-            <Route path={ROUTES.ADMIN} element={<AdminPage/>}/>
+          <AnimatePresence mode="wait">
+            <motion.div
+              style={{ opacity: 0, transform: 'scale(0.8)' }}
+              key={pathname}
+              initial={{ opacity: 0, transform:"scale(0.8)" }}
+              animate={{ opacity: 1, transform:"scale(1)" }}
+              exit={{ opacity:0, transition:{duration:0} }}
+              transition={{ duration: 1 }}
+            >
+              <Routes>
+                {/* Admin */}
+                <Route path={ROUTES.ADMIN} element={<AdminPage/>}/>
 
 
-            <Route path={ROUTES.HOME} element={<HomePage/>}/>
-            <Route path={ROUTES.PRESTATIONS.ARTISAN} element={<PrestationPage/>}/>
-            <Route path={ROUTES.PRESTATIONS.BOUDOIR} element={<PrestationPage/>}/>
-            <Route path={ROUTES.PRESTATIONS.PORTRAIT} element={<PrestationPage/>}/>
-            {/* <Route path={[
-              ROUTES.PORTEFOLIOS.STUDIO,
-              ROUTES.PORTEFOLIOS.FANTASTIQUE,
-              ROUTES.PORTEFOLIOS.COLLABORATION_ARTISTIQUE,
-              ROUTES.PORTEFOLIOS.LUMIERE_NATURELLE,
-              ROUTES.PORTEFOLIOS.NU_LINGER
-            ]} element={<PortefoliosPage/>}/> */}
-            <Route path={ROUTES.PORTEFOLIOS.STUDIO} element={<PortefoliosPage/>}/>
-            <Route path={ROUTES.PORTEFOLIOS.FANTASTIQUE} element={<PortefoliosPage/>}/>
-            <Route path={ROUTES.PORTEFOLIOS.COLLABORATION_ARTISTIQUE} element={<PortefoliosPage/>}/>
-            <Route path={ROUTES.PORTEFOLIOS.LUMIERE_NATURELLE} element={<PortefoliosPage/>}/>
-            <Route path={ROUTES.PORTEFOLIOS.NU_LINGERIE} element={<PortefoliosPage/>}/>
-            <Route path={ROUTES.APROPOS} element={<AProposPage/>}/>
-            <Route path={ROUTES.CONTACT} element={<ContactPage/>}/>
-          </Routes>
+                <Route path={ROUTES.HOME} element={<HomePage/>}/>
+                <Route path={ROUTES.PRESTATIONS.ARTISAN} element={<PrestationPage/>}/>
+                <Route path={ROUTES.PRESTATIONS.BOUDOIR} element={<PrestationPage/>}/>
+                <Route path={ROUTES.PRESTATIONS.PORTRAIT} element={<PrestationPage/>}/>
+
+                    <Route path={ROUTES.PORTEFOLIOS.STUDIO} element={<PortefoliosPage/>}/>
+                    <Route path={ROUTES.PORTEFOLIOS.FANTASTIQUE} element={<PortefoliosPage/>}/>
+                    <Route path={ROUTES.PORTEFOLIOS.COLLABORATION_ARTISTIQUE} element={<PortefoliosPage/>}/>
+                    <Route path={ROUTES.PORTEFOLIOS.LUMIERE_NATURELLE} element={<PortefoliosPage/>}/>
+                    <Route path={ROUTES.PORTEFOLIOS.NU_LINGERIE} element={<PortefoliosPage/>}/>
+                
+                <Route path={ROUTES.APROPOS} element={<AProposPage/>}/>
+                <Route path={ROUTES.CONTACT} element={<ContactPage/>}/>
+              </Routes>
+
+            </motion.div>
+
+          </AnimatePresence>
         </main>
         <PhoneMenuContainer/>
       </>

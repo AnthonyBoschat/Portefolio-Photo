@@ -33,6 +33,7 @@ class PhotoViewSet(viewsets.ReadOnlyModelViewSet):
 class UploadPhotoViewSet(viewsets.ViewSet):
     parser_classes = (MultiPartParser, FormParser)
 
+    
     def create(self, request, *args, **kwargs):
         files = request.FILES.getlist("files")
         type = request.data.get('type')

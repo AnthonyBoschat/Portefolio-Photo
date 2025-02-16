@@ -22,21 +22,11 @@ import carous3 from "./photos/carousel/3.jpg";
 import carous4 from "./photos/carousel/4.jpg";
 import carous5 from "./photos/carousel/5.jpg";
 import ENDPOINT from "@Constants/Endpoint";
+import STATIC_PHOTOS from "@Constants/StaticPhotos/StaticPhotos";
 
 
 const boudoirResponse = {
-    banner:[
-        {img:boudoirBanner1, type:"portrait"},
-        {img:boudoirBanner2, type:"portrait"},
-        {img:boudoirBanner3, type:"portrait"},
-    ],
-    presentation:[
-        {img:carous1, type:"portrait"},
-        {img:carous2, type:"portrait"},
-        {img:carous3, type:"paysage"},
-        {img:carous4, type:"portrait"},
-        {img:carous5, type:"paysage"},
-    ],
+    banner:STATIC_PHOTOS.PRESTATION.BOUDOIR.BANNER,
     informations:{
         duration:[3, 4],
         photosProvide:10,
@@ -51,21 +41,7 @@ const boudoirResponse = {
 }
 
 const portraitResponse = {
-    banner:[
-        {img:portraitBanner1, type:"portrait"},
-        {img:portraitBanner2, type:"portrait"},
-        {img:portraitBanner3, type:"portrait"},
-    ],
-    presentation:[
-        {img:carous1, type:"portrait"},
-        {img:carous2, type:"portrait"},
-        {img:carous3, type:"paysage"},
-        {img:carous4, type:"portrait"},
-        {img:carous5, type:"paysage"},
-        {img:carous5, type:"paysage"},
-        {img:carous5, type:"paysage"},
-        {img:carous5, type:"paysage"},
-    ],
+    banner:STATIC_PHOTOS.PRESTATION.PORTRAIT.BANNER,
     informations:{
         duration:[2],
         photosProvide:3,
@@ -79,19 +55,7 @@ const portraitResponse = {
 }
 
 const artisanResponse = {
-    banner:[
-        {img:artisanBanner1, type:"portrait"},
-        {img:artisanBanner2, type:"portrait"},
-        {img:artisanBanner3, type:"portrait"},
-    ],
-    presentation:[
-        {img:artisanBanner1, type:"portrait", label:"Atelier By Lau"},
-        {img:carous1, type:"portrait", label:"L'orée Sucrée"},
-        {img:carous2, type:"paysage", label: "Le Grain d'Or"},
-        {img:carous3, type:"portrait", label: "Délice de paris"},
-        {img:carous4, type:"portrait", label: "La maison des Heures"},
-        {img:carous5, type:"paysage", label: "Pure Précision"},
-    ],
+    banner:STATIC_PHOTOS.PRESTATION.ARTISAN.BANNER,
     informations:{
         duration:[2, 3],
         photosProvide:10,

@@ -1,23 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import "./style.scss";
 import ENDPOINT from "@Constants/Endpoint";
+import csrfFetch from "@Services/csrfCookie";
 
 export default function AdminPage(){
-
-    const datas = {
-        portefolio:[
-            "Collaboration Artistique",
-            "Fantastique",
-            "Lumière Naturelle",
-            "Nu - Lingerie",
-            "Studio",
-        ],
-        prestation:[
-            "Portrait",
-            "Artisan",
-            "Boudoir"
-        ],
-    }
 
     const [type, setType] = useState("prestation")
     const [subject, setSubject] = useState(null)
@@ -43,7 +29,7 @@ export default function AdminPage(){
         formData.append("subject", subject)
         formData.append("artisan", artisan)
 
-        fetch(ENDPOINT.UPLOAD, {
+        csrfFetch(ENDPOINT.UPLOAD, {
             method:"POST",
             body:formData,
         })

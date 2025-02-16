@@ -1,3 +1,4 @@
+import LazyImage from "@Components/LazyImage";
 import "./style.scss";
 
 
@@ -7,7 +8,8 @@ export default function AProposHome({aproposPhoto}){
     return(
         <div className="presentation">
             <picture>
-                <img src={aproposPhoto} alt="" />
+                <LazyImage src={aproposPhoto} alt={"Photo de Jesahel Charpentier"}/>
+                {/* <img src={aproposPhoto} alt="" /> */}
             </picture>
             <p className="presentation">
                 <span className="long">

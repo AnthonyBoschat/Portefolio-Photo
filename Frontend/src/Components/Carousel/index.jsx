@@ -3,6 +3,7 @@ import "./style.scss";
 import Slider from "react-slick";
 import CarouselIndicator from "@Components/CarouselIndicator";
 import { useSelector } from "react-redux";
+import LazyImage from "@Components/LazyImage";
 
 
 export default function Carousel({photos, setPhotos, infinite=false}){
@@ -43,7 +44,8 @@ export default function Carousel({photos, setPhotos, infinite=false}){
         <div className="slider-container">
             <Slider ref={sliderRef} {...sliderSettings}>
                 {photos.map((element, index) => (
-                <div key={index}>
+                <div style={{height:"20rem"}} key={index}>
+                    {/* <LazyImage src={element.image} alt={`Photo de présentation de la prestation ${element.label}`}/> */}
                     <img loading="eager" src={element.image} alt={`Photo de présentation de la prestation ${element.label}`} />
                 </div>
                 ))}

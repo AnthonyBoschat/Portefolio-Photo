@@ -6,6 +6,7 @@ import dollarsIcon from "@Assets/icons/dollars.svg";
 import ROUTES from "@Constants/Routes";
 import ExploreButton from "@Components/ExploreButton";
 import Carousel from "@Components/Carousel";
+import LazyImage from "@Components/LazyImage";
 
 
 export default function PrestationsLayout({
@@ -31,7 +32,8 @@ export default function PrestationsLayout({
                 <ul className="photos_presentation">
                     {bannerPhotos.map((photo, index) => (
                         <li key={index}>
-                            <img src={photo.img} alt="" />
+                            <LazyImage src={photo} alt={"Photo bannière de présentation de la préstation"}/>
+                            {/* <img src={photo} alt="" /> */}
                         </li>
                     ))}
                 </ul>
