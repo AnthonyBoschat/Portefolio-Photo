@@ -64,7 +64,7 @@ export default function PhoneMenuContainer(){
                         }
                         if(route.subMenu){
                             return(
-                                <li className={`${currentRoute.includes(route.label) || route.open ? "focus" : ""}`} onClick={() => dispatch(openSubMenu(route.label))} key={index}>
+                                <li className={`${(currentRoute === route.label || route.open) ? "focus" : ""}`} onClick={() => dispatch(openSubMenu(route.label))} key={index}>
                                     <span>
                                         {route.label}
                                         <i className={`fa-solid fa-angle-up ${route.open ? "reverse" : ""}`}></i>

@@ -31,6 +31,7 @@ export default function Header(){
         first:null,
         second:null
     })
+    
     // Génère le fil d'ariane
     useEffect(() => {
         const firstLevelRoute = routes.find(route => route.link === currentRoute)

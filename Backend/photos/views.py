@@ -25,6 +25,22 @@ class PhotoViewSet(viewsets.ReadOnlyModelViewSet):
         # Utiliser notre serializer personnalisé qui inclut les artisans
         serializer = ArtisanPhotoSerializer(artisans_photos, many=True)
         return Response(serializer.data)
+    
+    @action(detail=False, methods=["get"], url_path="get_artisan_photo")
+    def get_artisan_photo(self, request):
+        print("\n\n")
+        id_artisan = request.query_params.get('id_artisan', None)
+        print(f"id_artisan ______________{id_artisan}")
+        
+        if id_artisan:
+            photos = self.queryset.filter(artisans__id = id_artisan)
+            photos_serialized = PhotoSerializer(photos, many=True)
+            return Response(photos_serialized.data)
+        else:
+            return Response({"error": "Artisan non trouvé."}, status=status.HTTP_404_NOT_FOUND)
+
+
+        
         
         
         

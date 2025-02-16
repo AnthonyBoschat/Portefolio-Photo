@@ -71,71 +71,84 @@ const artisanResponse = {
 export default function PrestationPage(){
 
     const currentRoute = useSelector(state => state.routes.currentRoute)
+    
+    const [loading, setLoading]= useState(true)
 
     // Contient les photo de bannière
-    const [bannerPhotos, setBannerPhotos] = useState([])
+    const [bannerPhotos, setBannerPhotos] = useState(null)
     // Contient les photos de présentation
-    const [galeryPhotos, setGaleryPhotos] = useState([])
+    const [galeryPhotos, setGaleryPhotos] = useState(null)
     // Contient les informations de la prestation
-    const [informations, setInformations] = useState({})
+    const [informations, setInformations] = useState(null)
     // Contient la description de la prestation
-    const [description, setDescription] = useState([])
+    const [description, setDescription] = useState(null)
 
+    useEffect(() => {
+        setLoading(true)
+    }, [currentRoute])
 
     // Charge dans le state les photos de la réponse
     useEffect(() => {
-        let bannerPhotos
-        let informations
-        let description
+        if(loading){
 
-        let endpoint = false
-        switch(currentRoute){
-            
-            case ROUTES.PRESTATIONS.PORTRAIT:
-                endpoint = ENDPOINT.LOAD("prestation", "pre_portrait")
-                bannerPhotos = portraitResponse.banner
-                informations = portraitResponse.informations
-                description = portraitResponse.description
-                break;
-
-            case ROUTES.PRESTATIONS.ARTISAN:
-                endpoint = ENDPOINT.getArtisans
-                bannerPhotos = artisanResponse.banner
-                informations = artisanResponse.informations
-                description = artisanResponse.description
-                break
-
-            case ROUTES.PRESTATIONS.BOUDOIR:
-                endpoint = ENDPOINT.LOAD("prestation", "pre_boudoir")
-                bannerPhotos = boudoirResponse.banner
-                informations = boudoirResponse.informations
-                description = boudoirResponse.description
-                break
-
-            default:
-                break
+            let bannerPhotos
+            let informations
+            let description
+    
+            let endpoint = false
+            switch(currentRoute){
+                
+                case ROUTES.PRESTATIONS.PORTRAIT:
+                    endpoint = ENDPOINT.LOAD("prestation", "pre_portrait")
+                    bannerPhotos = portraitResponse.banner
+                    informations = portraitResponse.informations
+                    description = portraitResponse.description
+                    break;
+    
+                case ROUTES.PRESTATIONS.ARTISAN:
+                    endpoint = ENDPOINT.getArtisans
+                    bannerPhotos = artisanResponse.banner
+                    informations = artisanResponse.informations
+                    description = artisanResponse.description
+                    break
+    
+                case ROUTES.PRESTATIONS.BOUDOIR:
+                    endpoint = ENDPOINT.LOAD("prestation", "pre_boudoir")
+                    bannerPhotos = boudoirResponse.banner
+                    informations = boudoirResponse.informations
+                    description = boudoirResponse.description
+                    break
+    
+                default:
+                    break
+            }
+    
+            if(endpoint){
+                fetch(endpoint)
+                .then(response => response.json())
+                .then(galeriePhotos => {
+                    setGaleryPhotos(galeriePhotos.map((photo, index) => ({...photo, selected: index === 0})))
+                    setBannerPhotos(bannerPhotos)
+                    setInformations(informations)
+                    setDescription(description)
+                    setLoading(false)
+                })
+            }
         }
-
-        if(endpoint){
-            fetch(endpoint)
-            .then(response => response.json())
-            .then(galeriePhotos => {
-                setGaleryPhotos(galeriePhotos.map((photo, index) => ({...photo, selected: index === 0})))
-            })
-            setBannerPhotos(bannerPhotos)
-            setInformations(informations)
-            setDescription(description)
-        }
-    }, [currentRoute])
+    }, [loading, currentRoute])
 
     return(
-        <PrestationsLayout 
-            description={description}
-            informations={informations}
-            galeryPhotos={galeryPhotos} 
-            setGaleryPhotos={setGaleryPhotos}
-            bannerPhotos={bannerPhotos}
-            currentRoute={currentRoute}
-        />
+        <>
+            {!loading && (
+                <PrestationsLayout 
+                    description={description}
+                    informations={informations}
+                    galeryPhotos={galeryPhotos} 
+                    setGaleryPhotos={setGaleryPhotos}
+                    bannerPhotos={bannerPhotos}
+                    currentRoute={currentRoute}
+                />
+            )}
+        </>
     )
 }

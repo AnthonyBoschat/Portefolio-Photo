@@ -12,6 +12,7 @@ const ROUTES = {
         LUMIERE_NATURELLE:"/Portefolios/LumiereNaturelle",
         NU_LINGERIE:"/Portefolios/NuLingerie",
     },
+    ARTISAN:`/Artisan`,
     APROPOS:"/APropos",
     CONTACT:"/Contact",
     ADMIN:"/Admin"

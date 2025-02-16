@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import "./style.scss";
 
-export default function CarouselIndicator({array, condition}){
+export default function CarouselIndicator({array}){
 
     {/* Trois indicateurs */}
     const points = useMemo(() => {

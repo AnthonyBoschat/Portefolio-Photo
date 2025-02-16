@@ -3,7 +3,6 @@ import "./style.scss";
 import Slider from "react-slick";
 import CarouselIndicator from "@Components/CarouselIndicator";
 import { useSelector } from "react-redux";
-import LazyImage from "@Components/LazyImage";
 
 
 export default function Carousel({photos, setPhotos, infinite=false}){
@@ -27,18 +26,18 @@ export default function Carousel({photos, setPhotos, infinite=false}){
 
     // Si une photo devient selected en dehors du comportement du slider, place le slider sur celle-ci
     useEffect(() => {
-        if(sliderRef){
+        if(sliderRef && photos){
             const photoCurrentlyVisibleIndex = photos.findIndex(photo => photo.selected)
-            sliderRef.current.slickGoTo(photoCurrentlyVisibleIndex)
+            sliderRef.current.slickGoTo(photoCurrentlyVisibleIndex === -1 ? 0 : photoCurrentlyVisibleIndex)
         }
-    }, [photos])
+    }, [photos, sliderRef])
 
     // Réinitialise le slider à la première slide quand currentRoute change
     useEffect(() => {
         if (sliderRef.current) {
-        sliderRef.current.slickGoTo(0);
+            sliderRef.current.slickGoTo(0);
         }
-    }, [currentRoute]);
+    }, [currentRoute, sliderRef]);
 
     return(
         <div className="slider-container">
@@ -46,7 +45,7 @@ export default function Carousel({photos, setPhotos, infinite=false}){
                 {photos.map((element, index) => (
                 <div style={{height:"20rem"}} key={index}>
                     {/* <LazyImage src={element.image} alt={`Photo de présentation de la prestation ${element.label}`}/> */}
-                    <img loading="eager" src={element.image} alt={`Photo de présentation de la prestation ${element.label}`} />
+                    <img src={element.image} alt={`Photo de présentation de la prestation ${element.label}`} />
                 </div>
                 ))}
             </Slider>
