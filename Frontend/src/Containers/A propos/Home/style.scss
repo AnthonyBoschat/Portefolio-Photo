@@ -4,12 +4,12 @@ section.home-apropos{
     .presentation{
         display: flex;
         gap: 1rem;
-        height: 22rem;
+        height: fit-content;
         justify-content: space-between;
 
         picture{
             width: 50%;
-            height: 100%;
+            height: 22rem;
             overflow: hidden;
             position: relative;
             img{
@@ -29,6 +29,8 @@ section.home-apropos{
             flex-direction: column;
             justify-content: space-between;
             // outline: 1px solid red;
+            min-height: 22rem;
+            height: 100%;
             width: 50%;
             font-size: 14px;
             line-height: 24px;

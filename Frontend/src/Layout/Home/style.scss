@@ -23,6 +23,8 @@
     // A PROPOS
     section.home-apropos{
         .content{
+            height: fit-content;
+            // outline: 1px solid red;
             display: flex;
             flex-direction: column;
         }
