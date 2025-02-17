@@ -19,15 +19,18 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 from rest_framework import routers
+from photos.email import sendEmailView
 from photos.views import PhotoViewSet, UploadPhotoViewSet
 
 router = routers.DefaultRouter()
 router.register(r'photos', PhotoViewSet)
 router.register(r"upload", UploadPhotoViewSet, basename="upload")
+# router.register(r"sendmail", sendEmailView.as_view(), basename="sendmail")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+    path('api/sendmail/', sendEmailView.as_view(), name='send-email'),
 ]
 
 if settings.DEBUG:

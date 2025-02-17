@@ -40,8 +40,7 @@ class PhotoViewSet(viewsets.ReadOnlyModelViewSet):
             return Response({"error": "Artisan non trouvé."}, status=status.HTTP_404_NOT_FOUND)
 
 
-        
-        
+
         
         
 

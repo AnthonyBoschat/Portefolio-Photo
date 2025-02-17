@@ -1,3 +1,4 @@
+import contactOptions from '@Constants/ContactOptions';
 import { createSlice } from '@reduxjs/toolkit';
 
 
@@ -9,7 +10,7 @@ export const ContactSlice = createSlice({
         lastname:"",
         firstname:"",
         email:"",
-        subject:0,
+        subject:contactOptions[0],
         message:"",
     }
   },
@@ -22,7 +23,7 @@ export const ContactSlice = createSlice({
             lastname:"",
             firstname:"",
             email:"",
-            subject:0,
+            subject:contactOptions[0],
             message:"",
         }
     }

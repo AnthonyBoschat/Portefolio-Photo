@@ -2,10 +2,12 @@ import { useRef, useState } from "react";
 import "./style.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { setFormData } from "@Redux/Slices/Contact";
+import contactOptions from "@Constants/ContactOptions";
 
 export default function ContactForm({formRef, formData}){
 
     const dispatch = useDispatch()
+
 
     return(
         <form ref={formRef} id="contact-form" action="">
@@ -33,12 +35,10 @@ export default function ContactForm({formRef, formData}){
                 <div className="field">
                     <label htmlFor="subject">Sujet</label>
                     <div id="select">
-                        <select onChange={(e) => dispatch(setFormData({key:"subject", value:parseInt(e.target.value)}))} defaultValue={formData.subject} name="" id="">
-                            <option value={0}>Prise de contact</option>
-                            <option value={1}>Devis</option>
-                            <option value={2}>Proposition d'évènement</option>
-                            <option value={3}>Collaboration</option>
-                            <option value={4}>Autre</option>
+                        <select onChange={(e) => dispatch(setFormData({key:"subject", value:e.target.value}))} defaultValue={formData.subject} name="" id="">
+                            {contactOptions.map((option, index) => (
+                                <option key={index} value={option}>{option}</option>
+                            ))}
                         </select>
                         <i className="fa-solid fa-caret-down"></i>
                     </div>
