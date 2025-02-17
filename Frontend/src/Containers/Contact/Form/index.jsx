@@ -3,8 +3,9 @@ import "./style.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { setFormData } from "@Redux/Slices/Contact";
 import contactOptions from "@Constants/ContactOptions";
+import { SpinnerCircular } from "spinners-react";
 
-export default function ContactForm({formRef, formData}){
+export default function ContactForm({formRef, formData, loading}){
 
     const dispatch = useDispatch()
 
@@ -15,11 +16,11 @@ export default function ContactForm({formRef, formData}){
             <div className="line">
                 <div className="field">
                     <label htmlFor="lastname">Nom</label>
-                    <input required onChange={(e) => dispatch(setFormData({key:"lastname", value:e.target.value}))} value={formData.lastname} type="text" name="lastname" />
+                    <input className={loading ? "loading" : ""} required onChange={(e) => dispatch(setFormData({key:"lastname", value:e.target.value}))} value={formData.lastname} type="text" name="lastname" />
                 </div>
                 <div className="field">
                     <label htmlFor="firstname">Prénom</label>
-                    <input required onChange={(e) => dispatch(setFormData({key:"firstname", value:e.target.value}))} value={formData.firstname} type="text" name="firstname" />
+                    <input className={loading ? "loading" : ""} required onChange={(e) => dispatch(setFormData({key:"firstname", value:e.target.value}))} value={formData.firstname} type="text" name="firstname" />
                 </div>
             </div>
 
@@ -27,7 +28,7 @@ export default function ContactForm({formRef, formData}){
             <div className="line">
                 <div className="field">
                     <label htmlFor="">Adresse e-mail</label>
-                    <input required onChange={(e) => dispatch(setFormData({key:"email", value:e.target.value}))} value={formData.email} type="email" />
+                    <input className={loading ? "loading" : ""} required onChange={(e) => dispatch(setFormData({key:"email", value:e.target.value}))} value={formData.email} type="email" />
                 </div>
             </div>
 
@@ -35,7 +36,7 @@ export default function ContactForm({formRef, formData}){
                 <div className="field">
                     <label htmlFor="subject">Sujet</label>
                     <div id="select">
-                        <select onChange={(e) => dispatch(setFormData({key:"subject", value:e.target.value}))} defaultValue={formData.subject} name="" id="">
+                        <select className={loading ? "loading" : ""} onChange={(e) => dispatch(setFormData({key:"subject", value:e.target.value}))} defaultValue={formData.subject} name="" id="">
                             {contactOptions.map((option, index) => (
                                 <option key={index} value={option}>{option}</option>
                             ))}
@@ -49,7 +50,14 @@ export default function ContactForm({formRef, formData}){
             <div className="line">
                 <div className="field">
                     <label htmlFor="message">Message</label>
-                    <textarea required onChange={(e) => dispatch(setFormData({key:"message", value:e.target.value}))} value={formData.message} name="message" id="" rows={8}></textarea>
+                    <div className="textarea-container">
+                        <textarea className={loading ? "loading" : ""} required onChange={(e) => dispatch(setFormData({key:"message", value:e.target.value}))} value={formData.message} name="message" id="" rows={8}></textarea>
+                        {loading && (
+                            <div className="loadingIcon">
+                                <SpinnerCircular size={30} color="white"/>
+                            </div>
+                        )}
+                    </div>
                 </div>
 
             </div>

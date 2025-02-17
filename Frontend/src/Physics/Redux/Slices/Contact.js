@@ -19,14 +19,15 @@ export const ContactSlice = createSlice({
         state.formData[action.payload.key] = action.payload.value
     },
     resetFormData:(state,action) => {
+      console.log(action.payload)
         state.formData = {
             lastname:"",
             firstname:"",
             email:"",
-            subject:contactOptions[0],
+            subject: action.payload ? state.formData.subject : contactOptions[0],
             message:"",
         }
-    }
+    },
   },
 });
 

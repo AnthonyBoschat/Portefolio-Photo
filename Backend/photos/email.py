@@ -24,4 +24,4 @@ class sendEmailView(APIView):
             user_email,
             [settings.ADMIN_EMAIL]
         )
-        return Response({"detail": "Email envoyé."}, status=status.HTTP_200_OK)
+        return Response({"success":True}, status=status.HTTP_200_OK)
