@@ -3,29 +3,11 @@ import PrestationsLayout from "@Layout/Prestations";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-import portraitBanner1 from "./photos/portrait/banner/1.jpg"
-import portraitBanner2 from "./photos/portrait/banner/2.jpg"
-import portraitBanner3 from "./photos/portrait/banner/3.jpg"
-
-import boudoirBanner1 from "./photos/boudoir/banner/1.jpg"
-import boudoirBanner2 from "./photos/boudoir/banner/2.jpg"
-import boudoirBanner3 from "./photos/boudoir/banner/3.jpg"
-
-import artisanBanner1 from "./photos/artisan/banner/1.jpg"
-import artisanBanner2 from "./photos/artisan/banner/2.jpg"
-import artisanBanner3 from "./photos/artisan/banner/3.jpg"
-
-
-import carous1 from "./photos/carousel/1.jpg";
-import carous2 from "./photos/carousel/2.jpg";
-import carous3 from "./photos/carousel/3.jpg";
-import carous4 from "./photos/carousel/4.jpg";
-import carous5 from "./photos/carousel/5.jpg";
 import ENDPOINT from "@Constants/Endpoint";
 import STATIC_PHOTOS from "@Constants/StaticPhotos/StaticPhotos";
 
 
-const boudoirResponse = {
+const boudoirPrestation = {
     banner:STATIC_PHOTOS.PRESTATION.BOUDOIR.BANNER,
     informations:{
         duration:[3, 4],
@@ -40,7 +22,7 @@ const boudoirResponse = {
     ]
 }
 
-const portraitResponse = {
+const portraitPrestation = {
     banner:STATIC_PHOTOS.PRESTATION.PORTRAIT.BANNER,
     informations:{
         duration:[2],
@@ -54,7 +36,7 @@ const portraitResponse = {
     ]
 }
 
-const artisanResponse = {
+const artisanPrestation = {
     banner:STATIC_PHOTOS.PRESTATION.ARTISAN.BANNER,
     informations:{
         duration:[2, 3],
@@ -100,23 +82,23 @@ export default function PrestationPage(){
                 
                 case ROUTES.PRESTATIONS.PORTRAIT:
                     endpoint = ENDPOINT.LOAD("prestation", "pre_portrait")
-                    bannerPhotos = portraitResponse.banner
-                    informations = portraitResponse.informations
-                    description = portraitResponse.description
+                    bannerPhotos = portraitPrestation.banner
+                    informations = portraitPrestation.informations
+                    description = portraitPrestation.description
                     break;
     
                 case ROUTES.PRESTATIONS.ARTISAN:
                     endpoint = ENDPOINT.getArtisans
-                    bannerPhotos = artisanResponse.banner
-                    informations = artisanResponse.informations
-                    description = artisanResponse.description
+                    bannerPhotos = artisanPrestation.banner
+                    informations = artisanPrestation.informations
+                    description = artisanPrestation.description
                     break
     
                 case ROUTES.PRESTATIONS.BOUDOIR:
                     endpoint = ENDPOINT.LOAD("prestation", "pre_boudoir")
-                    bannerPhotos = boudoirResponse.banner
-                    informations = boudoirResponse.informations
-                    description = boudoirResponse.description
+                    bannerPhotos = boudoirPrestation.banner
+                    informations = boudoirPrestation.informations
+                    description = boudoirPrestation.description
                     break
     
                 default:

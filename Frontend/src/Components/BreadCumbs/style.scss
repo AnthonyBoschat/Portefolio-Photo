@@ -1,0 +1,23 @@
+#breadcrumbs-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.5px;
+    span{
+        position: relative;
+        letter-spacing: 1px;
+        font-size: 20px;
+        &.invisible{
+            color: transparent;
+        }
+        &.first{
+            position: relative;
+            bottom: -5px;
+            font-size: 14px;
+        }
+        &.second{
+            font-size: 20px;
+        }
+    }
+
+}

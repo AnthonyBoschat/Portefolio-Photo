@@ -6,21 +6,27 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import ContactPage from "@Pages/Contact";
 import PrestationPage from "@Pages/Prestations";
 import PortefoliosPage from "@Pages/Portefolios";
-import useRoute from "@Services/useRoute";
 import ROUTES from "@Constants/Routes";
 import AProposPage from "@Pages/APropos";
-import { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 import AdminPage from "@Pages/Admin";
 import { AnimatePresence, motion } from "framer-motion";
+import { useDispatch } from "react-redux";
+import { setOpenPhoneMenu } from "@Redux/Slices/phoneState";
+import { setCurrentRoute } from "@Redux/Slices/routes";
 
 
 export default function App() {
 
-  useRoute()
   const { pathname } = useLocation();
+  const dispatch = useDispatch()
 
+
+  // A chaque changement d'url ( de page ) 
   useEffect(() => {
-    window.scrollTo({top: 0, behavior: 'instant'});
+    window.scrollTo({top: 0, behavior: 'instant'}); // Repositionne la vue utilisateur en haut de l'écran
+    dispatch(setOpenPhoneMenu(false)) // Ferme le menu de navigation téléphone
+    dispatch(setCurrentRoute(pathname)) // set dans le store routes le currentRoute
   }, [pathname]);
 
   
@@ -39,7 +45,6 @@ export default function App() {
               transition={{ duration: 1 }}
             >
               <Routes>
-                {/* Admin */}
                 <Route path={ROUTES.ADMIN} element={<AdminPage/>}/>
 
 
@@ -49,8 +54,7 @@ export default function App() {
                 <Route path={ROUTES.PRESTATIONS.BOUDOIR} element={<PrestationPage/>}/>
                 <Route path={ROUTES.PRESTATIONS.PORTRAIT} element={<PrestationPage/>}/>
 
-                <Route path={`${ROUTES.ARTISAN}/:artisanID`} element={<PortefoliosPage/>} />
-
+                <Route path={`${ROUTES.ARTISAN}/:artisanID`} element={<PortefoliosPage/>}/>
                 <Route path={ROUTES.PORTEFOLIOS.STUDIO} element={<PortefoliosPage/>}/>
                 <Route path={ROUTES.PORTEFOLIOS.FANTASTIQUE} element={<PortefoliosPage/>}/>
                 <Route path={ROUTES.PORTEFOLIOS.COLLABORATION_ARTISTIQUE} element={<PortefoliosPage/>}/>
@@ -58,6 +62,7 @@ export default function App() {
                 <Route path={ROUTES.PORTEFOLIOS.NU_LINGERIE} element={<PortefoliosPage/>}/>
                 
                 <Route path={ROUTES.APROPOS} element={<AProposPage/>}/>
+
                 <Route path={ROUTES.CONTACT} element={<ContactPage/>}/>
               </Routes>
 

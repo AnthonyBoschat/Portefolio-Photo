@@ -3,7 +3,6 @@ import './style.scss';
 import { useSelector } from "react-redux";
 import ROUTES from "@Constants/Routes";
 import ENDPOINT from "@Constants/Endpoint";
-import LazyImage from "@Components/LazyImage";
 import { useParams } from "react-router-dom";
 import Galery from "@Components/Galery";
 
