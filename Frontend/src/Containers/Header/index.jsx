@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import "./style.scss";
 import logo from "@Assets/logo.svg"
-import { useDispatch, useSelector } from "react-redux";
-import { setOpenPhoneMenu } from "@Redux/Slices/phoneState";
 import { Link } from "react-router-dom";
 import ROUTES from "@Constants/Routes";
 import BreadCrumbs from "@Components/BreadCumbs";
@@ -10,7 +8,6 @@ import Navigation from "./Navigation";
 
 export default function Header(){
 
-    const dispatch = useDispatch()
     const headerRef = useRef()
 
     const [scrolling, setScrolling] = useState(false) // L'utilisateur est en train de scroll ?

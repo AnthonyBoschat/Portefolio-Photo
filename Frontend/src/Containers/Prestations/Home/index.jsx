@@ -9,7 +9,7 @@ import Carousel from "@Components/Carousel";
 export default function PrestationsHome({prestationsPhotos}){
     
     
-    // Listen des prestations
+    // Liste des prestations
     const [photos, setPhotos] = useState(prestationsPhotos)
 
     // Quand l'utilisateur clique sur le nom d'une prestation, modifie en conséquence la liste des prestations et le statut selected et fait se déplacer le slider

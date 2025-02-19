@@ -9,12 +9,12 @@ import Galery from "@Components/Galery";
 export default function PortefoliosPage() {
 
   const currentRoute = useSelector(store => store.routes.currentRoute)
-  const {artisanID} = useParams()
+  const { artisanID } = useParams()
   const [photos, setPhotos] = useState([]);
   const [portefolioType, setPortefolioType] = useState(null)
 
   useEffect(() => {
-    console.log(currentRoute)
+
     // Si le chargement de cette page concerne des artisans
     if(currentRoute.startsWith("/Artisan") && artisanID){
       console.log(artisanID)
@@ -69,7 +69,6 @@ export default function PortefoliosPage() {
 
   return (
     <div id="portefolios-main-container">
-        
         <Galery photos={photos} alt={`Photo de la categorie portefolio '${portefolioType}'`} />
     </div>
   );

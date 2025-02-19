@@ -8,10 +8,9 @@ export default function AProposLayout({aproposPhoto}){
     
 
     return(
-        <div id="apropos-main-container">
+        <div id="apropos-container">
             <div className="section white">
-                    <LazyImage src={aproposPhoto.jesahelPhoto}/>
-                    {/* <img src={aproposPhoto.jesahelPhoto} alt="" /> */}
+                <LazyImage src={aproposPhoto.jesahelPhoto} alt={"Photo de la photographe Jesahel"}/>
                 <p>
                     <span>Je m'appelle Jésahel, et je suis photographe, maquilleuse professionnelle et artisane textile.</span>
                     <span>Depuis toujours, l’art est ma manière de m’exprimer, et la photographie est devenue mon moyen préféré d’extérioriser mes émotions et de capturer la beauté unique de chaque instant.</span>
@@ -25,9 +24,7 @@ export default function AProposLayout({aproposPhoto}){
                 </p>
             </div>
             <div className="section white">
-                    <LazyImage src={aproposPhoto.naturalLight}/>
-
-                    {/* <img src={aproposPhoto.naturalLight} alt="" /> */}
+                <LazyImage src={aproposPhoto.naturalLight} alt={"Photo d'extérieur en lumière naturelle"}/>
                 <p>
                     <span>Je privilégie la lumière naturelle pour la spontanéité et les surprises qu’elle offre.</span>
                     <span>Pour moi, les variations imprévisibles de la météo ou de la luminosité apportent une touche unique à chaque cliché.</span>
@@ -41,9 +38,7 @@ export default function AProposLayout({aproposPhoto}){
                 </p>
             </div>
             <div className="section white">
-                    <LazyImage src={aproposPhoto.artisanPhoto}/>
-
-                    {/* <img src={aproposPhoto.artisanPhoto} alt="" /> */}
+                <LazyImage src={aproposPhoto.artisanPhoto} alt={"Photo représentative de la sensibilisation à l'écologie"}/>
                 <p>
                     <span>Ce qui me motive chaque jour, c’est l’envie d’apprendre, de rencontrer de nouvelles histoires, et de sublimer les moments et les personnes que je photographie.</span>
                     <span>Passionnée d’art et sensible à l’écologie, je m’efforce d’allier créativité et respect de notre environnement dans tout ce que je fais.</span>

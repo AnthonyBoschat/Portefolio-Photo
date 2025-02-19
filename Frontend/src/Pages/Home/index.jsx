@@ -10,7 +10,6 @@ export default function HomePage(){
     const prestationsPhotos = useMemo(() => [
         {label:"Portrait", selected:true, image:STATIC_PHOTOS.HOME.PRESTATION.PORTRAIT},
         {label:"Artisan", selected:false, image:STATIC_PHOTOS.HOME.PRESTATION.ARTISAN},
-        // {label:"Artisan", selected:false, image:STATIC_PHOTOS.HOME.PRESTATION.PORTRAIT_HIGHTQUALITY},
         {label:"Boudoir", selected:false, image:STATIC_PHOTOS.HOME.PRESTATION.BOUDOIR},
     ], [])
 

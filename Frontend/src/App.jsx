@@ -33,7 +33,7 @@ export default function App() {
   
   return (
       <>
-        <Header/>
+        <Header/> {/*Nettoyer*/}
         <main>
           <AnimatePresence mode="wait">
             <motion.div
@@ -48,22 +48,22 @@ export default function App() {
                 <Route path={ROUTES.ADMIN} element={<AdminPage/>}/>
 
 
-                <Route path={ROUTES.HOME} element={<HomePage/>}/>
+                <Route path={ROUTES.HOME} element={<HomePage/>}/> {/*Nettoyer*/}
 
-                <Route path={ROUTES.PRESTATIONS.ARTISAN} element={<PrestationPage/>}/>
-                <Route path={ROUTES.PRESTATIONS.BOUDOIR} element={<PrestationPage/>}/>
-                <Route path={ROUTES.PRESTATIONS.PORTRAIT} element={<PrestationPage/>}/>
+                <Route path={ROUTES.PRESTATIONS.ARTISAN} element={<PrestationPage/>}/> {/*Nettoyer*/}
+                <Route path={ROUTES.PRESTATIONS.BOUDOIR} element={<PrestationPage/>}/> {/*Nettoyer*/}
+                <Route path={ROUTES.PRESTATIONS.PORTRAIT} element={<PrestationPage/>}/> {/*Nettoyer*/}
 
-                <Route path={`${ROUTES.ARTISAN}/:artisanID`} element={<PortefoliosPage/>}/>
-                <Route path={ROUTES.PORTEFOLIOS.STUDIO} element={<PortefoliosPage/>}/>
-                <Route path={ROUTES.PORTEFOLIOS.FANTASTIQUE} element={<PortefoliosPage/>}/>
-                <Route path={ROUTES.PORTEFOLIOS.COLLABORATION_ARTISTIQUE} element={<PortefoliosPage/>}/>
-                <Route path={ROUTES.PORTEFOLIOS.LUMIERE_NATURELLE} element={<PortefoliosPage/>}/>
-                <Route path={ROUTES.PORTEFOLIOS.NU_LINGERIE} element={<PortefoliosPage/>}/>
+                <Route path={`${ROUTES.ARTISAN}/:artisanID`} element={<PortefoliosPage/>}/> {/*Nettoyer*/}
+                <Route path={ROUTES.PORTEFOLIOS.STUDIO} element={<PortefoliosPage/>}/> {/*Nettoyer*/}
+                <Route path={ROUTES.PORTEFOLIOS.FANTASTIQUE} element={<PortefoliosPage/>}/> {/*Nettoyer*/}
+                <Route path={ROUTES.PORTEFOLIOS.COLLABORATION_ARTISTIQUE} element={<PortefoliosPage/>}/> {/*Nettoyer*/}
+                <Route path={ROUTES.PORTEFOLIOS.LUMIERE_NATURELLE} element={<PortefoliosPage/>}/> {/*Nettoyer*/}
+                <Route path={ROUTES.PORTEFOLIOS.NU_LINGERIE} element={<PortefoliosPage/>}/> {/*Nettoyer*/}
                 
-                <Route path={ROUTES.APROPOS} element={<AProposPage/>}/>
+                <Route path={ROUTES.APROPOS} element={<AProposPage/>}/> {/*Nettoyer*/}
 
-                <Route path={ROUTES.CONTACT} element={<ContactPage/>}/>
+                <Route path={ROUTES.CONTACT} element={<ContactPage/>}/> {/*Nettoyer*/}
               </Routes>
 
             </motion.div>
