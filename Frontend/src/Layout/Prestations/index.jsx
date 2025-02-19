@@ -8,6 +8,7 @@ import ExploreButton from "@Components/ExploreButton";
 import Carousel from "@Components/Carousel";
 import LazyImage from "@Components/LazyImage";
 import { useNavigate } from "react-router-dom";
+import Galery from "@Components/Galery";
 
 
 
@@ -92,7 +93,8 @@ const GalerySection = ({ currentRoute, galeryPhotos, setGaleryPhotos, navigate }
 
     return (
         <div className="photos-carousel-container">
-        <Carousel infinite photos={galeryPhotos} setPhotos={setGaleryPhotos} />
+            <Galery photos={galeryPhotos.map(photo => photo.image)} />
+            {/* <Carousel infinite photos={galeryPhotos} setPhotos={setGaleryPhotos} /> */}
         </div>
     );
 };

@@ -5,14 +5,13 @@ import ContactForm from "@Containers/Contact/Form";
 import ExploreButton from "@Components/ExploreButton";
 import PrestationsHome from "@Containers/Prestations/Home";
 import AProposHome from "@Containers/A propos/Home";
-import PortefoliosHome from "@Containers/Portefolios/Home";
 import Medias from "@Containers/Media";
 import { useDispatch } from "react-redux";
 import ContactContainer from "@Containers/Contact";
-import { useNavigate } from "react-router-dom";
 import ROUTES from "@Constants/Routes";
 import { setOpenPhoneMenu } from "@Redux/Slices/phoneState";
 import { openSubMenuForce } from "@Redux/Slices/routes";
+import Galery from "@Components/Galery";
 
 
 
@@ -49,7 +48,7 @@ export default function HomeLayout({
 
             <SectionComponent label="Portefolio" customClass="home-portefolio">
                 <div className="content">
-                    <PortefoliosHome portefolioPhotos={portefolioPhotos}/>
+                    <Galery photos={portefolioPhotos} alt={"Photo de présentation de la catégorie 'Portefolio'"} />
                     <ExploreButton onClick={() => {
                         dispatch(openSubMenuForce("Portefolio"))
                         dispatch(setOpenPhoneMenu(true))

@@ -121,15 +121,15 @@ div#prestations-main-container{
         }
     }
 
-    // Slider quand autre prestation
+    
     div.photos-carousel-container{
-        // display: flex;
-        // overflow: hidden;
         width: 100%;
         position: relative;
         margin-top: 4rem;
-        height: 30rem;
-        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
         .slider-container{
             overflow: hidden;
             div{

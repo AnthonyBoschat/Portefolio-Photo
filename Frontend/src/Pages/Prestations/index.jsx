@@ -127,7 +127,8 @@ export default function PrestationPage(){
                 fetch(endpoint)
                 .then(response => response.json())
                 .then(galeriePhotos => {
-                    setGaleryPhotos(galeriePhotos.map((photo, index) => ({...photo, selected: index === 0})))
+                    // setGaleryPhotos(galeriePhotos.map((photo, index) => ({...photo, selected: index === 0})))
+                    setGaleryPhotos(galeriePhotos)
                     setBannerPhotos(bannerPhotos)
                     setInformations(informations)
                     setDescription(description)
