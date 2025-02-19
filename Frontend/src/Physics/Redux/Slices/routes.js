@@ -19,9 +19,9 @@ export const routesSlice = createSlice({
             {label:"Artisan", link:ROUTES.PRESTATIONS.ARTISAN},
             {label:"Boudoir", link:ROUTES.PRESTATIONS.BOUDOIR},
         ]},
-        {label:"Artisan", link:"/Artisan", subMenu:true, open:false, children:[
-          {label:"Atelier by Lou", link:`${ROUTES.ARTISAN}/1`}
-        ]},
+        // {label:"Artisan", link:"/Artisan", subMenu:true, open:false, hidden:true, children:[
+        //   {label:"Atelier by Lou", link:`${ROUTES.ARTISAN}/1`}
+        // ]},
         {label:"À propos", link:ROUTES.APROPOS, subMenu:false},
         {label:"Contact", link:ROUTES.CONTACT, subMenu:false},
     ],
