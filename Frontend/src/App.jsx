@@ -36,7 +36,7 @@ export default function App() {
   // Enregistre le dimensionnement de la fenêtre pour gérer l'affichage dynamique de composant
   useEffect(() => {
     dispatch(setScreenSize(window.innerWidth));
-
+    console.log("controle")
     const setSize = () => {
       dispatch(setScreenSize(window.innerWidth))
     }
