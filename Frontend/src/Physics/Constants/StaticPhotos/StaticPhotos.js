@@ -38,6 +38,24 @@ const STATIC_PHOTOS = {
             portefolio1,
             portefolio2,
             portefolio3
+        ],
+        PORTEFOLIO_DESKTOP:[
+            {src:bannerPortrait2, type:"portrait"},
+            {src:portefolio1, type:"paysage"},
+            {src:bannerBoudoir1, type:"portrait"},
+            {src:bannerPortrait1, type:"portrait"},
+            {src:aproposNaturalLight, type:"portrait"},
+            {src:prestation3, type:"portrait"},
+            {src:portefolio2, type:"paysage"},
+            {src:bannerPortrait3, type:"portrait"},
+
+
+            // {src:portefolio1, type:"paysage"},
+            // {src:bannerPortrait2, type:"portrait"},
+            // {src:bannerBoudoir1, type:"portrait"},
+            // {src:portefolio2, type:"paysage"},
+            // {src:bannerPortrait1, type:"portrait"},
+            // {src:aproposNaturalLight, type:"portrait"},
         ]
     },
 

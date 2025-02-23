@@ -1,4 +1,5 @@
 @use "@Sass/constants.scss" as v;
+@use "@Sass/mixins.scss" as mixins;
 
 div#medias-container{
     // outline: 1px solid red;
@@ -7,6 +8,11 @@ div#medias-container{
     align-items: center;
     gap: 1rem;
     font-size: 20px;
+
+    @include mixins.respond-to("desktop"){
+        font-size: 24px;
+        gap: 2rem;
+    }
 
     a{
 

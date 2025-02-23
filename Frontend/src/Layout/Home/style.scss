@@ -8,14 +8,19 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 4rem;
+    // gap: 4rem;
     padding: 2rem 21px 1rem 21px;
     
 
     @include mixins.respond-to("desktop"){
         padding: 2rem 15vw 1rem 15vw;
 
+        section .content{
+            margin-top: 2rem;
+        }
     }
+
+    
 
 
     // PRESTATION
@@ -45,13 +50,64 @@
             display: flex;
             flex-direction: column;
             gap: 1rem;
+            // outline: 1px solid red;
+            @include mixins.respond-to("desktop"){
+                display: grid;
+                gap: 0.5rem;
+                letter-spacing: 1px;
+
+
+
+                // PROPOSITION 1
+                // margin-left: 10rem;
+                // margin-right: 10rem;
+                // grid-template-columns: repeat(2, 1fr);
+                // .paysage{
+                //     grid-column: span 2;
+                // }
+                // div{
+                //     grid-column: span 2;
+                // }
+
+                // PROPOSITION 2
+
+                grid-template-columns: repeat(5, 1fr);
+                img{
+                    &.paysage{
+                        grid-column: span 2;
+                        object-fit: cover;
+                        height: 100%;
+                    }
+                    &.portrait{
+                        height: 100%;
+                    }
+                }
+                div{
+                    grid-column: span 5;
+                }
+                
+            }
         }
     }
 
     // CONTACT
     section.home-contact{
-        div.content{
-            
+        
+        @include mixins.respond-to("desktop"){
+            .content{
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                // outline: 2px solid blue;
+                gap: 8vw;
+
+                picture{
+                    margin-top: 20px;
+                    width: 100%;
+                    min-width: 20rem;
+                    height: 73%;
+                    background-color: rgb(228, 228, 228);
+                }
+            }
         }
     }
 }

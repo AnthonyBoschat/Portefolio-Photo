@@ -6,12 +6,13 @@ import ExploreButton from "@Components/ExploreButton";
 import PrestationsHome from "@Containers/Prestations/Home";
 import AProposHome from "@Containers/A propos/Home";
 import Medias from "@Containers/Media";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ContactContainer from "@Containers/Contact";
 import ROUTES from "@Constants/Routes";
 import { setOpenPhoneMenu } from "@Redux/Slices/phoneState";
 import { openSubMenuForce } from "@Redux/Slices/routes";
 import Galery from "@Components/Galery";
+import { useRef, useState } from "react";
 
 
 
@@ -21,6 +22,7 @@ export default function HomeLayout({
     aproposPhoto
 }){
 
+    const {mobile, desktop} = useSelector(store => store.app)
 
     const dispatch = useDispatch()
 
@@ -44,17 +46,39 @@ export default function HomeLayout({
 
             <SectionComponent label="Portefolio" customClass="home-portefolio">
                 <div className="content">
-                    <Galery photos={portefolioPhotos} alt={"Photo de présentation de la catégorie 'Portefolio'"} />
-                    <ExploreButton onClick={() => {
-                        dispatch(openSubMenuForce("Portefolio"))
-                        dispatch(setOpenPhoneMenu(true))
-                    }} text={"Parcourir"}/>
+                    {mobile && (
+                        <>
+                            <Galery photos={portefolioPhotos} alt={"Photo de présentation de la catégorie 'Portefolio'"} />
+                            <ExploreButton onClick={() => {
+                                dispatch(openSubMenuForce("Portefolio"))
+                                dispatch(setOpenPhoneMenu(true))
+                            }} text={"Parcourir"}/>
+                        </>
+                    )}
+                    {desktop && (
+                        <>
+                            {portefolioPhotos.map((photo, index) => (
+                                <img loading="lazy" className={photo.type} src={photo.src}></img>
+                            ))}
+                            {/* <ExploreButton onClick={() => {
+                                dispatch(openSubMenuForce("Portefolio"))
+                                dispatch(setOpenPhoneMenu(true))
+                            }} text={"Parcourir"}/> */}
+                        </>
+                    )}
                 </div>
             </SectionComponent>
 
             <SectionComponent label="Contact" customClass="home-contact">
                 <div className="content">
-                    <ContactContainer/>
+                    <div>
+                        <ContactContainer />
+                    </div>
+                    {desktop && (
+                        <picture>
+                            {/* <img src="" alt="qzdqzd" /> */}
+                        </picture>
+                    )}
                 </div>
             </SectionComponent>
 

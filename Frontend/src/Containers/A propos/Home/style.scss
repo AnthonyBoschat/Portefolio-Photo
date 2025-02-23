@@ -14,7 +14,7 @@ section.home-apropos{
         @include mixins.respond-to("desktop"){
             justify-content: center;
             align-items: center;
-            padding: 5rem;
+            padding: 0rem 2rem 0rem 2rem;
         }
 
         picture{
