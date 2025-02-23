@@ -1,0 +1,51 @@
+@use "@Sass/constants.scss" as v;
+
+
+div#redirect-button-container{
+    margin-top: 1rem;
+    display: flex;
+    justify-content: flex-end;
+    
+    button, a{
+        position: relative;
+        
+        &.mobile.line{
+            &::after{
+                pointer-events: none;
+                position: absolute;
+                content: "";
+                right: 0;
+                bottom: -0.3rem;
+                width: 55%;
+                height: 0.5px;
+                background-color: v.$dark;
+            }
+        }
+        &.desktop{
+            cursor: pointer;
+            opacity: 0.6;
+            transition: all 0.1s linear;
+
+            &.line::after{
+                pointer-events: none;
+                position: absolute;
+                content: "";
+                right: 0;
+                bottom: -0.3rem;
+                width: 55%;
+                height: 0.5px;
+                background-color: v.$dark;
+                opacity: 0.5;
+                transition: all 0.1s linear;
+            }
+            &:hover{
+                opacity: 1;
+            }
+            &.line:hover::after{
+                width: 90%;
+                opacity: 1;
+            }
+
+        }
+    }
+}

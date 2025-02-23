@@ -1,0 +1,78 @@
+@use "@Sass/constants.scss" as v;
+@use "@Sass/mixins.scss" as mixins;
+
+
+
+section.home-apropos{
+    #presentation{
+        display: flex;
+        gap: 1rem;
+        height: fit-content;
+        justify-content: space-between;
+        
+
+        @include mixins.respond-to("desktop"){
+            justify-content: center;
+            align-items: center;
+            padding: 5rem;
+        }
+
+        picture{
+            width: 50%;
+            height: 22rem;
+            overflow: hidden;
+            position: relative;
+            @include mixins.respond-to("desktop"){
+                width: 30%;
+                height: auto;
+            }
+            img{
+                position: absolute;
+                left: 0;
+                top: 0;
+                height: 100%;
+                object-fit: cover;
+                border-top-left-radius: 6px;
+                border-bottom-right-radius: 6px;
+    
+            }
+
+            @include mixins.respond-to("desktop"){
+                order: 2;
+            }
+        }
+
+        p.presentation{
+            color: v.$dark;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            // outline: 1px solid red;
+            min-height: 22rem;
+            height: 100%;
+            width: 50%;
+            font-size: 14px;
+            line-height: 24px;
+            @include mixins.respond-to("desktop"){
+                // justify-content: center;
+                font-size: 16px;
+                margin-right: 5rem;
+                letter-spacing: 1px;
+            }
+
+            .long{
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+                @include mixins.respond-to("desktop"){
+                    gap: 2rem;
+                }
+            }
+
+            @include mixins.respond-to("desktop"){
+                order: 1;
+            }
+            
+        }
+    }
+}

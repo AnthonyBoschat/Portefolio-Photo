@@ -1,0 +1,53 @@
+@use "@Sass/constants.scss" as v;
+@use "@Sass/mixins.scss" as mixins;
+
+
+section#section-component{
+    display: flex;
+    flex-direction: column;
+    @include mixins.respond-to("desktop"){
+        margin-top: 150px;
+    }
+
+    // SEPARATOR SECTION
+    .title{
+        position: relative;
+        width: 100%;
+        height: 5rem;
+        display: flex;
+        align-items: center;
+
+        @include mixins.respond-to("desktop"){
+            width: 24%;
+        }
+
+
+
+        &::after{
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            content: "";
+            width: 100%;
+            height: 1px;
+            opacity: 0.5;
+            background-color: v.$dark;
+        }
+
+        span.label{
+            z-index: 2;
+            left: 15%;
+            position: relative;
+            color: v.$dark;
+            font-size: 20px;
+            // outline: 1px solid blue;
+            background-color: v.$light;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            @include mixins.respond-to("desktop"){
+                left: 18%;
+            }
+        }
+    }
+}

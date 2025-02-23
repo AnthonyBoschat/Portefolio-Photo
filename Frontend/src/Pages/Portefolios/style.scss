@@ -1,0 +1,19 @@
+
+
+div#portefolios-main-container{
+    padding: 2rem 21px 1rem 21px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    
+    
+    img{
+        transition: opacity 1s linear;
+        opacity: 1;
+
+        &.loading{
+            opacity: 0;
+        }
+    }
+}

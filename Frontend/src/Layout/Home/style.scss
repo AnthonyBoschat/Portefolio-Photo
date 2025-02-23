@@ -1,0 +1,57 @@
+@use "@Sass/constants.scss" as v;
+@use "@Sass/mixins.scss" as mixins;
+
+
+
+#home-main-layout{
+    // background-color: rgba(0, 0, 0, 0.148);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    padding: 2rem 21px 1rem 21px;
+    
+
+    @include mixins.respond-to("desktop"){
+        padding: 2rem 15vw 1rem 15vw;
+
+    }
+
+
+    // PRESTATION
+    section.home-prestation{
+        .content{
+            display: flex;
+            flex-direction: column;
+            
+        }
+    }
+
+
+    // A PROPOS
+    section.home-apropos{
+        .content{
+            height: fit-content;
+            // outline: 1px solid red;
+            display: flex;
+            flex-direction: column;
+        }
+    }
+
+
+    // PORTEFOLIO
+    section.home-portefolio{
+        .content{
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+    }
+
+    // CONTACT
+    section.home-contact{
+        div.content{
+            
+        }
+    }
+}
