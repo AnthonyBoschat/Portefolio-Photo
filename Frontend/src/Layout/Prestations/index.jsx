@@ -81,9 +81,9 @@ const GalerySection = ({ currentRoute, galeryPhotos, setGaleryPhotos, navigate }
             return (
                 <div key={index} className={`picture ${index % 3 === 2 ? "paysage" : "portrait"}`}>
                 <span>{artisan.name}</span>
-                <picture onClick={() => navigate(`${ROUTES.ARTISAN}/${artisan.id}`)}>
-                    <img src={element.image} alt="" />
-                </picture>
+                    <picture onClick={() => navigate(`${ROUTES.ARTISAN}/${artisan.id}`)}>
+                        <img src={element.image} alt="" />
+                    </picture>
                 </div>
             );
             })}
@@ -93,7 +93,7 @@ const GalerySection = ({ currentRoute, galeryPhotos, setGaleryPhotos, navigate }
 
     return (
         <div className="photos-carousel-container">
-            <Galery photos={galeryPhotos.map(photo => photo.image)} />
+            <Galery photos={galeryPhotos.map(photo => ({image:photo.image, orientation:photo.orientation}))} />
             {/* <Carousel infinite photos={galeryPhotos} setPhotos={setGaleryPhotos} /> */}
         </div>
     );

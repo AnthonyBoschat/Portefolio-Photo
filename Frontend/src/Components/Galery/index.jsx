@@ -9,8 +9,8 @@ export default function Galery({photos, alt}){
     return(
         <>
             {photos.map((photo, index) => (
-                <picture key={index}>
-                    <LazyImage src={photo} alt={alt}/>
+                <picture className={photo.orientation} key={index}>
+                    <LazyImage src={photo.image} alt={alt}/>
                 </picture>
             ))}
             

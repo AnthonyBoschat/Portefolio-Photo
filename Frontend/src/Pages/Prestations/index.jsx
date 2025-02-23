@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 
 import ENDPOINT from "@Constants/Endpoint";
 import STATIC_PHOTOS from "@Constants/StaticPhotos/StaticPhotos";
+import sortByPhotoType from "@Services/sortByPhotoType";
 
 
 const boudoirPrestation = {
@@ -110,7 +111,8 @@ export default function PrestationPage(){
                 .then(response => response.json())
                 .then(galeriePhotos => {
                     // setGaleryPhotos(galeriePhotos.map((photo, index) => ({...photo, selected: index === 0})))
-                    setGaleryPhotos(galeriePhotos)
+                    const sortedPhotos = sortByPhotoType(galeriePhotos)
+                    setGaleryPhotos(sortedPhotos)
                     setBannerPhotos(bannerPhotos)
                     setInformations(informations)
                     setDescription(description)

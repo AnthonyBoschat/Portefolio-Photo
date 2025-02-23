@@ -5,6 +5,7 @@ import ROUTES from "@Constants/Routes";
 import ENDPOINT from "@Constants/Endpoint";
 import { useParams } from "react-router-dom";
 import Galery from "@Components/Galery";
+import sortByPhotoType from "@Services/sortByPhotoType";
 
 export default function PortefoliosPage() {
 
@@ -21,7 +22,8 @@ export default function PortefoliosPage() {
       fetch(ENDPOINT.getThisArtisanPhoto(artisanID))
       .then(response => response.json())
       .then(photos => {
-        setPhotos(photos.map(photo => photo.image))
+        const sortedPhotos = sortByPhotoType(photos)
+        setPhotos(sortedPhotos.map(photo => ({image:photo.image, orientation:photo.orientation})))
       })
     }
     
@@ -58,8 +60,9 @@ export default function PortefoliosPage() {
           setPortefolioType(portefolioType)
           fetch(ENDPOINT.LOAD("portefolio", subject))
           .then(response => response.json())
-          .then(result => {
-            const photosArray = result.map(photo => photo.image)
+          .then(photos => {
+            const sortedPhotos = sortByPhotoType(photos)
+            const photosArray = sortedPhotos.map(photo => ({image:photo.image, orientation:photo.orientation}))
             setPhotos(photosArray)
           })
         }

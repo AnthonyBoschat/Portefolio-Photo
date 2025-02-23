@@ -1,3 +1,5 @@
+@use "@Sass/mixins.scss" as mixins;
+
 
 
 div#portefolios-main-container{
@@ -7,13 +9,28 @@ div#portefolios-main-container{
     flex-direction: column;
     gap: 20px;
     
-    
-    img{
-        transition: opacity 1s linear;
-        opacity: 1;
+    @include mixins.respond-to("desktop"){
+        margin-top: 2rem;
+        padding: 2rem 20vw 1rem 20vw;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
+        
+        picture{
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
 
-        &.loading{
-            opacity: 0;
+        }
+        picture.paysage{
+            grid-column: span 2;
         }
     }
+    
+    // img{
+    //     transition: opacity 1s linear;
+    //     opacity: 1;
+
+    //     &.loading{
+    //         opacity: 0;
+    //     }
+    // }
 }

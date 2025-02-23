@@ -6,6 +6,7 @@ from .serializers import ArtisanPhotoSerializer, PhotoSerializer
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from rest_framework.decorators import action
+from PIL import Image
 
 class PhotoViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Photo.objects.all()
@@ -54,11 +55,20 @@ class UploadPhotoViewSet(viewsets.ViewSet):
         type = request.data.get('type')
         subject = request.data.get('subject')
         artisan = request.data.get('artisan')
-        orientation = request.data.get('orientation', 'portrait')
         print("\n\n")
         print(f"artisan ______________{artisan}")
         uploaded_photos = []
         for file in files:
+            # Détermine l'orientation de la photo paysage ou portrait
+            image = Image.open(file)
+            width, height = image.size
+            file.seek(0)
+            
+            if height > width:
+                orientation = 'portrait'
+            else:
+                orientation = 'paysage'
+
             photo = Photo.objects.create(
                 image=file,
                 type=type,
