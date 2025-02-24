@@ -82,7 +82,7 @@ export default function HomeLayout({
                 </div>
             </SectionComponent>
 
-            <Medias color={"dark"}/>
+            <Medias style={{marginTop:"3rem"}} color={"dark"}/>
         </div>
     )
 }

@@ -1,6 +1,6 @@
 import "./style.scss";
 
-export default function Medias({color}){
+export default function Medias({color, style}){
 
     // Ajouter le lien de redirection
     const mediaButtons = [
@@ -10,7 +10,7 @@ export default function Medias({color}){
     ]
 
     return(
-        <div id="medias-container">
+        <div style={style} id="medias-container">
             {mediaButtons.map((media, index) => (
                 <a key={index} href={media.path} target="_blank" className={`${color}`}>
                     {media.icon}

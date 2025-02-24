@@ -10,18 +10,23 @@ div#medias-container{
     font-size: 20px;
 
     @include mixins.respond-to("desktop"){
-        font-size: 24px;
-        gap: 2rem;
+        gap: 1.5rem;
     }
 
     a{
-
+        
         &.dark{
             color: v.$dark;
+            opacity: 0.6;
+            transition: opacity 0.2s linear;
+            &:hover{
+                cursor: pointer;
+                opacity: 1;
+            }
         }
         &.light{
             color: v.$light;
-            opacity: 80%;
+            opacity: 0.8;
         }
     }
 }

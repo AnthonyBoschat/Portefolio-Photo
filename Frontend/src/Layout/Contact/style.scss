@@ -1,3 +1,56 @@
+@use "@Sass/mixins.scss" as mixins;
+
+
+
 #contact-main-container{
+    outline: 1px solid red;
+    height: 80vh;
     padding: 2rem 21px 1rem 21px;
+
+    @include mixins.respond-to("desktop"){
+        margin-top: 4rem;
+        padding: 2rem 15vw 1rem 15vw;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8vw;
+
+        picture{
+            margin-top: 20px;
+            width: 100%;
+            min-width: 20rem;
+            height: 73%;
+            background-color: rgb(228, 228, 228);
+        }
+    }
+}
+
+#contact-layout-container{
+    // background-color: blue;
+    padding: 2rem 21px 1rem 21px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: calc(100vh - 5rem);
+    
+
+    @include mixins.respond-to("desktop"){
+        padding: 2rem 15vw 1rem 15vw;
+
+        .contact{
+            margin-top: 4rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8vw;
+            
+            picture{
+                margin-top: 20px;
+                width: 100%;
+                min-width: 20rem;
+                height: 73%;
+                background-color: rgb(228, 228, 228);
+            }
+        }
+
+    }
+
 }

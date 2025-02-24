@@ -95,6 +95,7 @@
         
         @include mixins.respond-to("desktop"){
             .content{
+                padding-bottom: 2rem;
                 display: grid;
                 grid-template-columns: 1fr 1fr;
                 // outline: 2px solid blue;

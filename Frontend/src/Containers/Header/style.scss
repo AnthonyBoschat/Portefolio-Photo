@@ -1,5 +1,8 @@
 @use "@Sass/constants.scss" as v;
 @use "@Sass/animation.scss" as a;
+@use "@Sass/mixins.scss" as mixins;
+
+
 
 header{
     height: 100%;
@@ -20,6 +23,10 @@ header{
         z-index: 1000;
         padding: 1.5rem; // res
         transition: all 0.1s linear;
+
+        @include mixins.respond-to("desktop"){
+            padding-left: 3rem; // res
+        }
 
         &.active{
             box-shadow: 0px 4px 8px v.$darkHeaderShadow;
