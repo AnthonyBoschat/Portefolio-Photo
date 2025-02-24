@@ -42,7 +42,6 @@ export default function ContactContainer(){
             for(const key in formData){
                 sendFormData.append(key, formData[key])
             }
-            console.log("formData", formData)
             csrfFetch(ENDPOINT.sendEmail, {
                 method:"POST",
                 body:sendFormData,

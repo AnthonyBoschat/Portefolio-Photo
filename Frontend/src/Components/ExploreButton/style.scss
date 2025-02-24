@@ -1,10 +1,11 @@
 @use "@Sass/constants.scss" as v;
 
 
-div#redirect-button-container{
+#redirect-button-container{
     margin-top: 1rem;
     display: flex;
     justify-content: flex-end;
+    
     
     button, a{
         position: relative;

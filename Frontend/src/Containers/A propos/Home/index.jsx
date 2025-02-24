@@ -42,7 +42,7 @@ export default function AProposHome({aproposPhoto}){
                                 )}
                                 {desktop && (
                                     <span>
-                                        J’aime débuter nos rencontres autour d'un ... <ExploreButton style={{letterSpacing:"2px", fontSize:"16px"}} noLine={true} navigate={ROUTES.APROPOS} text={"Lire plus"}/>
+                                        J’aime débuter nos rencontres autour d'un ... <ExploreButton style={{letterSpacing:"2px", fontSize:"16px"}} inline={true} navigate={ROUTES.APROPOS} text={"Lire plus"}/>
                                     </span>
                                 )}
                             </span>

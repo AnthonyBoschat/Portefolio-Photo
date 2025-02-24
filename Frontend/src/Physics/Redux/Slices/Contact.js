@@ -19,7 +19,6 @@ export const ContactSlice = createSlice({
         state.formData[action.payload.key] = action.payload.value
     },
     resetFormData:(state,action) => {
-      console.log(action.payload)
         state.formData = {
             lastname:"",
             firstname:"",

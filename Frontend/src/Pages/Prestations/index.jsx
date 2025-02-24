@@ -111,7 +111,10 @@ export default function PrestationPage(){
                 .then(response => response.json())
                 .then(galeriePhotos => {
                     // setGaleryPhotos(galeriePhotos.map((photo, index) => ({...photo, selected: index === 0})))
-                    const sortedPhotos = sortByPhotoType(galeriePhotos)
+                    const sortedPhotos = sortByPhotoType(galeriePhotos, {
+                        reverse: true,
+                        portraitNumber: 3
+                    })
                     setGaleryPhotos(sortedPhotos)
                     setBannerPhotos(bannerPhotos)
                     setInformations(informations)

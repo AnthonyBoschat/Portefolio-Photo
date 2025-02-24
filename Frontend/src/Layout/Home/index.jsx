@@ -58,7 +58,7 @@ export default function HomeLayout({
                     {desktop && (
                         <>
                             {portefolioPhotos.map((photo, index) => (
-                                <img loading="lazy" className={photo.type} src={photo.src}></img>
+                                <img key={index} loading="lazy" className={photo.type} src={photo.src}></img>
                             ))}
                             {/* <ExploreButton onClick={() => {
                                 dispatch(openSubMenuForce("Portefolio"))

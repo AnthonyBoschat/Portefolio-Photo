@@ -64,7 +64,7 @@ const DescriptionSection = ({ description }) => (
                 ))}
             </p>
         </div>
-        <ExploreButton navigate={ROUTES.CONTACT} text="Contact" />
+        <ExploreButton style={{letterSpacing:"1px"}} navigate={ROUTES.CONTACT} text="Contact" />
     </>
 );
 
