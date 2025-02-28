@@ -11,7 +11,7 @@ div#portefolios-main-container{
     
     @include mixins.respond-to("desktop"){
         margin-top: 2rem;
-        padding: 2rem 20vw 2rem 20vw;
+        padding: 2rem 25vw 2rem 25vw;
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 0.5rem;

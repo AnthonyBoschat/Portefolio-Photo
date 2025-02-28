@@ -7,7 +7,7 @@ div#prestations-main-container{
     padding: 2rem 21px 1rem 21px;
 
     @include mixins.respond-to("desktop"){
-        padding: 2rem 15vw 2rem 15vw;
+        padding: 2rem 20vw 2rem 20vw;
         margin-top: 2rem;
         font-size: 18px;
         letter-spacing: 1px;
@@ -30,6 +30,10 @@ div#prestations-main-container{
                     height: 20rem;
                     min-height: 20rem;
                     max-height: 20rem;
+                    border-top-left-radius: 4px;
+                    border-bottom-right-radius: 4px;
+                    // box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+                    
 
                     @include mixins.respond-to("desktop"){
                         height: auto;
@@ -145,6 +149,28 @@ div#prestations-main-container{
             picture{
                 box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.25) inset;
                 border-radius: 6px;
+                transition: all 0.2s linear;
+                overflow: hidden;
+                position: relative;
+                &:hover{
+                    cursor: pointer;
+                    img{
+                        transform: scale(1.05);
+                    }
+                    i{
+                        opacity: 1;
+                    }
+                }
+
+                i{
+                    position: absolute;
+                    top: 1rem;
+                    right: 1rem;
+                    color: rgba(255, 255, 255, 0.651);
+                    // color: black;
+                    opacity: 0;
+                    transition: opacity 0.2s linear;
+                }
             }
             img{
                 position: relative;
@@ -153,6 +179,7 @@ div#prestations-main-container{
                 object-position:center;
                 object-fit: cover;
                 z-index: -1;
+                transition: all 0.2s linear;
             }
             &.portrait{
                 aspect-ratio: 1;
@@ -188,6 +215,15 @@ div#prestations-main-container{
             display: grid;
             gap: 0.5rem;
             grid-template-columns: repeat(3, 1fr);
+
+            picture{
+                transition: all 0.2s linear;
+                &:hover{
+                    cursor: pointer;
+                    box-shadow: 2px 1px 6px rgba(0, 0, 0, 0.5);
+                    transform: scale(1.001);
+                }
+            }
 
             picture.paysage{
                 grid-column: span 3;
