@@ -14,19 +14,20 @@ div#medias-container{
     }
 
     a{
-        
         &.dark{
             color: v.$dark;
             opacity: 0.6;
-            transition: opacity 0.2s linear;
-            &:hover{
-                cursor: pointer;
-                opacity: 1;
-            }
+            
+            
         }
         &.light{
             color: v.$light;
             opacity: 0.8;
+        }
+        transition: opacity 0.2s linear;
+        &:hover{
+            cursor: pointer;
+            opacity: 1;
         }
     }
 }

@@ -5,19 +5,12 @@ import { useSelector } from "react-redux";
 
 export default function ContactLayout(){
 
-    const {desktop} = useSelector(store => store.app)
+    const {mobile, desktop} = useSelector(store => store.app)
 
     return(
-        // <>
-        //     <div id="contact-main-container">
-        //         <div>
-        //             <ContactContainer/>
-        //         </div>
-        //         <picture>
-        //             {/* <img src="" alt="qzdqzd" /> */}
-        //         </picture>
-        //     </div>
-        // </>
+        <>
+
+
         <div id="contact-layout-container">
             <div className="contact">
                 <div>
@@ -29,9 +22,10 @@ export default function ContactLayout(){
                     </picture>
                 )}
             </div>
-            <div className="media">
-                <Medias color={"dark"}/>
+            <div className="contact-media">
+                <Medias color={"light"}/>
             </div>
         </div>
+        </>
     )
 }

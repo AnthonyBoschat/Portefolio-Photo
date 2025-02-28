@@ -27,6 +27,7 @@ export default function HomeLayout({
     const dispatch = useDispatch()
 
     return(
+        <>
         <div id="home-main-layout">
 
 
@@ -81,8 +82,11 @@ export default function HomeLayout({
                     )}
                 </div>
             </SectionComponent>
-
-            <Medias style={{marginTop:"3rem"}} color={"dark"}/>
+            
         </div>
+            <footer style={{marginTop:"3rem"}}>
+                <Medias color={"light"}/>
+            </footer>
+        </>
     )
 }

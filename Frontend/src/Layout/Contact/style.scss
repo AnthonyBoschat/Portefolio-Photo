@@ -1,5 +1,5 @@
 @use "@Sass/mixins.scss" as mixins;
-
+@use "@Sass/constants.scss" as v;
 
 
 #contact-main-container{
@@ -26,17 +26,17 @@
 
 #contact-layout-container{
     // background-color: blue;
-    padding: 2rem 21px 1rem 21px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: calc(100vh - 5rem);
+    height: calc(100vh - 5rem); // Moins la taille du header
     
-
+    .contact{
+        padding: 2rem 21px 1rem 21px;
+    }
     @include mixins.respond-to("desktop"){
-        padding: 2rem 15vw 1rem 15vw;
-
         .contact{
+            padding: 2rem 15vw 1rem 15vw;
             margin-top: 4rem;
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -53,4 +53,13 @@
 
     }
 
+    .contact-media{
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: v.$dark-light;
+    }
+    
 }

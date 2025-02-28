@@ -39,6 +39,10 @@ header{
             align-items: end;
             gap: 0.5rem;
             align-items: center;
+
+            &:hover{
+                cursor: pointer;
+            }
         }
     
 

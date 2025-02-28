@@ -49,7 +49,7 @@ export default function AProposLayout({aproposPhoto}){
                 </p>
             </div>
             <div className="section black small">
-                <Medias/>
+                <Medias color={mobile ? "black" : "light"}/>
             </div>
             
         </div>

@@ -21,7 +21,7 @@ export default function App() {
 
   const { pathname } = useLocation();
   const dispatch = useDispatch()
-  const {mobile} = useSelector(store => store.app)
+  const {mobile, desktop} = useSelector(store => store.app)
 
 
   // A chaque changement d'url ( de page ) 
@@ -54,9 +54,9 @@ export default function App() {
         <main>
           <AnimatePresence mode="wait">
             <motion.div
-              style={{ opacity: 0, transform: 'scale(0.95)' }}
+              style={{ opacity: 0, transform: mobile ? 'scale(0.95)' : "scale(0.98)" }}
               key={pathname}
-              initial={{ opacity: 0, transform:"scale(0.95)" }}
+              initial={{ opacity: 0, transform:mobile ? 'scale(0.95)' : "scale(0.98)" }}
               animate={{ opacity: 1, transform:"scale(1)" }}
               exit={{ opacity:0, transition:{duration:0} }}
               transition={{ duration: 1 }}
