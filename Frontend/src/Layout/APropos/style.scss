@@ -51,9 +51,7 @@ div#apropos-container{
             margin-left: 7vw;
             margin-right: 8vw;
 
-            &.reverse{
-                flex-direction: row-reverse;
-            }
+            
             &.white{
                 display: flex;
                 flex-direction: row;
@@ -104,6 +102,9 @@ div#apropos-container{
                     // padding-left: 0;
                     margin: 0;
                 }
+            }
+            &.reverse{
+                flex-direction: row-reverse;
             }
         }
     }

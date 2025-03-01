@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 
 export default function Galery({photos, alt}){
 
-    const {mobile} = useSelector(store => store.app)
 
     return(
         <>
