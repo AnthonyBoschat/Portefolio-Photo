@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import './style.scss';
 import { useSelector } from "react-redux";
 import ROUTES from "@Constants/Routes";
 import ENDPOINT from "@Constants/Endpoint";
 import { useParams } from "react-router-dom";
-import Galery from "@Components/Galery";
 import sortByPhotoType from "@Services/sortByPhotoType";
+import PortefolioLayout from "@Layout/Portefolio";
 
 export default function PortefoliosPage() {
 
@@ -18,7 +17,6 @@ export default function PortefoliosPage() {
 
     // Si le chargement de cette page concerne des artisans
     if(currentRoute.startsWith("/Artisan") && artisanID){
-      console.log(artisanID)
       fetch(ENDPOINT.getThisArtisanPhoto(artisanID))
       .then(response => response.json())
       .then(photos => {
@@ -71,8 +69,6 @@ export default function PortefoliosPage() {
 
 
   return (
-    <div id="portefolios-main-container">
-        <Galery photos={photos} alt={`Photo de la categorie portefolio '${portefolioType}'`} />
-    </div>
+    <PortefolioLayout photos={photos} portefolioType={portefolioType} />
   );
 }

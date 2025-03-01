@@ -3,8 +3,8 @@ import SectionComponent from "@Components/Section";
 
 import ContactForm from "@Containers/Contact/Form";
 import ExploreButton from "@Components/ExploreButton";
-import PrestationsHome from "@Containers/Prestations/Home";
-import AProposHome from "@Containers/A propos/Home";
+import PrestationsHome from "@Layout/Home/Containers/Prestations";
+import AProposHome from "@Layout/Home/Containers/APropos";
 import Medias from "@Containers/Media";
 import { useDispatch, useSelector } from "react-redux";
 import ContactContainer from "@Containers/Contact";
@@ -40,7 +40,6 @@ export default function HomeLayout({
             <SectionComponent label="À propos" customClass="home-apropos">
                 <div className="content">
                     <AProposHome aproposPhoto={aproposPhoto}/>
-                    
                 </div>
 
             </SectionComponent>
