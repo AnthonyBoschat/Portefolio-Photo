@@ -113,7 +113,7 @@ export default function PrestationPage(){
                     // setGaleryPhotos(galeriePhotos.map((photo, index) => ({...photo, selected: index === 0})))
                     const sortedPhotos = sortByPhotoType(galeriePhotos, {
                         reverse: true,
-                        portraitNumber: 3
+                        portraitNumber: 2
                     })
                     setGaleryPhotos(sortedPhotos)
                     setBannerPhotos(bannerPhotos)

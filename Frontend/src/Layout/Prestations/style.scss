@@ -214,19 +214,14 @@ div#prestations-main-container{
             // outline: 2px solid blue;
             display: grid;
             gap: 0.5rem;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(2, 1fr);
 
             picture{
                 transition: all 0.2s linear;
-                &:hover{
-                    cursor: pointer;
-                    box-shadow: 2px 1px 6px rgba(0, 0, 0, 0.5);
-                    transform: scale(1.001);
-                }
             }
 
             picture.paysage{
-                grid-column: span 3;
+                grid-column: span 2;
             }
         }
 
