@@ -60,10 +60,7 @@ export default function HomeLayout({
                             {portefolioPhotos.map((photo, index) => (
                                 <img key={index} loading="lazy" className={photo.type} src={photo.src}></img>
                             ))}
-                            {/* <ExploreButton onClick={() => {
-                                dispatch(openSubMenuForce("Portefolio"))
-                                dispatch(setOpenPhoneMenu(true))
-                            }} text={"Parcourir"}/> */}
+                            <ExploreButton navigate={ROUTES.PORTEFOLIOS.INDEX} text={"Parcourir"}/>
                         </>
                     )}
                 </div>

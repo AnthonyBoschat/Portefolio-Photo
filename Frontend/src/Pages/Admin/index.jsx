@@ -66,6 +66,7 @@ export default function AdminPage(){
                         <option value="po_lumiereNaturelle">Lumière Naturelle</option>
                         <option value="po_nuLingerie">Nu - Lingerie</option>
                         <option value="po_studio">Studio</option>
+                        <option value="po_retoucheCreatives">Retouches Créative</option>
                     </select>
                 </div>
             )}

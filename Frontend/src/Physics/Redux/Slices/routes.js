@@ -11,6 +11,7 @@ export const routesSlice = createSlice({
             {label:"Collaboration Artistique", link:ROUTES.PORTEFOLIOS.COLLABORATION_ARTISTIQUE},
             {label:"Fantastique", link:ROUTES.PORTEFOLIOS.FANTASTIQUE},
             {label:"Lumière Naturelle", link:ROUTES.PORTEFOLIOS.LUMIERE_NATURELLE},
+            {label:"Retouche Créatives", link:ROUTES.PORTEFOLIOS.RETOUCHE_CREATIVE},
             {label:"Nu - Lingerie", link:ROUTES.PORTEFOLIOS.NU_LINGERIE},
             {label:"Studio", link:ROUTES.PORTEFOLIOS.STUDIO},
         ]},

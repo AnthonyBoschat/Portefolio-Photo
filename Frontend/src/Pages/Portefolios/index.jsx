@@ -51,6 +51,10 @@ export default function PortefoliosPage() {
             subject="po_studio"
             portefolioType = "Studio"
             break
+          case ROUTES.PORTEFOLIOS.RETOUCHE_CREATIVE:
+            subject="po_retoucheCreatives"
+            portefolioType = "Retouche Créative"
+            break
           default:
             return
         }

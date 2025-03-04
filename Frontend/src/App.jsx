@@ -6,6 +6,7 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import ContactPage from "@Pages/Contact";
 import PrestationPage from "@Pages/Prestations";
 import PortefoliosPage from "@Pages/Portefolios";
+import PortefoliosIndexPage from "@Pages/Portefolios/index/index.jsx";
 import ROUTES from "@Constants/Routes";
 import AProposPage from "@Pages/APropos";
 import { useEffect } from "react";
@@ -72,11 +73,13 @@ export default function App() {
                 <Route path={ROUTES.PRESTATIONS.PORTRAIT} element={<PrestationPage/>}/> {/*Nettoyer*/}
 
                 <Route path={`${ROUTES.ARTISAN}/:artisanID`} element={<PortefoliosPage/>}/> {/*Nettoyer*/}
+                <Route path={ROUTES.PORTEFOLIOS.INDEX} element={<PortefoliosIndexPage/>}/> {/*Nettoyer*/}
                 <Route path={ROUTES.PORTEFOLIOS.STUDIO} element={<PortefoliosPage/>}/> {/*Nettoyer*/}
                 <Route path={ROUTES.PORTEFOLIOS.FANTASTIQUE} element={<PortefoliosPage/>}/> {/*Nettoyer*/}
                 <Route path={ROUTES.PORTEFOLIOS.COLLABORATION_ARTISTIQUE} element={<PortefoliosPage/>}/> {/*Nettoyer*/}
                 <Route path={ROUTES.PORTEFOLIOS.LUMIERE_NATURELLE} element={<PortefoliosPage/>}/> {/*Nettoyer*/}
                 <Route path={ROUTES.PORTEFOLIOS.NU_LINGERIE} element={<PortefoliosPage/>}/> {/*Nettoyer*/}
+                <Route path={ROUTES.PORTEFOLIOS.RETOUCHE_CREATIVE} element={<PortefoliosPage/>}/> {/*Nettoyer*/}
                 
                 <Route path={ROUTES.APROPOS} element={<AProposPage/>}/> {/*Nettoyer*/}
 

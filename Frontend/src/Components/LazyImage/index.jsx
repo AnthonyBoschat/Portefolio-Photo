@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 
-export default function LazyImage({ src, alt }){
+export default function LazyImage({ src, alt, onClick }){
 
   const [aspectRatio, setAspectRatio] = useState(null);
   const [loaded, setLoaded] = useState(false);
@@ -23,6 +23,7 @@ export default function LazyImage({ src, alt }){
 
   return (
     <div
+      onClick={onClick}
       style={{
         position: 'relative',
         width: '100%',

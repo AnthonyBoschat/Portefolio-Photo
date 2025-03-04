@@ -39,8 +39,17 @@ section.home-prestation{
                 color:v.$dark;
                 margin-left: 0.5rem;
             }
+            div{
+                border-radius: 6px;
+
+            }
             img{
                 border-radius: 6px;
+                transition: transform 0.2s ease-in-out !important;
+                &:hover{
+                    cursor: pointer;
+                    transform: scale(1.05);
+                }
             }
             a{
                 margin-top: -0.5rem;

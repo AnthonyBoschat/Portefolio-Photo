@@ -10,6 +10,7 @@ SUBJECT_CHOICES = (
     ("po_lumiereNaturelle", "po_lumiereNaturelle"),
     ("po_nuLingerie", "po_nuLingerie"),
     ("po_studio", "po_studio"),
+    ("po_retoucheCreatives", "po_retoucheCreatives"),
 
 
     ("pre_portrait", "pre_portrait"),
@@ -41,6 +42,6 @@ ORIENTATION_CHOICES = (
 
 
 ARTISAN_CHOICES = (
-    ("Atelier by Lou", "Atelier by Lou"),
+    ("Atelier by Lau", "Atelier by Lau"),
     ("Autre", "Autre")
 )
