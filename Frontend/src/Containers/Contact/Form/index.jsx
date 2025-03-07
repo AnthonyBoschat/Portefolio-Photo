@@ -16,19 +16,19 @@ export default function ContactForm({formRef, formData, loading}){
             <div className="line">
                 <div className="field">
                     <label htmlFor="lastname">Nom</label>
-                    <input className={loading ? "loading" : ""} required onChange={(e) => dispatch(setFormData({key:"lastname", value:e.target.value}))} value={formData.lastname} type="text" name="lastname" />
+                    <input id="lastname" className={loading ? "loading" : ""} required onChange={(e) => dispatch(setFormData({key:"lastname", value:e.target.value}))} value={formData.lastname} type="text" name="lastname" />
                 </div>
                 <div className="field">
                     <label htmlFor="firstname">Prénom</label>
-                    <input className={loading ? "loading" : ""} required onChange={(e) => dispatch(setFormData({key:"firstname", value:e.target.value}))} value={formData.firstname} type="text" name="firstname" />
+                    <input id="firstname" className={loading ? "loading" : ""} required onChange={(e) => dispatch(setFormData({key:"firstname", value:e.target.value}))} value={formData.firstname} type="text" name="firstname" />
                 </div>
             </div>
 
             {/* Adresse e-mail */}
             <div className="line">
                 <div className="field">
-                    <label htmlFor="">Adresse e-mail</label>
-                    <input className={loading ? "loading" : ""} required onChange={(e) => dispatch(setFormData({key:"email", value:e.target.value}))} value={formData.email} type="email" />
+                    <label htmlFor="email">Adresse e-mail</label>
+                    <input id="email" className={loading ? "loading" : ""} required onChange={(e) => dispatch(setFormData({key:"email", value:e.target.value}))} value={formData.email} type="email" />
                 </div>
             </div>
 
@@ -51,7 +51,7 @@ export default function ContactForm({formRef, formData, loading}){
                 <div className="field">
                     <label htmlFor="message">Message</label>
                     <div className="textarea-container">
-                        <textarea className={loading ? "loading" : ""} required onChange={(e) => dispatch(setFormData({key:"message", value:e.target.value}))} value={formData.message} name="message" id="" rows={8}></textarea>
+                        <textarea id="message" className={loading ? "loading" : ""} required onChange={(e) => dispatch(setFormData({key:"message", value:e.target.value}))} value={formData.message} name="message" rows={8}></textarea>
                         {loading && (
                             <div className="loadingIcon">
                                 <SpinnerCircular size={30} color="white"/>

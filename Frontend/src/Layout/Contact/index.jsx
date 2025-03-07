@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 
 export default function ContactLayout(){
 
-    const {mobile, desktop} = useSelector(store => store.app)
+    const {desktop} = useSelector(store => store.app)
 
     return(
         <>

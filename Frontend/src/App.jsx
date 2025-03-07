@@ -11,7 +11,7 @@ import ROUTES from "@Constants/Routes";
 import AProposPage from "@Pages/APropos";
 import { useEffect } from "react";
 import AdminPage from "@Pages/Admin";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { setOpenPhoneMenu } from "@Redux/Slices/phoneState";
 import { setCurrentRoute } from "@Redux/Slices/routes";
@@ -20,20 +20,21 @@ import { setScreenSize } from "@Redux/Slices/App";
 
 export default function App() {
 
+  
   const { pathname } = useLocation();
   const dispatch = useDispatch()
   const {mobile, desktop} = useSelector(store => store.app)
-
-
+  
+  
   // A chaque changement d'url ( de page ) 
   useEffect(() => {
     window.scrollTo({top: 0, behavior: 'instant'}); // Repositionne la vue utilisateur en haut de l'écran
     dispatch(setOpenPhoneMenu(false)) // Ferme le menu de navigation téléphone
     dispatch(setCurrentRoute(pathname)) // set dans le store routes le currentRoute
   }, [pathname]);
-
-
-
+  
+  
+  
   // Enregistre le dimensionnement de la fenêtre pour gérer l'affichage dynamique de composant
   useEffect(() => {
     dispatch(setScreenSize(window.innerWidth));
@@ -41,26 +42,30 @@ export default function App() {
     const setSize = () => {
       dispatch(setScreenSize(window.innerWidth))
     }
-
+    
     window.addEventListener("resize", setSize)
-
+    
     return () => window.removeEventListener("resize", setSize)
   }, [])
-
+  
+  const shouldReduceMotion = useReducedMotion();
+  const initialScale = shouldReduceMotion ? "scale(1)" : mobile ? "scale(0.95)" : "scale(0.98)";
+  const transitionDuration = shouldReduceMotion ? 0 : 1;
+  
   
   
   return (
-      <>
+    <>
         <Header/> {/*Nettoyer*/}
         <main>
           <AnimatePresence mode="wait">
             <motion.div
-              style={{ opacity: 0, transform: mobile ? 'scale(0.95)' : "scale(0.98)" }}
+              style={{ opacity: 0, transform: initialScale }}
               key={pathname}
-              initial={{ opacity: 0, transform:mobile ? 'scale(0.95)' : "scale(0.98)" }}
+              initial={{ opacity: 0, transform: initialScale }}
               animate={{ opacity: 1, transform:"scale(1)" }}
-              exit={{ opacity:0, transition:{duration:0} }}
-              transition={{ duration: 1 }}
+              exit={{ opacity:0, transition:{duration:0 } }}
+              transition={{ duration: transitionDuration }}
             >
               <Routes>
                 <Route path={ROUTES.ADMIN} element={<AdminPage/>}/>
