@@ -2,18 +2,22 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import ROUTES from "@Constants/Routes";
 import ENDPOINT from "@Constants/Endpoint";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import sortByPhotoType from "@Services/sortByPhotoType";
 import PortefolioLayout from "@Layout/Portefolio";
 
-export default function PortefoliosPage() {
-
-  const currentRoute = useSelector(store => store.routes.currentRoute)
+export default function PortefoliosPage({exitComplete}) {
+  const location = useLocation()
+  const currentRoute = location.pathname
   const { artisanID } = useParams()
   const [photos, setPhotos] = useState([]);
   const [portefolioType, setPortefolioType] = useState(null)
 
   useEffect(() => {
+
+    if(!exitComplete){
+      return
+    }
 
     // Si le chargement de cette page concerne des artisans
     if(currentRoute.startsWith("/Artisan") && artisanID){
@@ -59,17 +63,17 @@ export default function PortefoliosPage() {
             return
         }
         if(subject && portefolioType){
-          setPortefolioType(portefolioType)
-          fetch(ENDPOINT.LOAD("portefolio", subject))
-          .then(response => response.json())
-          .then(photos => {
-            const sortedPhotos = sortByPhotoType(photos)
-            const photosArray = sortedPhotos.map(photo => ({image:photo.image, orientation:photo.orientation}))
-            setPhotos(photosArray)
-          })
+            setPortefolioType(portefolioType)
+            fetch(ENDPOINT.LOAD("portefolio", subject))
+            .then(response => response.json())
+            .then(photos => {
+              const sortedPhotos = sortByPhotoType(photos)
+              const photosArray = sortedPhotos.map(photo => ({image:photo.image, orientation:photo.orientation}))
+              setPhotos(photosArray)
+            })
         }
     }
-  }, [currentRoute])
+  }, [currentRoute, exitComplete])
 
 
   return (

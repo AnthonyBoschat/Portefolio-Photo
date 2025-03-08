@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import ENDPOINT from "@Constants/Endpoint";
 import STATIC_PHOTOS from "@Constants/StaticPhotos/StaticPhotos";
 import sortByPhotoType from "@Services/sortByPhotoType";
+import { useLocation } from "react-router-dom";
 
 
 const boudoirPrestation = {
@@ -51,9 +52,10 @@ const artisanPrestation = {
     ]
 }
 
-export default function PrestationPage(){
+export default function PrestationPage({exitComplete}){
 
-    const currentRoute = useSelector(state => state.routes.currentRoute)
+    const location = useLocation()
+    const currentRoute = location.pathname
     
     const [loading, setLoading]= useState(true)
 
@@ -72,6 +74,11 @@ export default function PrestationPage(){
 
     // Charge dans le state les photos de la réponse
     useEffect(() => {
+
+        if(!exitComplete){
+            return
+        }
+
         if(loading){
 
             let bannerPhotos
@@ -123,7 +130,7 @@ export default function PrestationPage(){
                 })
             }
         }
-    }, [loading, currentRoute])
+    }, [loading, currentRoute, exitComplete])
 
     return(
         <>
