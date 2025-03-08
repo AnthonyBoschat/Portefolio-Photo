@@ -3,7 +3,7 @@ import "./style.scss";
 
 import { setOpenPhoneMenu } from "@Redux/Slices/phoneState"
 import { useDispatch, useSelector } from "react-redux"
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export default function Navigation(){
 
@@ -11,6 +11,7 @@ export default function Navigation(){
     const {mobile, desktop} = useSelector(store => store.app)
     const {routes, currentRoute} = useSelector(store => store.routes)
     const {pathname} = useLocation()
+    const navigate = useNavigate()
 
     const isSelectedRoute = (link) => {
         if(pathname.startsWith("/Artisan")){
@@ -42,7 +43,7 @@ export default function Navigation(){
                                 <>
                                     {route.subMenu && (
                                         <div className="button-list-container">
-                                            <button className={isSelectedRoute(route.link) || route.open ? "active" : ""}>
+                                            <button onClick={route.label === "Portefolio" ? () => navigate(ROUTES.PORTEFOLIOS.INDEX) : undefined} className={isSelectedRoute(route.link) || route.open ? "active" : ""}>
                                                 {route.label}
                                                 {route.subMenu && (
                                                     <i className="fa-solid fa-caret-down"></i>
