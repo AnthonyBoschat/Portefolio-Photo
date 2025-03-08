@@ -37,12 +37,12 @@ export default function Navigation(){
 
             {desktop && (
                 <nav id="navigation-desktop-container">
-                    {routes.map((route) => {
+                    {routes.map((route, index) => {
                         if(!route.hidden){
                             return (
                                 <>
                                     {route.subMenu && (
-                                        <div className="button-list-container">
+                                        <div key={index} className="button-list-container">
                                             <button onClick={route.label === "Portefolio" ? () => navigate(ROUTES.PORTEFOLIOS.INDEX) : undefined} className={isSelectedRoute(route.link) || route.open ? "active" : ""}>
                                                 {route.label}
                                                 {route.subMenu && (
@@ -50,14 +50,14 @@ export default function Navigation(){
                                                 )}
                                             </button>
                                             <div className="child-list">
-                                                {route.children.map(route => (
-                                                    <Link className={isSelectedRoute(route.link) ? "active" : ""} to={route.link}>{route.label}</Link>
+                                                {route.children.map((route, index) => (
+                                                    <Link key={index} className={isSelectedRoute(route.link) ? "active" : ""} to={route.link}>{route.label}</Link>
                                                 ))}
                                             </div>
                                         </div>
                                     )}
                                     {!route.subMenu && (
-                                        <Link to={route.link} className={isSelectedRoute(route.link) ? "active" : ""}>
+                                        <Link key={index} to={route.link} className={isSelectedRoute(route.link) ? "active" : ""}>
                                             {route.label}
                                             {route.subMenu && (
                                                 <i className="fa-solid fa-caret-down"></i>

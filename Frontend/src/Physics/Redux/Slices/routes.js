@@ -1,5 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import ROUTES from '@Constants/Routes';
+import collab from "@Constants/StaticPhotos/photos/portefolio/index/collab.jpg";
+import fantastique from "@Constants/StaticPhotos/photos/portefolio/index/fantastique.jpg";
+import lumiereNaturelle from "@Constants/StaticPhotos/photos/portefolio/index/lumiereNaturelle.jpg";
+import nu from "@Constants/StaticPhotos/photos/portefolio/index/nu.jpg";
+import retouche from "@Constants/StaticPhotos/photos/portefolio/index/retouche.jpg";
+import studio from "@Constants/StaticPhotos/photos/portefolio/index/studio.jpg";
 
 
 export const routesSlice = createSlice({
@@ -8,12 +14,12 @@ export const routesSlice = createSlice({
     routes:[
         {label:"Accueil", link:ROUTES.HOME, subMenu:false},
         {label:"Portefolio", link:"/Portefolios", subMenu:true, open:false, children:[
-            {label:"Collaboration Artistique", link:ROUTES.PORTEFOLIOS.COLLABORATION_ARTISTIQUE},
-            {label:"Fantastique", link:ROUTES.PORTEFOLIOS.FANTASTIQUE},
-            {label:"Lumière Naturelle", link:ROUTES.PORTEFOLIOS.LUMIERE_NATURELLE},
-            {label:"Retouche Créatives", link:ROUTES.PORTEFOLIOS.RETOUCHE_CREATIVE},
-            {label:"Nu - Lingerie", link:ROUTES.PORTEFOLIOS.NU_LINGERIE},
-            {label:"Studio", link:ROUTES.PORTEFOLIOS.STUDIO},
+            {label:"Collaboration Artistique", link:ROUTES.PORTEFOLIOS.COLLABORATION_ARTISTIQUE, representant:collab},
+            {label:"Fantastique", link:ROUTES.PORTEFOLIOS.FANTASTIQUE, representant:fantastique},
+            {label:"Lumière Naturelle", link:ROUTES.PORTEFOLIOS.LUMIERE_NATURELLE, representant:lumiereNaturelle},
+            {label:"Retouche Créatives", link:ROUTES.PORTEFOLIOS.RETOUCHE_CREATIVE, representant:retouche},
+            {label:"Nu - Lingerie", link:ROUTES.PORTEFOLIOS.NU_LINGERIE, representant:nu},
+            {label:"Studio", link:ROUTES.PORTEFOLIOS.STUDIO, representant:studio},
         ]},
         {label:"Prestations", link:"/Prestations", subMenu:true, open:false, children:[
             {label:"Portrait", link:ROUTES.PRESTATIONS.PORTRAIT},

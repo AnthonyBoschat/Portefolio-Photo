@@ -1,0 +1,27 @@
+div#portefolio-index-main-container{
+    
+    padding: 2rem 15vw 4rem 15vw;
+
+    ul.portefolio-list{
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 3rem 1rem;
+
+        li{
+            h1{
+                all:unset;
+                font-size: 16px;
+                letter-spacing: 1px;
+                margin-left: 0.5rem;
+            }
+            img{
+                border-radius: 6px;
+                transition: transform 0.2s linear !important;
+                &:hover{
+                    cursor: pointer;
+                    transform: scale(1.05);
+                }
+            }
+        }
+    }
+}

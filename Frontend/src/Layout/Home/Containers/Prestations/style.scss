@@ -45,10 +45,10 @@ section.home-prestation{
             }
             img{
                 border-radius: 6px;
-                // transition: transform 0.2s ease-in-out !important;
+                transition: transform 0.2s linear !important;
                 &:hover{
                     cursor: pointer;
-                    // transform: scale(1.05);
+                    transform: scale(1.05);
                 }
             }
             a{
