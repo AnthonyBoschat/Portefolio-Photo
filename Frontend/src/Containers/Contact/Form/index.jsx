@@ -16,11 +16,11 @@ export default function ContactForm({formRef, formData, loading}){
             <div className="line">
                 <div className="field">
                     <label htmlFor="lastname">Nom</label>
-                    <input id="lastname" className={loading ? "loading" : ""} required onChange={(e) => dispatch(setFormData({key:"lastname", value:e.target.value}))} value={formData.lastname} type="text" name="lastname" />
+                    <input placeholder="Nom" id="lastname" className={loading ? "loading" : ""} required onChange={(e) => dispatch(setFormData({key:"lastname", value:e.target.value}))} value={formData.lastname} type="text" name="lastname" />
                 </div>
                 <div className="field">
-                    <label htmlFor="firstname">Prénom</label>
-                    <input id="firstname" className={loading ? "loading" : ""} required onChange={(e) => dispatch(setFormData({key:"firstname", value:e.target.value}))} value={formData.firstname} type="text" name="firstname" />
+                    <label style={{opacity:0}} htmlFor="firstname">Prénom</label>
+                    <input placeholder="Prénom" id="firstname" className={loading ? "loading" : ""} required onChange={(e) => dispatch(setFormData({key:"firstname", value:e.target.value}))} value={formData.firstname} type="text" name="firstname" />
                 </div>
             </div>
 
@@ -28,7 +28,7 @@ export default function ContactForm({formRef, formData, loading}){
             <div className="line">
                 <div className="field">
                     <label htmlFor="email">Adresse e-mail</label>
-                    <input id="email" className={loading ? "loading" : ""} required onChange={(e) => dispatch(setFormData({key:"email", value:e.target.value}))} value={formData.email} type="email" />
+                    <input placeholder="exemple@email.com" id="email" className={loading ? "loading" : ""} required onChange={(e) => dispatch(setFormData({key:"email", value:e.target.value}))} value={formData.email} type="email" />
                 </div>
             </div>
 
@@ -51,7 +51,7 @@ export default function ContactForm({formRef, formData, loading}){
                 <div className="field">
                     <label htmlFor="message">Message</label>
                     <div className="textarea-container">
-                        <textarea id="message" className={loading ? "loading" : ""} required onChange={(e) => dispatch(setFormData({key:"message", value:e.target.value}))} value={formData.message} name="message" rows={8}></textarea>
+                        <textarea placeholder="Bonjour, je suis intéressé(e) par vos services et j’aimerais..." id="message" className={loading ? "loading" : ""} required onChange={(e) => dispatch(setFormData({key:"message", value:e.target.value}))} value={formData.message} name="message" rows={8}></textarea>
                         {loading && (
                             <div className="loadingIcon">
                                 <SpinnerCircular size={30} color="white"/>
