@@ -1,0 +1,32 @@
+@use "@Sass/constants.scss" as v;
+
+div#home-introduction{
+    // position: absolute;
+    position: relative;
+    z-index: 1001;
+    top: -5rem;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+
+    &::after{
+        position: absolute;
+        content: "";
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.332);
+    }
+
+    h1{
+        font-weight: 500;
+        position: absolute;
+        z-index: 2;
+        bottom: 6rem;
+        right: 10rem;
+        color: v.$light;
+        letter-spacing: 3px;
+    }
+}

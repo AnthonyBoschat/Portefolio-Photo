@@ -3,6 +3,7 @@ import { useMemo } from "react";
 import STATIC_PHOTOS from "@Constants/StaticPhotos/StaticPhotos";
 import ROUTES from "@Constants/Routes";
 import { useSelector } from "react-redux";
+import IntroductionContainer from "@Containers/Introduction";
 
 
 export default function HomePage(){
@@ -20,10 +21,13 @@ export default function HomePage(){
     const aproposPhoto = useMemo(() => STATIC_PHOTOS.APROPOS.JESAHEL, [])
 
     return(
-        <HomeLayout
-            prestationsPhotos={prestationsPhotos}
-            portefolioPhotos={portefolioPhotos}
-            aproposPhoto={aproposPhoto}
-        />
+        <>
+            <IntroductionContainer/>
+            <HomeLayout
+                prestationsPhotos={prestationsPhotos}
+                portefolioPhotos={portefolioPhotos}
+                aproposPhoto={aproposPhoto}
+            />
+        </>
     )
 }

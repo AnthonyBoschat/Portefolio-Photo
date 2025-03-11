@@ -19,9 +19,15 @@ header{
         height: 5rem;
         width: 100vw;
         top: 0;
-        z-index: 1000;
+        z-index: 1002;
         padding: 1.5rem; // res
-        transition: all 0.1s linear;
+        transition: opacity 0.3s linear;
+        opacity: 1;
+
+        &.hidden{
+            opacity: 0;
+            pointer-events: none;
+        }
 
         @include mixins.respond-to("desktop"){
             padding: 0;
