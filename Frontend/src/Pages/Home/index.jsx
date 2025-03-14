@@ -1,5 +1,5 @@
 import HomeLayout from "@Layout/Home";
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
 import STATIC_PHOTOS from "@Constants/StaticPhotos/StaticPhotos";
 import ROUTES from "@Constants/Routes";
 import { useSelector } from "react-redux";
@@ -20,10 +20,13 @@ export default function HomePage(){
 
     const aproposPhoto = useMemo(() => STATIC_PHOTOS.APROPOS.JESAHEL, [])
 
+    const firstElementRef = useRef()
+
     return(
         <>
-            <IntroductionContainer/>
+            <IntroductionContainer firstElementRef={firstElementRef}/>
             <HomeLayout
+                firstElementRef={firstElementRef}
                 prestationsPhotos={prestationsPhotos}
                 portefolioPhotos={portefolioPhotos}
                 aproposPhoto={aproposPhoto}

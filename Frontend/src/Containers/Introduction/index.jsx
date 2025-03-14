@@ -1,9 +1,9 @@
 import "./style.scss";
 import introductionImage from "./introduction.jpg"
 import { useEffect, useState } from "react";
-import { transform } from "framer-motion";
+import { RxDoubleArrowDown } from "react-icons/rx";
 
-export default function IntroductionContainer(){
+export default function IntroductionContainer({firstElementRef}){
 
     const [offset, setOffset] = useState(0);
 
@@ -18,19 +18,26 @@ export default function IntroductionContainer(){
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
+    const transformStyle = {
+        transform: `translateY( -${offset / 1.5}px`,
+        height: `calc(100vh -${offset}px)`
+    }
+
     const zoomStyle = {
-        transform: "scale(" + (1 + offset / 3000) + ")"
+        transform: "scale(" + (1 + offset / 1000) + ")"
     }
 
     const textOpacity = Math.max(1 - offset / 600, 0);
 
 
     return(
-        <div id="home-introduction">
-            <img src={introductionImage} style={zoomStyle} />
+        <div id="home-introduction" style={transformStyle}>
+            <img src={introductionImage}/>
             <h1 style={{ opacity: textOpacity }}>
                 Bienvenue dans mon univers<br/> photographique.
             </h1>
+            <RxDoubleArrowDown onClick={() => firstElementRef.current.scrollIntoView({behavior:"smooth"})} style={{opacity:textOpacity}} />
+            {/* <i className="fa-solid fa-arrow-down"></i> */}
         </div>
     )
 }

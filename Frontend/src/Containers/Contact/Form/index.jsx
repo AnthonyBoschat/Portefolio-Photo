@@ -51,7 +51,7 @@ export default function ContactForm({formRef, formData, loading}){
                 <div className="field">
                     <label htmlFor="message">Message</label>
                     <div className="textarea-container">
-                        <textarea placeholder="Bonjour, je suis intéressé(e) par vos services et j’aimerais..." id="message" className={loading ? "loading" : ""} required onChange={(e) => dispatch(setFormData({key:"message", value:e.target.value}))} value={formData.message} name="message" rows={8}></textarea>
+                        <textarea placeholder="" id="message" className={loading ? "loading" : ""} required onChange={(e) => dispatch(setFormData({key:"message", value:e.target.value}))} value={formData.message} name="message" rows={8}></textarea>
                         {loading && (
                             <div className="loadingIcon">
                                 <SpinnerCircular size={30} color="white"/>

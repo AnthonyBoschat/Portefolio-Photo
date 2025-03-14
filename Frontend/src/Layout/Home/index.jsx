@@ -19,7 +19,8 @@ import { useRef, useState } from "react";
 export default function HomeLayout({
     prestationsPhotos,
     portefolioPhotos,
-    aproposPhoto
+    aproposPhoto,
+    firstElementRef
 }){
 
     const {mobile, desktop} = useSelector(store => store.app)
@@ -28,7 +29,7 @@ export default function HomeLayout({
 
     return(
         <>
-        <div id="home-main-layout">
+        <div id="home-main-layout" ref={firstElementRef}>
 
 
             <SectionComponent style={{marginTop:"70px"}} label="Prestations" customClass="home-prestation">

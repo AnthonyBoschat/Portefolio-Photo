@@ -20,11 +20,31 @@ div#home-introduction{
         background-color: rgba(0, 0, 0, 0.332);
     }
 
+    svg{
+        position: absolute;
+        // left: 8rem;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 3rem;
+        color: v.$light;
+        font-size: 2rem;
+        animation: pulse 3s ease-in-out infinite;
+        z-index: 2;
+        // text-shadow: 2px 2px ;
+        filter: drop-shadow(0px 2px 1px black);
+        transition: all 0.2s ease-in-out;
+        &:hover{
+            transform:translateX(-50%) scale(1.2);
+            cursor: pointer;
+            opacity: 1;
+        }
+    }
+
     h1{
         font-weight: 500;
         position: absolute;
         z-index: 2;
-        bottom: 6rem;
+        bottom: 10rem;
         right: 10rem;
         color: v.$light;
         letter-spacing: 3px;
