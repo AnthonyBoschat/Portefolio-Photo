@@ -39,7 +39,7 @@ export default function PrestationsHome({prestationsPhotos}){
                     <div id="picture-container">
                         <Carousel photos={photos} setPhotos={setPhotos}/>
                     </div>
-                    <ExploreButton onClick={() => {
+                    <ExploreButton position="center" onClick={() => {
                         dispatch(openSubMenuForce("Prestations"))
                         dispatch(setOpenPhoneMenu(true))
                     }} text={"En savoir plus"}/>

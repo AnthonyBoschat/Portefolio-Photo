@@ -37,7 +37,6 @@
     section.home-apropos{
         .content{
             height: fit-content;
-            // outline: 1px solid red;
             display: flex;
             flex-direction: column;
         }
@@ -49,29 +48,17 @@
         .content{
             display: flex;
             flex-direction: column;
-            gap: 1rem;
-            // outline: 1px solid red;
+            div.galery{
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+            }
             @include mixins.respond-to("desktop"){
                 display: grid;
                 gap: 0.5rem;
                 letter-spacing: 1px;
-
-
-
-                // PROPOSITION 1
-                // margin-left: 10rem;
-                // margin-right: 10rem;
-                // grid-template-columns: repeat(2, 1fr);
-                // .paysage{
-                //     grid-column: span 2;
-                // }
-                // div{
-                //     grid-column: span 2;
-                // }
-
-                // PROPOSITION 2
-
                 grid-template-columns: repeat(5, 1fr);
+
                 img{
                     &.paysage{
                         grid-column: span 2;

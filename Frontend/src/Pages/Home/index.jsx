@@ -8,7 +8,7 @@ import IntroductionContainer from "@Containers/Introduction";
 
 export default function HomePage(){
 
-    const {mobile} = useSelector(store => store.app)
+    const {mobile, desktop} = useSelector(store => store.app)
 
     const prestationsPhotos = useMemo(() => [
         {label:"Portrait", selected:true, image:STATIC_PHOTOS.HOME.PRESTATION.PORTRAIT, url:ROUTES.PRESTATIONS.PORTRAIT},
@@ -24,7 +24,9 @@ export default function HomePage(){
 
     return(
         <>
-            <IntroductionContainer firstElementRef={firstElementRef}/>
+            {desktop && (
+                <IntroductionContainer firstElementRef={firstElementRef}/>
+            )}
             <HomeLayout
                 firstElementRef={firstElementRef}
                 prestationsPhotos={prestationsPhotos}

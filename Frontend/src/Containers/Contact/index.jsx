@@ -60,7 +60,7 @@ export default function ContactContainer(){
     return(
         <>
             <ContactForm loading={loading} formRef={formRef} formData={formData}/>
-            <ExploreButton onClick={() => sendMail()} text={"Transmettre"}/>
+            <ExploreButton position="right" onClick={() => sendMail()} text={"Transmettre"}/>
             <div  className="email-send-report-container">
                 {emailSend && (
                 <span ref={emailSendReportRef}>Message envoyé !</span>

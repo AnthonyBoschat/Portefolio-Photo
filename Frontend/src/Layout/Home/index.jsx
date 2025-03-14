@@ -49,8 +49,10 @@ export default function HomeLayout({
                 <div className="content">
                     {mobile && (
                         <>
-                            <Galery photos={portefolioPhotos} alt={"Photo de présentation de la catégorie 'Portefolio'"} />
-                            <ExploreButton onClick={() => {
+                            <div className="galery">
+                                <Galery photos={portefolioPhotos} alt={"Photo de présentation de la catégorie 'Portefolio'"} />
+                            </div>
+                            <ExploreButton position={"center"} onClick={() => {
                                 dispatch(openSubMenuForce("Portefolio"))
                                 dispatch(setOpenPhoneMenu(true))
                             }} text={"Parcourir"}/>
