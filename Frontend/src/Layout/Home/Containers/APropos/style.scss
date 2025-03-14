@@ -10,12 +10,16 @@ div#presentation{
 
     @include mixins.respond-to("desktop"){
         flex-direction: row;
-        gap: 10rem;
+        gap: 15rem;
         align-items: center;
     }
 
     picture{
         width: 100%;
+        img{
+            border-top-left-radius: 6px;
+            border-bottom-right-radius: 6px;
+        }
         @include mixins.respond-to("desktop"){
             order: 2;
             width: 40vh;

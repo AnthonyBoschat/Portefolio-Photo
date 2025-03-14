@@ -5,9 +5,18 @@
 
 
 header{
+    position: relative;
+    z-index: 1000000;
     height: 100%;
     width: 100%;
     font-family: v.$font;
+
+    &:hover{
+        .container{
+            opacity: 1 !important;
+            transform: translateY(0%) !important;
+        }
+    }
     
     
     .container{
@@ -21,12 +30,16 @@ header{
         top: 0;
         z-index: 1002;
         padding: 1.5rem; // res
-        transition: opacity 0.3s linear;
-        opacity: 1;
+        transition: all 0.3s linear;
+
+        // Evite l'apparition du header au chargement de la page (desktop)
+        &.no-transition {
+            transition: none;
+        }
 
         &.hidden{
+            transform: translateY(-100%);
             opacity: 0;
-            pointer-events: none;
         }
 
         @include mixins.respond-to("desktop"){

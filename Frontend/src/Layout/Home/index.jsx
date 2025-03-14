@@ -69,16 +69,16 @@ export default function HomeLayout({
                 </div>
             </SectionComponent>
 
-            <SectionComponent label="Contact" customClass="home-contact">
+            <SectionComponent label={"Contactez moi"} customClass="home-contact">
                 <div className="content">
-                    <div>
-                        <ContactContainer />
-                    </div>
                     {desktop && (
                         <picture>
                             {/* <img src="" alt="qzdqzd" /> */}
                         </picture>
                     )}
+                    <div>
+                        <ContactContainer />
+                    </div>
                 </div>
             </SectionComponent>
             

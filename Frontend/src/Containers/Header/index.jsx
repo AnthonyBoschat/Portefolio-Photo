@@ -13,7 +13,15 @@ export default function Header(){
     const {pathname} = useLocation()
     const headerRef = useRef()
 
-    const [scrolling, setScrolling] = useState(false) // L'utilisateur est en train de scroll ?
+    // L'utilisateur est en train de scroll ?
+    const [scrolling, setScrolling] = useState(false)
+
+    // Détermine si le composant est monté ou non
+    const [mounted, setMounted] = useState(false);
+    useEffect(() => {
+        setMounted(true);
+      }, []);
+
 
     // Gère l'animation dû au scroll
     useEffect(() => {
@@ -28,10 +36,18 @@ export default function Header(){
         };
     }, []);
 
+    // Classes dynamique du container
+    const containerClasses = `
+        container 
+        ${!scrolling && pathname === "/" && desktop ? "hidden" : ""} 
+        ${scrolling ? "active" : ""} 
+        ${mounted ? "" : "no-transition"}
+    `;
+
 
     return(
         <header ref={headerRef}>
-            <div className={`container ${(!scrolling && pathname === "/") ? "hidden" : ""} ${scrolling ? "active" : ""}`}>
+            <div className={containerClasses }>
                 <div className="logo-breadcrumbs-container">
                     <Link to={ROUTES.HOME}>
                         <img src={logo} alt="Logo du site internet" />
