@@ -93,6 +93,7 @@ div#prestations-main-container{
 
         @include mixins.respond-to("desktop"){
             margin-top: 8vw;
+            padding-bottom: 2rem;
         }
 
         p{
@@ -107,8 +108,9 @@ div#prestations-main-container{
             align-self: center;
             @include mixins.respond-to("desktop"){
                 font-size: 18px;
-                width: 40%;
+                width: 60%;
                 gap: 2rem;
+
             }
         }
     }
