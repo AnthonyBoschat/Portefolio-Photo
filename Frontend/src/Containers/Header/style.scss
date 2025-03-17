@@ -11,6 +11,8 @@ header{
     width: 100%;
     font-family: v.$font;
 
+
+    // PROPOSITION APPARITION SURVOL
     &:hover{
         .container{
             opacity: 1 !important;
