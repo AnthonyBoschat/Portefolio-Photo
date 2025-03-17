@@ -5,6 +5,33 @@ import ROUTES from "@Constants/Routes";
 import { useSelector } from "react-redux";
 import IntroductionContainer from "@Containers/Introduction";
 
+import { useEffect } from 'react';
+import Lenis from "lenis";
+
+function SmoothScrollWrapper({ children }) {
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1, // durée de l’animation
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // easing smooth
+      smoothWheel: true, // activer smooth pour la roulette souris
+      smoothTouch: false, // désactiver smooth pour le tactile (optionnel)
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
+    // Nettoyage à la désinstallation du composant
+    return () => lenis.destroy();
+  }, []);
+
+  return children;
+}
+
+
 
 export default function HomePage(){
 
@@ -25,14 +52,14 @@ export default function HomePage(){
     return(
         <>
             {desktop && (
-                <IntroductionContainer firstElementRef={firstElementRef}/>
-            )}
+                    <IntroductionContainer firstElementRef={firstElementRef}/>
+                )}
             <HomeLayout
                 firstElementRef={firstElementRef}
                 prestationsPhotos={prestationsPhotos}
                 portefolioPhotos={portefolioPhotos}
                 aproposPhoto={aproposPhoto}
-            />
+                />
         </>
     )
 }

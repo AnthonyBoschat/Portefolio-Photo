@@ -16,6 +16,31 @@ import { useDispatch, useSelector } from "react-redux";
 import { setOpenPhoneMenu } from "@Redux/Slices/phoneState";
 import { setCurrentRoute } from "@Redux/Slices/routes";
 import { setScreenSize } from "@Redux/Slices/App";
+import Lenis from "lenis";
+
+
+function SmoothScrollWrapper({ children }) {
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 0.5, // durée de l’animation
+      easing: (t) => Math.min(1, 1.001 - Math.pow(1.5, -15 * t)), // Paramètre de l'animation
+      smoothWheel: true,
+      smoothTouch: false
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
+    // Nettoyage à la désinstallation du composant
+    return () => lenis.destroy();
+  }, []);
+
+  return children;
+}
 
 
 export default function App() {
@@ -62,6 +87,8 @@ export default function App() {
   
   return (
     <>
+                <SmoothScrollWrapper>
+                
         <Header/> {/*Nettoyer*/}
         <main>
           <AnimatePresence mode="wait" onExitComplete={() => setExitComplete(true)}>
@@ -119,6 +146,7 @@ export default function App() {
         {mobile && (
           <PhoneMenuContainer/>
         )}
+        </SmoothScrollWrapper>
       </>
   )
 }
