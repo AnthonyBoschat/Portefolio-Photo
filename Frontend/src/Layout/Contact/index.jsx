@@ -13,14 +13,14 @@ export default function ContactLayout(){
 
         <div id="contact-layout-container">
             <div className="contact">
-                <div>
-                    <ContactContainer/>
-                </div>
                 {desktop && (
                     <picture>
                         {/* <img src="" alt="qzdqzd" /> */}
                     </picture>
                 )}
+                <div>
+                    <ContactContainer/>
+                </div>
             </div>
             <div className="contact-media">
                 <Medias color={"light"}/>

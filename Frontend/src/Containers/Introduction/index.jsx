@@ -3,7 +3,7 @@ import introductionImage from "./introduction.jpg"
 import { useEffect, useState } from "react";
 import { RxDoubleArrowDown } from "react-icons/rx";
 
-export default function IntroductionContainer({firstElementRef}){
+export default function IntroductionContainer({firstElementRef, introductionImageRef}){
 
     const [offset, setOffset] = useState(0);
 
@@ -31,7 +31,7 @@ export default function IntroductionContainer({firstElementRef}){
 
 
     return(
-        <div id="home-introduction" style={transformStyle}>
+        <div ref={introductionImageRef} id="home-introduction" style={transformStyle}>
             <img src={introductionImage}/>
             <h1 style={{ opacity: textOpacity }}>
                 Bienvenue dans mon univers<br/> photographique.

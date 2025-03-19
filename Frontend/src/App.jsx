@@ -9,7 +9,7 @@ import PortefoliosPage from "@Pages/Portefolios";
 import PortefoliosIndexPage from "@Pages/Portefolios/index/index.jsx";
 import ROUTES from "@Constants/Routes";
 import AProposPage from "@Pages/APropos";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import AdminPage from "@Pages/Admin";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
@@ -83,13 +83,14 @@ export default function App() {
   const shouldReduceMotion = useReducedMotion();
   const duration = shouldReduceMotion ? 0 : 0.5;
 
+  const introductionImageRef = useRef(null);
   
   
   return (
     <>
-                <SmoothScrollWrapper>
+      <SmoothScrollWrapper>
                 
-        <Header/> {/*Nettoyer*/}
+        <Header introductionImageRef={introductionImageRef}/> {/*Nettoyer*/}
         <main>
           <AnimatePresence mode="wait" onExitComplete={() => setExitComplete(true)}>
             <motion.div
@@ -119,7 +120,7 @@ export default function App() {
                 <Route path={ROUTES.ADMIN} element={<AdminPage/>}/>
 
 
-                <Route path={ROUTES.HOME} element={<HomePage/>}/> {/*Nettoyer*/}
+                <Route path={ROUTES.HOME} element={<HomePage introductionImageRef={introductionImageRef}/>}/> {/*Nettoyer*/}
 
                 <Route path={ROUTES.PRESTATIONS.ARTISAN} element={<PrestationPage exitComplete={exitComplete}/>}/> {/*Nettoyer*/}
                 <Route path={ROUTES.PRESTATIONS.BOUDOIR} element={<PrestationPage exitComplete={exitComplete}/>}/> {/*Nettoyer*/}

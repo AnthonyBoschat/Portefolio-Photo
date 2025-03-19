@@ -6,7 +6,7 @@
 
 header{
     position: relative;
-   z-index: 1003;
+    z-index: 1003;
     height: 100%;
     width: 100%;
     font-family: v.$font;
@@ -33,6 +33,75 @@ header{
         z-index: 1000;
         padding: 1.5rem; // res
         transition: all 0.3s linear;
+
+        // PROPOSITION 3 
+        &.transparentStyle{
+            background-color: rgba(221, 221, 221, 0.7);
+            backdrop-filter: blur(4px);
+            box-shadow: 0px 2px 16px rgba(0, 0, 0, 0.188) !important;
+        }
+
+        // PROPOSITION 2
+        // &.transparentStyle{
+        //     background-color: rgba(255, 255, 255, 0.2);
+        //     backdrop-filter: blur(4px);
+        //     box-shadow: 0px 2px 16px rgba(0, 0, 0, 0.188) !important;
+
+        //     #navigation-desktop-container{
+        //         color: v.$light;
+        //         text-shadow: 0px 1px 1px black ;
+        //         i{
+        //             color: v.$light;
+        //         }
+        //     }
+        // }
+
+        // PROPOSITION 1 
+        // &.transparentStyle{
+        //     background-color: rgba(0, 0, 0, 0.20);
+        //     backdrop-filter: blur(4px);
+        //     box-shadow: 0px 2px 16px rgba(0, 0, 0, 0.188) !important;
+
+
+        //     #navigation-desktop-container{
+
+        //         color: v.$light;
+                
+        //         .button-list-container{
+
+        //             &:hover button{
+        //                 opacity: 1;
+        //                 background-color: transparent !important;
+        //             }
+        //             .child-list{
+        //                 background-color: transparent;
+        //                 width: 120% !important;
+        //             }
+                    
+        //             i{
+        //                 color: v.$light;
+        //             }
+                    
+        //         }
+        //         button,a {
+        //             opacity: 0.5;
+        //             &.active{
+        //                 background-color: transparent;
+        //                 opacity: 1;
+        //             }
+        //             &:hover{
+        //                 background-color: transparent;
+        //                 opacity: 1;
+        //             }
+        //         }
+
+
+        //     }
+        // }
+        
+
+
+
 
         // Evite l'apparition du header au chargement de la page (desktop)
         &.no-transition {
