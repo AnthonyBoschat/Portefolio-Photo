@@ -83,7 +83,6 @@ const GalerySection = ({ currentRoute, galeryPhotos, setGaleryPhotos, navigate }
                 <span>{artisan.name}</span>
                     <picture onClick={() => navigate(`${ROUTES.ARTISAN}/${artisan.id}`)}>
                         <img src={element.image} alt="" />
-                        <i className="fa-solid fa-arrow-up-right-from-square"></i>
                     </picture>
                 </div>
             );

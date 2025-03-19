@@ -22,7 +22,7 @@ export default function LazyImage({ src, alt, onClick }){
   const paddingBottom = aspectRatio ? `${100 / aspectRatio}%` : '100%';
 
   return (
-    <div
+    <picture
       onClick={onClick}
       style={{
         position: 'relative',
@@ -49,6 +49,6 @@ export default function LazyImage({ src, alt, onClick }){
           transition: 'opacity 0.5s ease-in'
         }}
       />
-    </div>
+    </picture>
   );
 };
