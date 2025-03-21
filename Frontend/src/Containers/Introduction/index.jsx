@@ -32,11 +32,14 @@ export default function IntroductionContainer({firstElementRef, introductionImag
 
     return(
         <div ref={introductionImageRef} id="home-introduction" style={transformStyle}>
-            <img src={introductionImage}/>
-            <h1 style={{ opacity: textOpacity }}>
-                Bienvenue dans mon univers<br/> photographique.
-            </h1>
-            <RxDoubleArrowDown onClick={() => firstElementRef.current.scrollIntoView({behavior:"smooth"})} style={{opacity:textOpacity}} />
+            <picture>
+                <img src={introductionImage}/>
+
+                <h1 style={{ opacity: textOpacity }}>
+                    Bienvenue dans mon univers<br/> photographique.
+                </h1>
+                <RxDoubleArrowDown onClick={() => firstElementRef.current.scrollIntoView({behavior:"smooth"})} style={{opacity:textOpacity}} />
+            </picture>
             {/* <i className="fa-solid fa-arrow-down"></i> */}
         </div>
     )

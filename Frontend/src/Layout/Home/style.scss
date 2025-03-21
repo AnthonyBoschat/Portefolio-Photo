@@ -10,7 +10,7 @@
     flex-direction: column;
     gap: 6rem;
     padding: 2rem 21px 1rem 21px;
-    
+    margin-top: -12rem;
 
     @include mixins.respond-to("desktop"){
         margin-top: -10rem;

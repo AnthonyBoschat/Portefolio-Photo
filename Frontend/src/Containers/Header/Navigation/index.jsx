@@ -5,6 +5,7 @@ import { setOpenPhoneMenu } from "@Redux/Slices/phoneState"
 import { useDispatch, useSelector } from "react-redux"
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { routesSlice } from "@Redux/Slices/routes";
+import React from "react";
 
 export default function Navigation(){
 
@@ -49,7 +50,7 @@ export default function Navigation(){
                     {routes.map((route, index) => {
                         if(!route.hidden){
                             return (
-                                <>
+                                <React.Fragment key={index}>
                                     {route.subMenu && (
                                         <div key={index} className="button-list-container">
                                             <button onClick={route.label === "Portefolio" ? () => navigate(ROUTES.PORTEFOLIOS.INDEX) : undefined} className={isSelectedRoute(route.link) || route.open ? "active" : ""}>
@@ -73,7 +74,10 @@ export default function Navigation(){
                                             )}
                                         </Link>
                                     )}
-                                </>
+
+
+                                </React.Fragment>
+
                             )
                         }
                     })}

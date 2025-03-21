@@ -30,7 +30,7 @@ export default function ZoomOverlay(){
         <div ref={containerRef} onClick={closeOverlay} className={active ? "active" : ""}  id="zoom-overlay-main-container">
             <div  className="overlay-element">
                 <div className="close-container">
-                    <i ref={closeButtonRef} onClick={() => dispatch(deactivateZoomOverlay())} class="fa-solid fa-xmark"></i>
+                    <i ref={closeButtonRef} onClick={() => dispatch(deactivateZoomOverlay())} className="fa-solid fa-xmark"></i>
                 </div>
                 
                 <img ref={imageRef} src={photoURL} alt="Photo actuellement zoomer par l'utilisateur" />

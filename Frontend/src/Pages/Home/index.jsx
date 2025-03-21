@@ -28,7 +28,8 @@ export default function HomePage({introductionImageRef}){
 
     return(
         <>
-            {desktop && ( <IntroductionContainer introductionImageRef={introductionImageRef} firstElementRef={firstElementRef}/> )}
+            {/* {desktop && ( <IntroductionContainer introductionImageRef={introductionImageRef} firstElementRef={firstElementRef}/> )} */}
+            <IntroductionContainer introductionImageRef={introductionImageRef} firstElementRef={firstElementRef}/>
             <HomeLayout
                 firstElementRef={firstElementRef}
                 prestationsPhotos={prestationsPhotos}

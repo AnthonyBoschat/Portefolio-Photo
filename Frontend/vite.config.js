@@ -13,6 +13,7 @@ export default defineConfig({
       "@Containers":path.resolve(__dirname, "./src/Containers"),
       "@Layout":path.resolve(__dirname, "./src/Layout"),
       "@Pages":path.resolve(__dirname, "./src/Pages"),
+      "@Proposition":path.resolve(__dirname, "./src/Proposition"),
 
       "@Assets":path.resolve(__dirname, "./src/Physics/Assets"),
       "@Constants":path.resolve(__dirname, "./src/Physics/Constants"),
