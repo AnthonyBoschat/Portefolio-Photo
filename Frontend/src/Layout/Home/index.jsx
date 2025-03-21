@@ -24,68 +24,65 @@ export default function HomeLayout({
 }){
 
     const {mobile, desktop} = useSelector(store => store.app)
-
     const dispatch = useDispatch()
 
     return(
         <>
-        <div id="home-main-layout" ref={firstElementRef}>
+            <div id="home-main-layout" ref={firstElementRef}>
 
 
-            <SectionComponent style={{marginTop:"70px"}} label="Prestations" customClass="home-prestation">
-                <div className="content">
-                    <PrestationsHome prestationsPhotos={prestationsPhotos}/>
-                </div>
-            </SectionComponent>
-            
-            <SectionComponent label="À propos" customClass="home-apropos">
-                <div className="content">
-                    <AProposHome aproposPhoto={aproposPhoto}/>
-                </div>
-
-            </SectionComponent>
-
-            <SectionComponent label="Portefolio" customClass="home-portefolio">
-                <div className="content">
-                    {mobile && (
-                        <>
-                            <div className="galery">
-                                <Galery photos={portefolioPhotos} alt={"Photo de présentation de la catégorie 'Portefolio'"} />
-                            </div>
-                            <ExploreButton position={"center"} onClick={() => {
-                                dispatch(openSubMenuForce("Portefolio"))
-                                dispatch(setOpenPhoneMenu(true))
-                            }} text={"Parcourir"}/>
-                        </>
-                    )}
-                    {desktop && (
-                        <>
-                            {portefolioPhotos.map((photo, index) => (
-                                <img key={index} loading="lazy" className={photo.type} src={photo.src}></img>
-                            ))}
-                            <ExploreButton navigate={ROUTES.PORTEFOLIOS.INDEX} text={"Parcourir"}/>
-                        </>
-                    )}
-                </div>
-            </SectionComponent>
-
-            <SectionComponent label={"Contactez moi"} customClass="home-contact">
-                <div className="content">
-                    {desktop && (
-                        <picture>
-                            {/* <img src="" alt="qzdqzd" /> */}
-                        </picture>
-                    )}
-                    <div>
-                        <ContactContainer />
+                <SectionComponent style={{marginTop:"70px"}} label="Prestations" customClass="home-prestation">
+                    <div className="content">
+                        <PrestationsHome prestationsPhotos={prestationsPhotos}/>
                     </div>
-                </div>
-            </SectionComponent>
-            
-        </div>
-            <footer style={{marginTop:"3rem"}}>
-                <Medias color={"light"}/>
-            </footer>
+                </SectionComponent>
+                
+                <SectionComponent label="À propos" customClass="home-apropos">
+                    <div className="content">
+                        <AProposHome aproposPhoto={aproposPhoto}/>
+                    </div>
+
+                </SectionComponent>
+
+                <SectionComponent label="Portefolio" customClass="home-portefolio">
+                    <div className="content">
+                        {mobile && (
+                            <>
+                                <div className="galery">
+                                    <Galery photos={portefolioPhotos} alt={"Photo de présentation de la catégorie 'Portefolio'"} />
+                                </div>
+                                <ExploreButton position={"center"} onClick={() => {
+                                    dispatch(openSubMenuForce("Portefolio"))
+                                    dispatch(setOpenPhoneMenu(true))
+                                }} text={"Parcourir"}/>
+                            </>
+                        )}
+                        {desktop && (
+                            <>
+                                {portefolioPhotos.map((photo, index) => (
+                                    <img key={index} loading="lazy" className={photo.type} src={photo.src}></img>
+                                ))}
+                                <ExploreButton navigate={ROUTES.PORTEFOLIOS.INDEX} text={"Parcourir"}/>
+                            </>
+                        )}
+                    </div>
+                </SectionComponent>
+
+                <SectionComponent label={"Contactez moi"} customClass="home-contact">
+                    <div className="content">
+                        {desktop && (
+                            <picture>
+                                {/* <img src="" alt="qzdqzd" /> */}
+                            </picture>
+                        )}
+                        <div>
+                            <ContactContainer />
+                        </div>
+                    </div>
+                </SectionComponent>
+                
+            </div>
+            <Medias color={"light"}/>
         </>
     )
 }

@@ -38,76 +38,6 @@ div#apropos-container{
                 letter-spacing: 1px;
             }
         }
-    
-    // @include mixins.respond-to("desktop"){
-    //     padding-top: 8rem;
-        
-    //     display: flex;
-    //     flex-direction: column;
-    //     gap: 3rem;
-    //     font-size: 18px;
-
-    //     .section{
-    //         margin-left: 7vw;
-    //         margin-right: 8vw;
-
-            
-    //         &.white{
-    //             display: flex;
-    //             flex-direction: row;
-    //             // background-color: red;
-    //             align-items: normal;
-    //             justify-content: center;
-    //             gap: 2rem;
-
-    //             img{
-    //                 // outline: 1px solid red;
-    //                 // height: 40rem;
-    //                 width: 20%;
-    //                 object-fit: cover;
-
-    //             }
-    //             p{
-    //                 // margin-top: -10px;
-    //                 justify-content: space-between;
-    //                 line-height: 50px;
-    //                 width: 20%;
-                    
-    //                 // outline: 1px solid red;
-    //             }
-    //         }
-    //         &.black{
-    //             padding-top: 4rem;
-    //             padding-bottom: 4rem;
-    //             background-color: v.$dark-light;
-    //             color: white;
-    //             display: flex;
-    //             justify-content: center;
-    //             align-items: center;
-    //             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
-    //             p{
-    //                 align-items: center;
-    //                 width: 50%;
-    //                 gap: 2rem;
-    //                 line-height: 30px;
-    //                 letter-spacing: 2px;
-    //                 span{
-    //                     text-align: center;
-    //                     opacity: 0.9;
-    //                 }
-    //             }
-    //             &.small{
-    //                 padding-top: 1rem;
-    //                 padding-bottom: 1rem;
-    //                 // padding-left: 0;
-    //                 margin: 0;
-    //             }
-    //         }
-    //         &.reverse{
-    //             flex-direction: row-reverse;
-    //         }
-    //     }
-    // }
 
 
     @include mixins.respond-to("desktop"){
@@ -168,7 +98,7 @@ div#apropos-container{
 
 
         div.media{
-            padding-top: 5rem !important;
+            // padding-top: 5rem !important;
             display: flex;
             justify-content: center;
         }

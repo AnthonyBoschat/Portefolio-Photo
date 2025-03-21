@@ -48,14 +48,6 @@ const STATIC_PHOTOS = {
             {src:prestation3, type:"portrait"},
             {src:portefolio2, type:"paysage"},
             {src:bannerPortrait3, type:"portrait"},
-
-
-            // {src:portefolio1, type:"paysage"},
-            // {src:bannerPortrait2, type:"portrait"},
-            // {src:bannerBoudoir1, type:"portrait"},
-            // {src:portefolio2, type:"paysage"},
-            // {src:bannerPortrait1, type:"portrait"},
-            // {src:aproposNaturalLight, type:"portrait"},
         ]
     },
 

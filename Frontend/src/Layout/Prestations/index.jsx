@@ -92,9 +92,8 @@ const GalerySection = ({ currentRoute, galeryPhotos, setGaleryPhotos, navigate }
     }
 
     return (
-        <div className="photos-carousel-container">
+        <div className="photos-galery-container">
             <Galery photos={galeryPhotos.map(photo => ({image:photo.image, orientation:photo.orientation}))} />
-            {/* <Carousel infinite photos={galeryPhotos} setPhotos={setGaleryPhotos} /> */}
         </div>
     );
 };

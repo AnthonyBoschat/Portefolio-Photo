@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import "./style.scss";
 import logo from "@Assets/logo.svg"
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import ROUTES from "@Constants/Routes";
 import BreadCrumbs from "@Components/BreadCumbs";
 import Navigation from "./Navigation";
@@ -9,11 +9,12 @@ import { useSelector } from "react-redux";
 
 export default function Header({introductionImageRef}){
 
+  const headerRef = useRef()
     const {pathname} = useLocation()
-    const [introductionIsVisible, setIntroductionIsVisible] = useState(pathname === "/")
-
     const {mobile, desktop} = useSelector(store => store.app)
-    const headerRef = useRef()
+    const [introductionIsVisible, setIntroductionIsVisible] = useState(desktop ? pathname === "/" : false)
+    const navigate = useNavigate()
+
 
     // L'utilisateur est en train de scroll ?
     const [scrolling, setScrolling] = useState(false)
@@ -85,12 +86,20 @@ export default function Header({introductionImageRef}){
         ${introductionIsVisible ? "transparentStyle" : ""}`
     }, [introductionIsVisible, mounted, scrolling, pathname, desktop])
 
+    const navigateTo = (routeLink) => {
+      if(currentRoute === routeLink){
+          window.scrollTo({top: 0, behavior: 'smooth'})
+      }else{
+          navigate(routeLink)
+      }
+  }
+
 
     return(
         <header ref={headerRef}>
             <div className={containerClasses }>
                 <div className="logo-breadcrumbs-container">
-                    <Link to={ROUTES.HOME}>
+                    <Link onClick={() => navigateTo(ROUTES.HOME)} to={ROUTES.HOME}>
                         <img src={logo} alt="Logo du site internet" />
                     </Link>
                     {mobile && (

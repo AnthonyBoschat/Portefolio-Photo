@@ -121,6 +121,9 @@ header{
 
         &.active{
             box-shadow: 0px 4px 8px v.$darkHeaderShadow;
+            // PROPAL LAURA
+            background-color: rgba(255, 249, 246, 0.9);
+            backdrop-filter: blur(4px);
         }
         
         div.logo-breadcrumbs-container{

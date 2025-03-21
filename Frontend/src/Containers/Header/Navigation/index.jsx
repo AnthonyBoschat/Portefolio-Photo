@@ -4,6 +4,7 @@ import "./style.scss";
 import { setOpenPhoneMenu } from "@Redux/Slices/phoneState"
 import { useDispatch, useSelector } from "react-redux"
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { routesSlice } from "@Redux/Slices/routes";
 
 export default function Navigation(){
 
@@ -25,6 +26,14 @@ export default function Navigation(){
             return currentRoute === link
         }
 
+    }
+
+    const navigateTo = (routeLink) => {
+        if(currentRoute === routeLink){
+            window.scrollTo({top: 0, behavior: 'smooth'})
+        }else{
+            navigate(routeLink)
+        }
     }
 
     return(
@@ -51,13 +60,13 @@ export default function Navigation(){
                                             </button>
                                             <div className="child-list">
                                                 {route.children.map((route, index) => (
-                                                    <Link key={index} className={isSelectedRoute(route.link) ? "active" : ""} to={route.link}>{route.label}</Link>
+                                                    <Link onClick={() => navigateTo(route.link)} key={index} className={isSelectedRoute(route.link) ? "active" : ""} to={route.link}>{route.label}</Link>
                                                 ))}
                                             </div>
                                         </div>
                                     )}
                                     {!route.subMenu && (
-                                        <Link key={index} to={route.link} className={isSelectedRoute(route.link) ? "active" : ""}>
+                                        <Link onClick={() => navigateTo(route.link)} key={index} to={route.link} className={isSelectedRoute(route.link) ? "active" : ""}>
                                             {route.label}
                                             {route.subMenu && (
                                                 <i className="fa-solid fa-caret-down"></i>

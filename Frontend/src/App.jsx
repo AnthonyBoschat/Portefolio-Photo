@@ -17,9 +17,13 @@ import { setOpenPhoneMenu } from "@Redux/Slices/phoneState";
 import { setCurrentRoute } from "@Redux/Slices/routes";
 import { setScreenSize } from "@Redux/Slices/App";
 import Lenis from "lenis";
+import ZoomOverlay from "@Containers/ZoomOverlay";
 
-
+// Composant wrapper qui permet d'avoir un scroll fluide
 function SmoothScrollWrapper({ children }) {
+
+  const location = useLocation()
+
   useEffect(() => {
     const lenis = new Lenis({
       duration: 0.5, // durée de l’animation
@@ -35,9 +39,8 @@ function SmoothScrollWrapper({ children }) {
 
     requestAnimationFrame(raf);
 
-    // Nettoyage à la désinstallation du composant
     return () => lenis.destroy();
-  }, []);
+  }, [location.pathname]);
 
   return children;
 }
@@ -64,11 +67,9 @@ export default function App() {
   // Enregistre le dimensionnement de la fenêtre pour gérer l'affichage dynamique de composant
   useEffect(() => {
     dispatch(setScreenSize(window.innerWidth));
-    
     const setSize = () => {
       dispatch(setScreenSize(window.innerWidth))
     }
-    
     window.addEventListener("resize", setSize)
     
     return () => window.removeEventListener("resize", setSize)
@@ -88,58 +89,43 @@ export default function App() {
   
   return (
     <>
-      <SmoothScrollWrapper>
+        <ZoomOverlay/>
                 
         <Header introductionImageRef={introductionImageRef}/> {/*Nettoyer*/}
-        <main>
+        <main >
           <AnimatePresence mode="wait" onExitComplete={() => setExitComplete(true)}>
             <motion.div
               key={location.pathname}
-
-              // Avec scale
-              // initial={{ opacity: 0, scale: shouldReduceMotion ? 1 : 0.95 }}
-              // animate={{ opacity: 1, scale: 1 }}
-
-              // Sans scale
-              // initial={{ opacity: 0}}
-              // animate={{ opacity: 1}}
-              
-              
-              // exit={{ opacity: 0 }}
-
-              // Transition global
-              // transition={{ duration }}
-
-
-              // Transition spécifique
               initial={{ opacity: 0}}
               animate={{ opacity: 1, transition: { duration: 0.6 } }}
               exit={{ opacity: 0, transition: { duration: 0.3 } }}
-            >
-              <Routes location={location}>
-                <Route path={ROUTES.ADMIN} element={<AdminPage/>}/>
+              >
+              <SmoothScrollWrapper>
+                <Routes location={location}>
+                  <Route path={ROUTES.ADMIN} element={<AdminPage/>}/>
 
 
-                <Route path={ROUTES.HOME} element={<HomePage introductionImageRef={introductionImageRef}/>}/> {/*Nettoyer*/}
+                  <Route path={ROUTES.HOME} element={<HomePage introductionImageRef={introductionImageRef}/>}/> {/*Nettoyer*/}
 
-                <Route path={ROUTES.PRESTATIONS.ARTISAN} element={<PrestationPage exitComplete={exitComplete}/>}/> {/*Nettoyer*/}
-                <Route path={ROUTES.PRESTATIONS.BOUDOIR} element={<PrestationPage exitComplete={exitComplete}/>}/> {/*Nettoyer*/}
-                <Route path={ROUTES.PRESTATIONS.PORTRAIT} element={<PrestationPage exitComplete={exitComplete}/>}/> {/*Nettoyer*/}
+                  <Route path={ROUTES.PRESTATIONS.ARTISAN} element={<PrestationPage exitComplete={exitComplete}/>}/> {/*Nettoyer*/}
+                  <Route path={ROUTES.PRESTATIONS.BOUDOIR} element={<PrestationPage exitComplete={exitComplete}/>}/> {/*Nettoyer*/}
+                  <Route path={ROUTES.PRESTATIONS.PORTRAIT} element={<PrestationPage exitComplete={exitComplete}/>}/> {/*Nettoyer*/}
 
-                <Route path={`${ROUTES.ARTISAN}/:artisanID`} element={<PortefoliosPage exitComplete={exitComplete}/>}/> {/*Nettoyer*/}
-                <Route path={ROUTES.PORTEFOLIOS.INDEX} element={<PortefoliosIndexPage exitComplete={exitComplete} />}/> {/*Nettoyer*/}
-                <Route path={ROUTES.PORTEFOLIOS.STUDIO} element={<PortefoliosPage exitComplete={exitComplete}/>}/> {/*Nettoyer*/}
-                <Route path={ROUTES.PORTEFOLIOS.FANTASTIQUE} element={<PortefoliosPage exitComplete={exitComplete}/>}/> {/*Nettoyer*/}
-                <Route path={ROUTES.PORTEFOLIOS.COLLABORATION_ARTISTIQUE} element={<PortefoliosPage exitComplete={exitComplete}/>}/> {/*Nettoyer*/}
-                <Route path={ROUTES.PORTEFOLIOS.LUMIERE_NATURELLE} element={<PortefoliosPage exitComplete={exitComplete}/>}/> {/*Nettoyer*/}
-                <Route path={ROUTES.PORTEFOLIOS.NU_LINGERIE} element={<PortefoliosPage exitComplete={exitComplete}/>}/> {/*Nettoyer*/}
-                <Route path={ROUTES.PORTEFOLIOS.RETOUCHE_CREATIVE} element={<PortefoliosPage exitComplete={exitComplete}/>}/> {/*Nettoyer*/}
-                
-                <Route path={ROUTES.APROPOS} element={<AProposPage/>}/> {/*Nettoyer*/}
+                  <Route path={`${ROUTES.ARTISAN}/:artisanID`} element={<PortefoliosPage exitComplete={exitComplete}/>}/> {/*Nettoyer*/}
+                  <Route path={ROUTES.PORTEFOLIOS.INDEX} element={<PortefoliosIndexPage exitComplete={exitComplete} />}/> {/*Nettoyer*/}
+                  <Route path={ROUTES.PORTEFOLIOS.STUDIO} element={<PortefoliosPage exitComplete={exitComplete}/>}/> {/*Nettoyer*/}
+                  <Route path={ROUTES.PORTEFOLIOS.FANTASTIQUE} element={<PortefoliosPage exitComplete={exitComplete}/>}/> {/*Nettoyer*/}
+                  <Route path={ROUTES.PORTEFOLIOS.COLLABORATION_ARTISTIQUE} element={<PortefoliosPage exitComplete={exitComplete}/>}/> {/*Nettoyer*/}
+                  <Route path={ROUTES.PORTEFOLIOS.LUMIERE_NATURELLE} element={<PortefoliosPage exitComplete={exitComplete}/>}/> {/*Nettoyer*/}
+                  <Route path={ROUTES.PORTEFOLIOS.NU_LINGERIE} element={<PortefoliosPage exitComplete={exitComplete}/>}/> {/*Nettoyer*/}
+                  <Route path={ROUTES.PORTEFOLIOS.RETOUCHE_CREATIVE} element={<PortefoliosPage exitComplete={exitComplete}/>}/> {/*Nettoyer*/}
+                  
+                  <Route path={ROUTES.APROPOS} element={<AProposPage/>}/> {/*Nettoyer*/}
 
-                <Route path={ROUTES.CONTACT} element={<ContactPage/>}/> {/*Nettoyer*/}
-              </Routes>
+                  <Route path={ROUTES.CONTACT} element={<ContactPage/>}/> {/*Nettoyer*/}
+                </Routes>
 
+              </SmoothScrollWrapper>
             </motion.div>
 
           </AnimatePresence>
@@ -147,7 +133,6 @@ export default function App() {
         {mobile && (
           <PhoneMenuContainer/>
         )}
-        </SmoothScrollWrapper>
-      </>
+    </>
   )
 }

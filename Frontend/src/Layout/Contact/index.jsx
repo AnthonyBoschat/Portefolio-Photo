@@ -22,9 +22,7 @@ export default function ContactLayout(){
                     <ContactContainer/>
                 </div>
             </div>
-            <div className="contact-media">
                 <Medias color={"light"}/>
-            </div>
         </div>
         </>
     )

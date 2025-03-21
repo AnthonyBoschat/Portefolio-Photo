@@ -10,7 +10,7 @@ export default function Medias({color, style}){
     ]
 
     return(
-        <div style={style} id="medias-container">
+        <div style={style} id="medias-container" className={`${color}`}>
             {mediaButtons.map((media, index) => (
                 <a key={index} href={media.path} target="_blank" className={`${color}`}>
                     {media.icon}

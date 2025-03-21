@@ -17,20 +17,48 @@ div#portefolios-main-container{
         gap: 0.5rem;
         
         picture{
-            // box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+
+            
+            @include mixins.respond-to("desktop"){
+                &::after{
+                    position: absolute;
+                    content: "";
+                    left: 0;
+                    top: 0;
+                    border-radius: 6px;
+                    width: 100%;
+                    height: 100%;
+                    background-color: black;
+                    transition: opacity 0.15s linear;
+                    opacity: 0;
+                    // PROPAL INVERSER
+                    // opacity: 0.1; 
+                }
+            }
+            
+            img{
+                transition: all 0.15s linear !important;
+            }
+            
+            &:hover{
+                cursor: pointer;
+                img{
+                    // PROPOSITION SCALE
+                    // transform: scale(1.02);
+                }
+                picture{
+                    &::after{
+                        opacity: 0.1;
+                        // PROPAL INVERSER
+                        // opacity: 0;
+                    }
+                }
+            }
 
         }
         picture.paysage{
             grid-column: span 2;
         }
     }
-    
-    // img{
-    //     transition: opacity 1s linear;
-    //     opacity: 1;
-
-    //     &.loading{
-    //         opacity: 0;
-    //     }
-    // }
 }
