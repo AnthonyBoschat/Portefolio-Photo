@@ -6,7 +6,7 @@ import { useLocation, useParams } from "react-router-dom";
 import sortByPhotoType from "@Services/sortByPhotoType";
 import PortefolioLayout from "@Layout/Portefolio";
 
-export default function PortefoliosPage({exitComplete}) {
+export default function PortefoliosPage() {
   const location = useLocation()
   const currentRoute = location.pathname
   const { artisanID } = useParams()
@@ -15,9 +15,6 @@ export default function PortefoliosPage({exitComplete}) {
 
   useEffect(() => {
 
-    if(!exitComplete){
-      return
-    }
 
     // Si le chargement de cette page concerne des artisans
     if(currentRoute.startsWith("/Artisan") && artisanID){
@@ -73,7 +70,7 @@ export default function PortefoliosPage({exitComplete}) {
             })
         }
     }
-  }, [currentRoute, exitComplete])
+  }, [currentRoute])
 
 
   return (

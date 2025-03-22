@@ -8,14 +8,14 @@ import LazyImage from "@Components/LazyImage";
 import ExploreButton from "@Components/ExploreButton";
 import { openSubMenuForce } from "@Redux/Slices/routes";
 import { setOpenPhoneMenu } from "@Redux/Slices/phoneState";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Galery from "@Components/Galery";
 
 
 
 export default function PrestationsHome({prestationsPhotos}){
     
     const {desktop, mobile} = useSelector(store => store.app)
-    const navigate = useNavigate()
     const dispatch = useDispatch()
     
     // Liste des prestations
@@ -46,14 +46,19 @@ export default function PrestationsHome({prestationsPhotos}){
                 </div>
             )}
             {desktop && (
-                <div id="desktop">
-                    {photos.map((photo, index) => (
-                        <div key={index} className="prestation">
+                <Galery 
+                    id="desktop"
+                    elements={photos} 
+                    hoverEffect
+                    render={(photo) => (
+                        <>
                             <div className="label">{photo.label}</div>
-                            <LazyImage src={photo.image} onClick={() => navigate(photo.url)} />
-                        </div>
-                    ) )}
-                </div>
+                            <Link to={photo.link || photo.url}>
+                                <LazyImage src={photo.image ? photo.image : photo} alt={`Photo représentative de la prestation ${photo.label}`}/>
+                            </Link>
+                        </>
+                    )}
+                />
             )}
         </>
     )

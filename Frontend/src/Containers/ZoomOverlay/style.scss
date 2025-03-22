@@ -107,7 +107,10 @@
 
             &.disabled{
                 opacity: 0.3;
-                pointer-events: none;
+                // pointer-events: none;
+                &:hover{
+                    opacity: 0.3;
+                }
                 cursor: pointer;
             }
 

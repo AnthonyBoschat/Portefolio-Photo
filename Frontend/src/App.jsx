@@ -52,7 +52,6 @@ export default function App() {
   const pathname = location.pathname
   const dispatch = useDispatch()
   const {mobile, desktop} = useSelector(store => store.app)
-  const [exitComplete, setExitComplete] = useState(false);
   
   
   // A chaque changement d'url ( de page ) 
@@ -74,11 +73,6 @@ export default function App() {
     
     return () => window.removeEventListener("resize", setSize)
   }, [])
-  
-  // Si le chemin change, on indique que l'animation de sortie a commencer
-  useEffect(() => {
-    setExitComplete(false);
-  }, [location.pathname]);
 
   // Paramètre d'animation de transition entre les pages
   const shouldReduceMotion = useReducedMotion();
@@ -93,7 +87,7 @@ export default function App() {
                 
         <Header introductionImageRef={introductionImageRef}/> {/*Nettoyer*/}
         <main >
-          <AnimatePresence mode="wait" onExitComplete={() => setExitComplete(true)}>
+          <AnimatePresence mode="wait">
             <motion.div
               key={location.pathname}
               initial={{ opacity: 0}}
@@ -107,18 +101,18 @@ export default function App() {
 
                   <Route path={ROUTES.HOME} element={<HomePage introductionImageRef={introductionImageRef}/>}/> {/*Nettoyer*/}
 
-                  <Route path={ROUTES.PRESTATIONS.ARTISAN} element={<PrestationPage exitComplete={exitComplete}/>}/> {/*Nettoyer*/}
-                  <Route path={ROUTES.PRESTATIONS.BOUDOIR} element={<PrestationPage exitComplete={exitComplete}/>}/> {/*Nettoyer*/}
-                  <Route path={ROUTES.PRESTATIONS.PORTRAIT} element={<PrestationPage exitComplete={exitComplete}/>}/> {/*Nettoyer*/}
+                  <Route path={ROUTES.PRESTATIONS.ARTISAN} element={<PrestationPage/>}/> {/*Nettoyer*/}
+                  <Route path={ROUTES.PRESTATIONS.BOUDOIR} element={<PrestationPage/>}/> {/*Nettoyer*/}
+                  <Route path={ROUTES.PRESTATIONS.PORTRAIT} element={<PrestationPage/>}/> {/*Nettoyer*/}
 
-                  <Route path={`${ROUTES.ARTISAN}/:artisanID`} element={<PortefoliosPage exitComplete={exitComplete}/>}/> {/*Nettoyer*/}
-                  <Route path={ROUTES.PORTEFOLIOS.INDEX} element={<PortefoliosIndexPage exitComplete={exitComplete} />}/> {/*Nettoyer*/}
-                  <Route path={ROUTES.PORTEFOLIOS.STUDIO} element={<PortefoliosPage exitComplete={exitComplete}/>}/> {/*Nettoyer*/}
-                  <Route path={ROUTES.PORTEFOLIOS.FANTASTIQUE} element={<PortefoliosPage exitComplete={exitComplete}/>}/> {/*Nettoyer*/}
-                  <Route path={ROUTES.PORTEFOLIOS.COLLABORATION_ARTISTIQUE} element={<PortefoliosPage exitComplete={exitComplete}/>}/> {/*Nettoyer*/}
-                  <Route path={ROUTES.PORTEFOLIOS.LUMIERE_NATURELLE} element={<PortefoliosPage exitComplete={exitComplete}/>}/> {/*Nettoyer*/}
-                  <Route path={ROUTES.PORTEFOLIOS.NU_LINGERIE} element={<PortefoliosPage exitComplete={exitComplete}/>}/> {/*Nettoyer*/}
-                  <Route path={ROUTES.PORTEFOLIOS.RETOUCHE_CREATIVE} element={<PortefoliosPage exitComplete={exitComplete}/>}/> {/*Nettoyer*/}
+                  <Route path={`${ROUTES.ARTISAN}/:artisanID`} element={<PortefoliosPage/>}/> {/*Nettoyer*/}
+                  <Route path={ROUTES.PORTEFOLIOS.INDEX} element={<PortefoliosIndexPage />}/> {/*Nettoyer*/}
+                  <Route path={ROUTES.PORTEFOLIOS.STUDIO} element={<PortefoliosPage/>}/> {/*Nettoyer*/}
+                  <Route path={ROUTES.PORTEFOLIOS.FANTASTIQUE} element={<PortefoliosPage/>}/> {/*Nettoyer*/}
+                  <Route path={ROUTES.PORTEFOLIOS.COLLABORATION_ARTISTIQUE} element={<PortefoliosPage/>}/> {/*Nettoyer*/}
+                  <Route path={ROUTES.PORTEFOLIOS.LUMIERE_NATURELLE} element={<PortefoliosPage/>}/> {/*Nettoyer*/}
+                  <Route path={ROUTES.PORTEFOLIOS.NU_LINGERIE} element={<PortefoliosPage/>}/> {/*Nettoyer*/}
+                  <Route path={ROUTES.PORTEFOLIOS.RETOUCHE_CREATIVE} element={<PortefoliosPage/>}/> {/*Nettoyer*/}
                   
                   <Route path={ROUTES.APROPOS} element={<AProposPage/>}/> {/*Nettoyer*/}
 

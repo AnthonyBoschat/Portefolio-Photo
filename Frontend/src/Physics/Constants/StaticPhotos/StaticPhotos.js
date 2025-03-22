@@ -40,14 +40,14 @@ const STATIC_PHOTOS = {
             portefolio3
         ],
         PORTEFOLIO_DESKTOP:[
-            {src:bannerPortrait2, type:"portrait"},
-            {src:portefolio1, type:"paysage"},
-            {src:bannerBoudoir1, type:"portrait"},
-            {src:bannerPortrait1, type:"portrait"},
-            {src:aproposNaturalLight, type:"portrait"},
-            {src:prestation3, type:"portrait"},
-            {src:portefolio2, type:"paysage"},
-            {src:bannerPortrait3, type:"portrait"},
+            {src:bannerPortrait2, orientation:"portrait"},
+            {src:portefolio1, orientation:"paysage"},
+            {src:bannerBoudoir1, orientation:"portrait"},
+            {src:bannerPortrait1, orientation:"portrait"},
+            {src:aproposNaturalLight, orientation:"portrait"},
+            {src:prestation3, orientation:"portrait"},
+            {src:portefolio2, orientation:"paysage"},
+            {src:bannerPortrait3, orientation:"portrait"},
         ]
     },
 

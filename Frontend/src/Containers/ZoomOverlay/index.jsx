@@ -14,8 +14,6 @@ export default function ZoomOverlay(){
     const arrowRightRef = useRef(null)
 
     const closeOverlay = (e) => {
-        console.log("e.target", e.target)
-        console.log("containerRef.current", containerRef.current)
         if(
             e.target !== closeButtonRef.current &&
             e.target !== imageRef.current &&
@@ -35,8 +33,8 @@ export default function ZoomOverlay(){
                 
                 <img ref={imageRef} src={photoURL} alt="Photo actuellement zoomer par l'utilisateur" />
                 <div className="navigation">
-                    <i ref={arrowLeftRef} onClick={() => dispatch(previousPhoto())} className={`fa-solid fa-arrow-left ${first ? "disabled" : ""}`}></i>
-                    <i ref={arrowRightRef} onClick={() => dispatch(nextPhoto())} className={`fa-solid fa-arrow-right ${last ? "disabled" : ""}`}></i>
+                    <i ref={arrowLeftRef} onClick={!first ? () => dispatch(previousPhoto()) : null} className={`fa-solid fa-arrow-left ${first ? "disabled" : ""}`}></i>
+                    <i ref={arrowRightRef} onClick={!last ? () => dispatch(nextPhoto()) : null} className={`fa-solid fa-arrow-right ${last ? "disabled" : ""}`}></i>
                 </div>
             </div>
         </div>

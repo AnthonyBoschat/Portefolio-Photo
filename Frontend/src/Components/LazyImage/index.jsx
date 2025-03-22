@@ -24,6 +24,7 @@ export default function LazyImage({ src, alt, onClick }){
   return (
     <picture
       onClick={onClick}
+      className="photo-container"
       style={{
         position: 'relative',
         width: '100%',

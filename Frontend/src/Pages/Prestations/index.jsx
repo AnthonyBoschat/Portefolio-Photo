@@ -52,7 +52,7 @@ const artisanPrestation = {
     ]
 }
 
-export default function PrestationPage({exitComplete}){
+export default function PrestationPage(){
 
     const location = useLocation()
     const currentRoute = location.pathname
@@ -75,9 +75,7 @@ export default function PrestationPage({exitComplete}){
     // Charge dans le state les photos de la réponse
     useEffect(() => {
 
-        if(!exitComplete){
-            return
-        }
+        
 
         if(loading){
 
@@ -130,7 +128,7 @@ export default function PrestationPage({exitComplete}){
                 })
             }
         }
-    }, [loading, currentRoute, exitComplete])
+    }, [loading, currentRoute])
 
     return(
         <>

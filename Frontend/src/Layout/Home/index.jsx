@@ -13,6 +13,7 @@ import { setOpenPhoneMenu } from "@Redux/Slices/phoneState";
 import { openSubMenuForce } from "@Redux/Slices/routes";
 import Galery from "@Components/Galery";
 import { useRef, useState } from "react";
+import LazyImage from "@Components/LazyImage";
 
 
 
@@ -48,9 +49,13 @@ export default function HomeLayout({
                     <div className="content">
                         {mobile && (
                             <>
-                                <div className="galery">
-                                    <Galery photos={portefolioPhotos} alt={"Photo de présentation de la catégorie 'Portefolio'"} />
-                                </div>
+                                <Galery
+                                    id={"home-portefolio-galery"}
+                                    elements={portefolioPhotos}
+                                    render={(photo) => (
+                                        <LazyImage src={photo} alt={"Photo de présentation de la catégorie 'Portefolio'"}/>
+                                    )}
+                                />
                                 <ExploreButton position={"center"} onClick={() => {
                                     dispatch(openSubMenuForce("Portefolio"))
                                     dispatch(setOpenPhoneMenu(true))
@@ -59,9 +64,13 @@ export default function HomeLayout({
                         )}
                         {desktop && (
                             <>
-                                {portefolioPhotos.map((photo, index) => (
-                                    <img key={index} loading="lazy" className={photo.type} src={photo.src}></img>
-                                ))}
+                                <Galery
+                                    id={"home-portefolio-galery"}
+                                    elements={portefolioPhotos}
+                                    render={(photo, index) => (
+                                        <img key={index} loading="lazy" className={photo.orientation} src={photo.src}></img>
+                                    )}
+                                />
                                 <ExploreButton navigate={ROUTES.PORTEFOLIOS.INDEX} text={"Parcourir"}/>
                             </>
                         )}
