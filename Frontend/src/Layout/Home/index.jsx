@@ -69,10 +69,8 @@ export default function HomeLayout({
                                 <Galery
                                     id={"home-portefolio-galery"}
                                     elements={portefolioPhotos}
-                                    hoverEffect
                                     render={(photo, index) => (
-                                        <LazyImage onClick={() => zoomPhoto(portefolioPhotos, index)} src={photo.image}/>
-                                        // <img onClick={() => zoomPhoto(portefolioPhotos, index)} key={index} loading="lazy" className={photo.orientation} src={photo.image}></img>
+                                        <LazyImage src={photo.image}/>
                                     )}
                                 />
                                 <ExploreButton navigate={ROUTES.PORTEFOLIOS.INDEX} text={"Parcourir"}/>
