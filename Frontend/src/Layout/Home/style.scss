@@ -1,0 +1,112 @@
+@use "@Sass/constants.scss" as v;
+@use "@Sass/mixins.scss" as mixins;
+
+
+
+#home-main-layout{
+    // background-color: rgba(0, 0, 0, 0.148);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 6rem;
+    padding: 2rem 21px 1rem 21px;
+    margin-top: -12rem;
+
+    @include mixins.respond-to("desktop"){
+        margin-top: -10rem;
+        padding: 2rem 15vw 1rem 15vw;
+        gap: 10rem;
+        section .content{
+            margin-top: 2rem;
+        }
+    }
+
+    
+
+
+    // PRESTATION
+    section.home-prestation{
+        .content{
+            display: flex;
+            flex-direction: column;
+            
+        }
+    }
+
+
+    // A PROPOS
+    section.home-apropos{
+        .content{
+            height: fit-content;
+            display: flex;
+            flex-direction: column;
+        }
+    }
+
+
+    // PORTEFOLIO
+    section.home-portefolio{
+        .content{
+
+            #home-portefolio-galery{
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+
+                @include mixins.respond-to("desktop"){
+                    display: grid;
+                    gap: 0.5rem;
+                    letter-spacing: 1px;
+                    grid-template-columns: repeat(5, 1fr);
+    
+                    .paysage{
+                            grid-column: span 2;
+                            object-fit: cover;
+                            height: 100%;
+                        }
+                    .portrait{
+                            height: 100%;
+                        }
+                    
+                    // div{
+                    //     grid-column: span 5;
+                    // }
+                    
+                }
+            }
+            
+        }
+    }
+
+    // CONTACT
+    section.home-contact{
+        
+        @include mixins.respond-to("desktop"){
+            .content{
+                padding-bottom: 2rem;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                // outline: 2px solid blue;
+                gap: 8vw;
+
+                picture{
+                    margin-top: 20px;
+                    width: 100%;
+                    min-width: 20rem;
+                    height: 73%;
+                    background-color: rgb(228, 228, 228);
+                }
+            }
+        }
+    }
+
+    
+}
+footer{
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    background-color: v.$dark-light;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

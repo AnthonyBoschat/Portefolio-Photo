@@ -1,0 +1,64 @@
+@use "@Sass/constants.scss" as v;
+@use "@Sass/mixins.scss" as mixins;
+
+div#medias-container{
+    // outline: 1px solid red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    font-size: 20px;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+
+    &.lighter{
+        background-color: v.$dark-light;
+        a{
+            opacity: 0.8;
+            color: v.$light;
+        }
+    }
+    &.light{
+        background-color: v.$dark;
+        a{
+            opacity: 0.8;
+            color: v.$light;
+        }
+    }
+    &.dark{
+        a{
+            color: v.$dark;
+            opacity: 0.6;
+        }
+    }
+
+    a{
+        transition: opacity 0.2s linear;
+        &:hover{
+            cursor: pointer;
+            opacity: 1;
+        }
+    }
+
+    @include mixins.respond-to("desktop"){
+        gap: 1.5rem;
+    }
+
+    // a{
+    //     transition: opacity 0.2s linear;
+    //     &.dark{
+    //         color: v.$dark;
+    //         opacity: 0.6;
+            
+            
+    //     }
+    //     &.light{
+    //         color: v.$light;
+    //         opacity: 0.8;
+    //     }
+    //     &:hover{
+    //         cursor: pointer;
+    //         opacity: 1;
+    //     }
+    // }
+}

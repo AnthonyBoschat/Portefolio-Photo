@@ -1,0 +1,142 @@
+@use "@Sass/constants.scss" as v;
+@use "@Sass/animation.scss" as a;
+@use "@Sass/mixins.scss" as mixins;
+
+
+
+header{
+    position: relative;
+    z-index: 1003;
+    height: 100%;
+    width: 100%;
+    font-family: v.$font;
+
+
+    // PROPOSITION APPARITION SURVOL
+    &:hover{
+        .container{
+            opacity: 1 !important;
+            transform: translateY(0%) !important;
+        }
+    }
+    
+    
+    .container{
+        background-color: v.$light;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position:fixed;
+        height: 5rem;
+        width: 100vw;
+        top: 0;
+        z-index: 1000;
+        padding: 1.5rem; // res
+        transition: all 0.3s linear;
+
+        // PROPOSITION 3 
+        &.transparentStyle{
+            backdrop-filter: blur(4px);
+            box-shadow: 0px 2px 16px rgba(0, 0, 0, 0.188) !important;
+        }
+
+        // PROPOSITION 2
+        // &.transparentStyle{
+        //     background-color: rgba(255, 255, 255, 0.2);
+        //     backdrop-filter: blur(4px);
+        //     box-shadow: 0px 2px 16px rgba(0, 0, 0, 0.188) !important;
+
+        //     #navigation-desktop-container{
+        //         color: v.$light;
+        //         text-shadow: 0px 1px 1px black ;
+        //         i{
+        //             color: v.$light;
+        //         }
+        //     }
+        // }
+
+        // PROPOSITION 1 
+        // &.transparentStyle{
+        //     background-color: rgba(0, 0, 0, 0.20);
+        //     backdrop-filter: blur(4px);
+        //     box-shadow: 0px 2px 16px rgba(0, 0, 0, 0.188) !important;
+
+
+        //     #navigation-desktop-container{
+
+        //         color: v.$light;
+                
+        //         .button-list-container{
+
+        //             &:hover button{
+        //                 opacity: 1;
+        //                 background-color: transparent !important;
+        //             }
+        //             .child-list{
+        //                 background-color: transparent;
+        //                 width: 120% !important;
+        //             }
+                    
+        //             i{
+        //                 color: v.$light;
+        //             }
+                    
+        //         }
+        //         button,a {
+        //             opacity: 0.5;
+        //             &.active{
+        //                 background-color: transparent;
+        //                 opacity: 1;
+        //             }
+        //             &:hover{
+        //                 background-color: transparent;
+        //                 opacity: 1;
+        //             }
+        //         }
+
+
+        //     }
+        // }
+        
+
+
+
+
+        // Evite l'apparition du header au chargement de la page (desktop)
+        &.no-transition {
+            transition: none;
+        }
+
+        &.hidden{
+            transform: translateY(-100%);
+            opacity: 0;
+        }
+
+        @include mixins.respond-to("desktop"){
+            padding: 0;
+            padding-left: 3rem; // res
+
+        }
+
+        &.active{
+            box-shadow: 0px 4px 8px v.$darkHeaderShadow;
+            background-color: rgba(255, 249, 246, 0.9);
+            backdrop-filter: blur(4px);
+        }
+        
+        div.logo-breadcrumbs-container{
+            // outline: 1px solid black;
+            display: flex;
+            align-items: end;
+            gap: 0.5rem;
+            align-items: center;
+
+            &:hover{
+                cursor: pointer;
+            }
+        }
+    
+
+    }
+
+}

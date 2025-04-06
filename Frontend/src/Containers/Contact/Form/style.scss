@@ -1,0 +1,120 @@
+@use "@Sass/constants.scss" as v;
+
+form#contact-form{
+    // outline: 1px solid red;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    .line{
+        width: 100%;
+        display: flex;
+        gap: 1rem;
+
+        .field{
+            width: 100%;
+
+            .textarea-container{
+                position: relative;
+
+                .loadingIcon{
+                    animation: fadeIn 0.15s linear forwards;
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    top: 0;
+                    left: 0;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+            }
+
+            input, select, textarea{
+                all:unset;
+                box-sizing: border-box;
+                margin-top: 0.2rem;
+                padding-top: 0.1rem;
+                padding-bottom: 0.1rem;
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+                border-radius: 2px;
+                width: 100%;
+                outline: 1px solid v.$inputContactOutlineUnfocus;
+                background-color: v.$inputBackgroundUnfocus;
+                font-size: 16px;
+                transition: all 0.1s linear;
+
+                &:hover{
+                    background-color:v.$inputBackgroundFocus;
+                }
+
+                select{
+                    outline: 1px solid v.$inputContactOutlineFocus;
+                    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
+                    background-color:v.$inputBackgroundFocus;
+                    
+                }
+                &:valid{
+                    outline: 1px solid v.$inputContactOutlineFocus;
+                    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
+                    background-color:v.$inputBackgroundFocus;
+                }
+                &:focus{
+                    outline: 1px solid v.$inputContactOutlineFocus;
+                    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
+                    background-color:v.$inputBackgroundFocus;
+                }
+
+                &.loading{
+                    animation: fadeIn 0.15s linear forwards;
+                    background-color: rgba(0, 0, 0, 0.056);
+                }
+            }
+
+
+            #select{
+                position: relative;
+                // outline: 1px solid red;
+                &:hover{
+                    cursor: pointer;
+                    select{
+                        // background-color: red;
+                    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+
+                    }
+                }
+
+                i{
+                    position: absolute;
+                    right: 0.5rem;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    color: v.$dark;
+                }
+            }
+
+            
+        }
+    }
+}
+
+
+div.email-send-report-container{
+    // margin-top: 3rem;
+    height: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    letter-spacing: 2px;
+    
+    span{
+        animation: fadeIn 0.15s linear forwards;
+        
+        &.fadeout{
+            animation: fadeOut 0.15s linear forwards;
+    
+        }
+    }
+
+}

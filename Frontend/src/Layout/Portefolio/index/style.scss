@@ -1,0 +1,51 @@
+div#portefolio-index-main-container{
+    
+    padding: 4rem 15vw 4rem 15vw;
+
+    ul.portefolio-list{
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 3rem 1rem;
+
+        li{
+
+            h1{
+                all:unset;
+                font-size: 16px;
+                letter-spacing: 1px;
+                margin-left: 0.5rem;
+            }
+            &:hover{
+                cursor: pointer;
+                img{
+                    transform: scale(1.02);
+                }
+                picture{
+                    &::after{
+                        opacity: 0;
+                    }
+                }
+            }
+            picture{
+                border-radius: 6px;
+                &::after{
+                    position: absolute;
+                    content: "";
+                    left: 0;
+                    top: 0;
+                    border-radius: 6px;
+                    width: 100%;
+                    height: 100%;
+                    background-color: black;
+                    opacity: 0.1;
+                    transition: opacity 0.2s linear;
+                }
+            }
+            img{
+                border-radius: 6px;
+                transition: transform 0.2s linear !important;
+                
+            }
+        }
+    }
+}

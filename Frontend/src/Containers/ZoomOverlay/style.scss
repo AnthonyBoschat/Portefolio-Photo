@@ -1,0 +1,123 @@
+@use "@Sass/mixins.scss" as mixins;
+@use "@Sass/constants.scss" as v;
+#zoom-overlay-main-container{
+    z-index: 10000;
+    position: fixed;
+    // left: 0;
+    // top: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0);
+    opacity: 1;
+    pointer-events: none;
+    transition: background-color 0.2s linear;
+
+    &.active{
+        pointer-events: all;
+        background-color: rgba(0, 0, 0, 0.9);
+
+        .overlay-element{
+            opacity: 1;
+        }
+
+    }
+
+    .overlay-element{
+        
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 1rem;
+        opacity: 0;
+        transition: opacity 0.2s linear;
+
+        height: auto;
+        width: 90%;
+        height: 80%;
+
+        @include mixins.respond-to("desktop"){
+            height: 80%;
+            width: auto;
+        }
+    }
+
+    .close-container{
+        width: 100%;
+        transition: all 0.2s linear;
+        display: flex;
+        justify-content: flex-end;
+        position: relative;
+        left: 0.5rem;
+        top: 0.5rem;
+        i{
+            padding: 0.5rem;
+            font-size: 22px;
+            color: v.$light;
+            opacity: 0.7;
+            transition: opacity 0.15s linear;
+            text-shadow: 0px 1px 1px black;
+            &:hover{
+                cursor: pointer;
+                opacity: 1;
+            }
+        }
+    }
+
+    img{
+        width: 100%;
+        transition: opacity 0.2s linear;
+        @include mixins.respond-to("desktop"){
+            height: 100%;
+        }
+    }
+
+    .navigation{
+        
+        display: flex;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 5%;
+        gap: 1.5rem;
+        
+        @include mixins.respond-to("desktop"){
+            position: relative;
+            left: auto;
+            bottom: auto;
+            transform: translate(0%);
+        }
+        transition: opacity 0.2s linear;
+        
+        
+        i{
+            border-radius: 50%;
+            padding: 1rem;
+            font-size: 20px;
+            @include mixins.respond-to("desktop"){
+                font-size: 24px;
+            }
+            color: v.$light;
+            opacity: 0.7;
+            transition: opacity 0.15s linear;
+
+            &.disabled{
+                opacity: 0.3;
+                // pointer-events: none;
+                &:hover{
+                    opacity: 0.3;
+                }
+                cursor: pointer;
+            }
+
+            &:hover{
+                cursor: pointer;
+                opacity: 1;
+            }
+        }
+    }
+}

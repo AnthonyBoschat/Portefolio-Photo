@@ -1,0 +1,45 @@
+@use "@Sass/constants.scss" as v;
+
+section.home-prestation{
+
+    div#mobile{
+        .buttons{
+            color: v.$dark;
+            padding-left: 1rem;
+            width: 100%;
+            display: flex;
+            gap: 1rem;
+            font-size: 16px;
+            button{
+                opacity: 0.4;
+                &.focus{
+                    opacity: 1;
+                }
+            }
+        }
+    
+    
+        #picture-container{
+            // position: relative;
+            position: relative;
+            .slider-container{
+                overflow: hidden;
+            }
+        }
+    }
+
+        #desktop{
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0.5rem;
+
+            .label{
+                letter-spacing: 1px;
+                color:v.$dark;
+                margin-left: 0.5rem;
+            }
+    }
+
+
+
+}

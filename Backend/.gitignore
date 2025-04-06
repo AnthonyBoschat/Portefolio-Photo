@@ -1,0 +1,70 @@
+# Fichiers compilés Python et cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Fichiers C extensions
+*.so
+
+# Environnements virtuels
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Fichiers de log et base de données SQLite
+*.log
+db.sqlite3
+
+# Fichiers de configuration locale (à ne pas versionner)
+local_settings.py
+
+# Fichiers médias (uploads utilisateurs)
+media/
+
+# Fichiers statiques collectés (si vous les générez via collectstatic)
+staticfiles/
+
+# Dossiers et fichiers générés pour la distribution et le packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+
+# Fichiers de logs d'installateur pip
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Répertoires et fichiers de tests et de couverture
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+
+# Fichiers de traduction compilés
+*.mo
+*.pot
+
+# Dossiers de configuration d'éditeurs (Visual Studio Code, PyCharm, etc.)
+.vscode/
+.idea/
+*.swp
+*~

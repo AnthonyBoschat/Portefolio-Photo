@@ -1,0 +1,12 @@
+@use "@Sass/constants.scss" as v;
+
+@mixin respond-to($breakpoint) {
+    $size: map-get(v.$breakpoints, $breakpoint);
+    @if $size {
+      @media (min-width: $size) {
+        @content;
+      }
+    } @else {
+      @warn "Le breakpoint `#{$breakpoint}` n'est pas défini dans la map \$breakpoints.";
+    }
+  }

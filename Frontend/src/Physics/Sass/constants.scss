@@ -1,0 +1,22 @@
+$light:rgb(255, 249, 246);
+$dark:rgb(20, 16, 16);
+$dark-light:rgb(44, 39, 39);
+$darkHeaderShadow:rgba(64, 60, 59, 0.1);
+$boxShadowPhoneMenu:rgb(20, 16, 16, 0.25);
+
+
+
+// Input formulaire de contact
+// Background
+$inputBackgroundUnfocus:rgb(249, 243, 240);
+$inputBackgroundFocus:rgb(253, 247, 244);
+// Outline
+$inputContactOutlineUnfocus:rgb(20, 16, 16, 0.30);
+$inputContactOutlineFocus:rgb(20, 16, 16, 0.60);
+
+$font:"Arapey";
+
+$breakpoints:(
+    "desktop": 1024px,
+    // "mobile":0px
+)
