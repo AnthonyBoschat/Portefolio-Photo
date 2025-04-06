@@ -84,7 +84,6 @@ export default function App() {
   return (
     <>
         <ZoomOverlay/>
-        qzdqzd
         <Header introductionImageRef={introductionImageRef}/> {/*Nettoyer*/}
         <main >
           <AnimatePresence mode="wait">
