@@ -10,6 +10,7 @@ import LazyImage from "@Components/LazyImage";
 import { Link, useNavigate } from "react-router-dom";
 import Galery from "@Components/Galery";
 import usePhoto from "@Services/usePhoto";
+import Footer from "@Containers/Footer";
 
 
 
@@ -114,17 +115,20 @@ export default function PrestationsLayout({
   const navigate = useNavigate();
 
   return (
-    <div id="prestations-main-container">
-        <BannerSection bannerPhotos={bannerPhotos}>
-            <InformationSection informations={informations}/>
-        </BannerSection>
-        <DescriptionSection description={description} />
-        <GalerySection
-            currentRoute={currentRoute}
-            galeryPhotos={galeryPhotos}
-            setGaleryPhotos={setGaleryPhotos}
-            navigate={navigate}
-        />
-    </div>
+    <>
+        <div id="prestations-main-container">
+            <BannerSection bannerPhotos={bannerPhotos}>
+                <InformationSection informations={informations}/>
+            </BannerSection>
+            <DescriptionSection description={description} />
+            <GalerySection
+                currentRoute={currentRoute}
+                galeryPhotos={galeryPhotos}
+                setGaleryPhotos={setGaleryPhotos}
+                navigate={navigate}
+            />
+        </div>
+        <Footer/>
+    </>
   );
 }

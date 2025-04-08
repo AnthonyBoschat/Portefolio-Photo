@@ -1,51 +1,39 @@
-div#portefolio-index-main-container{
-    
-    padding: 4rem 15vw 4rem 15vw;
+@use "@Sass/constants.scss" as v;
 
-    ul.portefolio-list{
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 3rem 1rem;
+#portefolio-index{
+    background-color: v.$dark;
+    width: 100vw;
+    height: calc(100vh - 5rem);
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: 100%;
 
-        li{
-
-            h1{
-                all:unset;
-                font-size: 16px;
-                letter-spacing: 1px;
-                margin-left: 0.5rem;
-            }
-            &:hover{
-                cursor: pointer;
-                img{
-                    transform: scale(1.02);
-                }
-                picture{
-                    &::after{
-                        opacity: 0;
-                    }
-                }
-            }
-            picture{
-                border-radius: 6px;
-                &::after{
-                    position: absolute;
-                    content: "";
-                    left: 0;
-                    top: 0;
-                    border-radius: 6px;
-                    width: 100%;
-                    height: 100%;
-                    background-color: black;
-                    opacity: 0.1;
-                    transition: opacity 0.2s linear;
-                }
-            }
-            img{
-                border-radius: 6px;
-                transition: transform 0.2s linear !important;
-                
-            }
+    a{
+        &::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 100%;
+            box-shadow: 0px -150px 80px -60px black inset,
+                        -10px 0px 40px black inset;
+            pointer-events: none;
+            z-index: 1;
+            transition: all 0.15s linear;
         }
+    }
+
+    h2{
+        all:unset;
+        position: absolute;
+        z-index: 3;
+        bottom: 1rem;
+        left: 50%;
+        transform: translateX(-50%);
+        color: v.$light;
+        text-align: center;
+        word-wrap:break-word;
+        text-wrap: break-word;
     }
 }

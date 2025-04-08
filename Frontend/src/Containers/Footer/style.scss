@@ -1,0 +1,48 @@
+@use "@Sass/constants.scss" as v;
+
+footer{
+    // margin-top: 2rem;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    color: v.$light;
+    .copyright-container{
+        opacity: 0.6;
+        display: flex;
+        gap: 1rem;
+
+        .copyright{
+            letter-spacing: 1px;
+        }
+    }
+
+    .link-container{
+        height: fit-content;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        a{
+            opacity: 0.6;
+            transition: opacity 0.1s linear;
+            &:hover{
+                opacity: 1;
+                cursor: pointer;
+            }
+        }
+        
+        .separator{
+            opacity: 0.5;
+            height: 1.3rem;
+            width: 1px;
+            background-color: white;
+        }
+
+        .links{
+            letter-spacing: 0.5px;
+            display: flex;
+            gap: 0.8rem;
+        }
+    }
+}

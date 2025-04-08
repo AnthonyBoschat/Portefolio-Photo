@@ -1,20 +1,17 @@
 import "./style.scss";
 import SectionComponent from "@Components/Section";
 
-import ContactForm from "@Containers/Contact/Form";
 import ExploreButton from "@Components/ExploreButton";
 import PrestationsHome from "@Layout/Home/Containers/Prestations";
 import AProposHome from "@Layout/Home/Containers/APropos";
-import Medias from "@Containers/Media";
 import { useDispatch, useSelector } from "react-redux";
 import ContactContainer from "@Containers/Contact";
 import ROUTES from "@Constants/Routes";
 import { setOpenPhoneMenu } from "@Redux/Slices/phoneState";
 import { openSubMenuForce } from "@Redux/Slices/routes";
 import Galery from "@Components/Galery";
-import { useRef, useState } from "react";
 import LazyImage from "@Components/LazyImage";
-import usePhoto from "@Services/usePhoto";
+import Footer from "@Containers/Footer";
 
 
 
@@ -27,7 +24,6 @@ export default function HomeLayout({
 
     const {mobile, desktop} = useSelector(store => store.app)
     const dispatch = useDispatch()
-    const {zoomPhoto} = usePhoto()
 
     return(
         <>
@@ -93,7 +89,8 @@ export default function HomeLayout({
                 </SectionComponent>
                 
             </div>
-            <Medias color={"light"}/>
+            <Footer/>
+            {/* <Medias color={"light"}/> */}
         </>
     )
 }

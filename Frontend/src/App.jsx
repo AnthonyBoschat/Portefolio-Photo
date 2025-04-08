@@ -18,6 +18,7 @@ import { setCurrentRoute } from "@Redux/Slices/routes";
 import { setScreenSize } from "@Redux/Slices/App";
 import Lenis from "lenis";
 import ZoomOverlay from "@Containers/ZoomOverlay";
+import Footer from "@Containers/Footer";
 
 // Composant wrapper qui permet d'avoir un scroll fluide
 function SmoothScrollWrapper({ children }) {

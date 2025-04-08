@@ -2,6 +2,7 @@ import LazyImage from "@Components/LazyImage";
 import "./style.scss";
 import Medias from "@Containers/Media";
 import { useSelector } from "react-redux";
+import Footer from "@Containers/Footer";
 
 
 export default function AProposLayout({aproposPhoto}){
@@ -101,8 +102,8 @@ export default function AProposLayout({aproposPhoto}){
                     </div>
                 </>
             )}
-            
-            <Medias style={{paddingTop:"5rem", paddingBottom:"2rem"}} color={"lighter"}/>
+            <Footer/>
+            {/* <Medias style={{paddingTop:"5rem", paddingBottom:"2rem"}} color={"lighter"}/> */}
         </div>
     )
 }

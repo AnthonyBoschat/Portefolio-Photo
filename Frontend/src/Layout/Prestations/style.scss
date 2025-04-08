@@ -7,7 +7,7 @@ div#prestations-main-container{
     padding: 2rem 21px 1rem 21px;
 
     @include mixins.respond-to("desktop"){
-        padding: 2rem 20vw 2rem 20vw;
+        padding: 2rem 20vw 4rem 20vw;
         margin-top: 2rem;
         font-size: 18px;
         letter-spacing: 1px;

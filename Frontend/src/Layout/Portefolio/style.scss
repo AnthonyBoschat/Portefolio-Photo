@@ -4,14 +4,13 @@
 
 #portefolios-main-container{
     padding: 2rem 21px 1rem 21px;
-
     display: flex;
     flex-direction: column;
     gap: 20px;
     
     @include mixins.respond-to("desktop"){
         margin-top: 2rem;
-        padding: 2rem 25vw 2rem 25vw;
+        padding: 2rem 25vw 4rem 25vw;
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 0.5rem;

@@ -2,6 +2,7 @@ import ContactContainer from "@Containers/Contact";
 import "./style.scss"
 import Medias from "@Containers/Media";
 import { useSelector } from "react-redux";
+import Footer from "@Containers/Footer";
 
 export default function ContactLayout(){
 
@@ -22,7 +23,8 @@ export default function ContactLayout(){
                     <ContactContainer/>
                 </div>
             </div>
-                <Medias color={"light"}/>
+            <Footer/>
+            
         </div>
         </>
     )
