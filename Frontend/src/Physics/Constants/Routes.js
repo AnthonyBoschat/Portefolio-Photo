@@ -1,6 +1,7 @@
 const ROUTES = {
     HOME:"/",
     PRESTATIONS:{
+        INDEX:"/Prestations",
         ARTISAN:"/Prestations/Artisan",
         BOUDOIR:"/Prestations/Boudoir",
         PORTRAIT:"/Prestations/Portrait",

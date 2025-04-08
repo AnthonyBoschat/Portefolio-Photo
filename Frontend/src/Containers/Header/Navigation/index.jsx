@@ -53,7 +53,7 @@ export default function Navigation(){
                                 <React.Fragment key={index}>
                                     {route.subMenu && (
                                         <div key={index} className="button-list-container">
-                                            <button onClick={route.label === "Portefolio" ? () => navigate(ROUTES.PORTEFOLIOS.INDEX) : undefined} className={isSelectedRoute(route.link) || route.open ? "active" : ""}>
+                                            <button onClick={route.label === "Portefolio" ? () => navigate(ROUTES.PORTEFOLIOS.INDEX) : route.label === "Prestations" ? () => navigate(ROUTES.PRESTATIONS.INDEX) : undefined} className={isSelectedRoute(route.link) || route.open ? "active" : ""}>
                                                 {route.label}
                                                 {route.subMenu && (
                                                     <i className="fa-solid fa-caret-down"></i>

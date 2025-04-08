@@ -6,6 +6,7 @@ import lumiereNaturelle from "@Constants/StaticPhotos/photos/portefolio/index/lu
 import nu from "@Constants/StaticPhotos/photos/portefolio/index/nu.jpg";
 import retouche from "@Constants/StaticPhotos/photos/portefolio/index/retouche.jpg";
 import studio from "@Constants/StaticPhotos/photos/portefolio/index/studio.jpg";
+import STATIC_PHOTOS from '@Constants/StaticPhotos/StaticPhotos';
 
 
 export const routesSlice = createSlice({
@@ -22,9 +23,9 @@ export const routesSlice = createSlice({
             {label:"Studio", link:ROUTES.PORTEFOLIOS.STUDIO, representant:studio},
         ]},
         {label:"Prestations", link:"/Prestations", subMenu:true, open:false, children:[
-            {label:"Portrait", link:ROUTES.PRESTATIONS.PORTRAIT},
-            {label:"Artisan", link:ROUTES.PRESTATIONS.ARTISAN},
-            {label:"Boudoir", link:ROUTES.PRESTATIONS.BOUDOIR},
+            {label:"Portrait", link:ROUTES.PRESTATIONS.PORTRAIT, representant:STATIC_PHOTOS.HOME.PRESTATION.PORTRAIT},
+            {label:"Artisan", link:ROUTES.PRESTATIONS.ARTISAN, representant:STATIC_PHOTOS.HOME.PRESTATION.ARTISAN},
+            {label:"Boudoir", link:ROUTES.PRESTATIONS.BOUDOIR, representant:STATIC_PHOTOS.HOME.PRESTATION.BOUDOIR},
         ]},
         {label:"Artisan", link:"/Artisan", subMenu:true, open:false, hidden:true, children:[
           {label:"Atelier by Lou", link:`${ROUTES.ARTISAN}/1`}

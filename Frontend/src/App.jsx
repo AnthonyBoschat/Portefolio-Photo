@@ -19,6 +19,7 @@ import { setScreenSize } from "@Redux/Slices/App";
 import Lenis from "lenis";
 import ZoomOverlay from "@Containers/ZoomOverlay";
 import Footer from "@Containers/Footer";
+import PrestationsIndexPage from "@Pages/Prestations/index/index.jsx";
 
 // Composant wrapper qui permet d'avoir un scroll fluide
 function SmoothScrollWrapper({ children }) {
@@ -101,12 +102,13 @@ export default function App() {
 
                   <Route path={ROUTES.HOME} element={<HomePage introductionImageRef={introductionImageRef}/>}/> {/*Nettoyer*/}
 
+                  <Route path={ROUTES.PRESTATIONS.INDEX} element={<PrestationsIndexPage/>}/> {/*Nettoyer*/}
                   <Route path={ROUTES.PRESTATIONS.ARTISAN} element={<PrestationPage/>}/> {/*Nettoyer*/}
                   <Route path={ROUTES.PRESTATIONS.BOUDOIR} element={<PrestationPage/>}/> {/*Nettoyer*/}
                   <Route path={ROUTES.PRESTATIONS.PORTRAIT} element={<PrestationPage/>}/> {/*Nettoyer*/}
 
-                  <Route path={`${ROUTES.ARTISAN}/:artisanID`} element={<PortefoliosPage/>}/> {/*Nettoyer*/}
                   <Route path={ROUTES.PORTEFOLIOS.INDEX} element={<PortefoliosIndexPage />}/> {/*Nettoyer*/}
+                  <Route path={`${ROUTES.ARTISAN}/:artisanID`} element={<PortefoliosPage/>}/> {/*Nettoyer*/}
                   <Route path={ROUTES.PORTEFOLIOS.STUDIO} element={<PortefoliosPage/>}/> {/*Nettoyer*/}
                   <Route path={ROUTES.PORTEFOLIOS.FANTASTIQUE} element={<PortefoliosPage/>}/> {/*Nettoyer*/}
                   <Route path={ROUTES.PORTEFOLIOS.COLLABORATION_ARTISTIQUE} element={<PortefoliosPage/>}/> {/*Nettoyer*/}
