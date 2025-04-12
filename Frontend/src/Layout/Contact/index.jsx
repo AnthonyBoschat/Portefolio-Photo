@@ -23,7 +23,6 @@ export default function ContactLayout(){
                     <ContactContainer/>
                 </div>
             </div>
-            <Footer/>
             
         </div>
         </>

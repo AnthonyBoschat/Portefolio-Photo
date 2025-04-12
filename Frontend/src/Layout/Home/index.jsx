@@ -89,8 +89,6 @@ export default function HomeLayout({
                 </SectionComponent>
                 
             </div>
-            <Footer/>
-            {/* <Medias color={"light"}/> */}
         </>
     )
 }

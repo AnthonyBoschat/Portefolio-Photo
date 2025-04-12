@@ -58,9 +58,11 @@ export default function App() {
   
   // A chaque changement d'url ( de page ) 
   useEffect(() => {
-    window.scrollTo({top: 0, behavior: 'smooth'}); // Repositionne la vue utilisateur en haut de l'écran
-    dispatch(setOpenPhoneMenu(false)) // Ferme le menu de navigation téléphone
-    dispatch(setCurrentRoute(pathname)) // set dans le store routes le currentRoute
+    setTimeout(() => { 
+      window.scrollTo({top: 0, behavior: 'smooth'}); // Repositionne la vue utilisateur en haut de l'écran
+      dispatch(setOpenPhoneMenu(false)) // Ferme le menu de navigation téléphone
+      dispatch(setCurrentRoute(pathname)) // set dans le store routes le currentRoute
+    }, 500);
   }, [pathname]);
   
   
@@ -122,6 +124,7 @@ export default function App() {
                 </Routes>
 
               </SmoothScrollWrapper>
+              <Footer/>
             </motion.div>
 
           </AnimatePresence>

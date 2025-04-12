@@ -102,7 +102,7 @@ export default function AProposLayout({aproposPhoto}){
                     </div>
                 </>
             )}
-            <Footer/>
+            {/* <Footer/> */}
             {/* <Medias style={{paddingTop:"5rem", paddingBottom:"2rem"}} color={"lighter"}/> */}
         </div>
     )
