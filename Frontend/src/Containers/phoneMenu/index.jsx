@@ -85,7 +85,7 @@ export default function PhoneMenuContainer(){
                         }
                     })}
                 </ul>
-                    <Medias color={"light"}/>
+                <Medias style={{marginTop:0}} color={"light"}/>
             </nav>
         </div>
     )
