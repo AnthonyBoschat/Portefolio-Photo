@@ -1,12 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import ROUTES from '@Constants/Routes';
-import collab from "@Constants/StaticPhotos/photos/portefolio/index/collab.jpg";
-import fantastique from "@Constants/StaticPhotos/photos/portefolio/index/fantastique.jpg";
-import lumiereNaturelle from "@Constants/StaticPhotos/photos/portefolio/index/lumiereNaturelle.jpg";
-import nu from "@Constants/StaticPhotos/photos/portefolio/index/nu.jpg";
-import retouche from "@Constants/StaticPhotos/photos/portefolio/index/retouche.jpg";
-import studio from "@Constants/StaticPhotos/photos/portefolio/index/studio.jpg";
-import STATIC_PHOTOS from '@Constants/StaticPhotos/StaticPhotos';
 
 
 export const routesSlice = createSlice({
@@ -14,28 +7,43 @@ export const routesSlice = createSlice({
   initialState: {
     routes:[
         {label:"Accueil", link:ROUTES.HOME, subMenu:false},
-        {label:"Portefolio", link:"/Portefolios", subMenu:true, open:false, children:[
-            {label:"Collaboration Artistique", link:ROUTES.PORTEFOLIOS.COLLABORATION_ARTISTIQUE, representant:collab},
-            {label:"Fantastique", link:ROUTES.PORTEFOLIOS.FANTASTIQUE, representant:fantastique},
-            {label:"Lumière Naturelle", link:ROUTES.PORTEFOLIOS.LUMIERE_NATURELLE, representant:lumiereNaturelle},
-            {label:"Retouche Créatives", link:ROUTES.PORTEFOLIOS.RETOUCHE_CREATIVE, representant:retouche},
-            {label:"Nu - Lingerie", link:ROUTES.PORTEFOLIOS.NU_LINGERIE, representant:nu},
-            {label:"Studio", link:ROUTES.PORTEFOLIOS.STUDIO, representant:studio},
-        ]},
-        {label:"Prestations", link:"/Prestations", subMenu:true, open:false, children:[
-            {label:"Portrait", link:ROUTES.PRESTATIONS.PORTRAIT, representant:STATIC_PHOTOS.HOME.PRESTATION.PORTRAIT},
-            {label:"Artisan", link:ROUTES.PRESTATIONS.ARTISAN, representant:STATIC_PHOTOS.HOME.PRESTATION.ARTISAN},
-            {label:"Boudoir", link:ROUTES.PRESTATIONS.BOUDOIR, representant:STATIC_PHOTOS.HOME.PRESTATION.BOUDOIR},
-        ]},
-        {label:"Artisan", link:"/Artisan", subMenu:true, open:false, hidden:true, children:[
-          {label:"Atelier by Lou", link:`${ROUTES.ARTISAN}/1`}
-        ]},
+        {label:"Portefolio", link:"/Portefolios", subMenu:true, open:false, children:[]},
+        {label:"Prestations", link:"/Prestations", subMenu:true, open:false, children:[]},
+        {label:"Artisan", link:"/Artisan", subMenu:true, open:false, hidden:true, children:[]},
         {label:"À propos", link:ROUTES.APROPOS, subMenu:false},
         {label:"Contact", link:ROUTES.CONTACT, subMenu:false},
     ],
     currentRoute:ROUTES.HOME
   },
   reducers: {
+    setPortefoliosRoutes:(state, action) => {
+      const newChildren = []
+      const portefolios = action.payload
+      portefolios.forEach(portefolio => {
+        const banner = portefolio.photos.find(photo => photo.role === "banner")
+        newChildren.push({label:portefolio.name, link:`/Portefolios/${portefolio.name}`, id:portefolio.id, banner:banner})
+      })
+      const portefolioRouteIndex = state.routes.findIndex(route => route.label === "Portefolio")
+      state.routes[portefolioRouteIndex].children = newChildren
+    },
+    setPrestationsRoutes:(state, action) => {
+      const newChildren = []
+      const prestations = action.payload
+      prestations.forEach(prestation => {
+        newChildren.push({label:prestation.name, link:`/Prestations/${prestation.name}`, id:prestation.id})
+      })
+      const prestationRouteIndex = state.routes.findIndex(route => route.label === "Prestations")
+      state.routes[prestationRouteIndex].children = newChildren
+    },
+    setArtisansRoutes:(state, action) => {
+      const newChildren = []
+      const artisans = action.payload
+      artisans.forEach(artisan => {
+        newChildren.push({label:artisan.name, link:`/Artisans/${artisan.name}`, id:artisan.id})
+      })
+      const artisanRouteIndex = state.routes.findIndex(route => route.label === "Artisan")
+      state.routes[artisanRouteIndex].children = newChildren
+    },
     openSubMenu:(state,action) => {
       state.routes = state.routes.map(route => {
           if(route.label === action.payload){
@@ -72,7 +80,11 @@ export const {
   openSubMenu,
   openSubMenuForce,
   setCurrentRoute,
-  closeSubMenu
+  closeSubMenu,
+
+  setPortefoliosRoutes,
+  setPrestationsRoutes,
+  setArtisansRoutes,
 } = routesSlice.actions;
 
 export const routesReducer = routesSlice.reducer;

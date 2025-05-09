@@ -9,17 +9,24 @@ import PortefoliosPage from "@Pages/Portefolios";
 import PortefoliosIndexPage from "@Pages/Portefolios/index/index.jsx";
 import ROUTES from "@Constants/Routes";
 import AProposPage from "@Pages/APropos";
-import { useEffect, useRef, useState } from "react";
-import AdminPage from "@Pages/Admin";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { setOpenPhoneMenu } from "@Redux/Slices/phoneState";
-import { setCurrentRoute } from "@Redux/Slices/routes";
+import { setArtisansRoutes, setCurrentRoute, setPortefoliosRoutes, setPrestationsRoutes } from "@Redux/Slices/routes";
 import { setScreenSize } from "@Redux/Slices/App";
 import Lenis from "lenis";
 import ZoomOverlay from "@Containers/ZoomOverlay";
 import Footer from "@Containers/Footer";
 import PrestationsIndexPage from "@Pages/Prestations/index/index.jsx";
+import AdminPage from "@Pages/Admin";
+import Admin_Login from "@Pages/Admin/Components/Login";
+import Admin_Dashboard from "@Pages/Admin/Components/Dashboard";
+import { Flip, ToastContainer } from "react-toastify";
+import { setPortefoliosList } from "@Redux/Slices/portefolios";
+import { setPrestationsList } from "@Redux/Slices/prestations";
+import ENDPOINT from "@Constants/Endpoint";
+import { setArtisansList } from "@Redux/Slices/artisans";
 
 // Composant wrapper qui permet d'avoir un scroll fluide
 function SmoothScrollWrapper({ children }) {
@@ -54,8 +61,30 @@ export default function App() {
   const pathname = location.pathname
   const dispatch = useDispatch()
   const {mobile, desktop} = useSelector(store => store.app)
+  const portefolios = useSelector(store => store.portefolios.list)
+  const prestations = useSelector(store => store.prestations.list)
+  const artisans = useSelector(store => store.artisans.list)
+  const {routes} = useSelector(store => store.routes)
   
   
+  const isAdminPage = useMemo(() => pathname.includes(ROUTES.ADMIN.PAGE),[pathname])
+
+  useEffect(() => {
+    Promise.all([
+        fetch(ENDPOINT.PORTEFOLIOS.LIST).then(response => response.json()),
+        fetch(ENDPOINT.PRESTATIONS.LIST).then(response => response.json()),
+        fetch(ENDPOINT.ARTISANS.LIST).then(response => response.json()),
+    ]).then(([portefolios, prestations, artisans]) => {
+        dispatch(setPortefoliosList(portefolios))
+        dispatch(setPrestationsList(prestations))
+        dispatch(setArtisansList(artisans))
+
+        dispatch(setPortefoliosRoutes(portefolios))
+        dispatch(setPrestationsRoutes(prestations))
+        dispatch(setArtisansRoutes(artisans))
+    })
+}, [])
+
   // A chaque changement d'url ( de page ) 
   useEffect(() => {
       window.scrollTo({top: 0, behavior: 'smooth'}); // Repositionne la vue utilisateur en haut de l'écran
@@ -86,7 +115,12 @@ export default function App() {
   return (
     <>
         <ZoomOverlay/>
-        <Header introductionImageRef={introductionImageRef}/> {/*Nettoyer*/}
+
+
+        {!isAdminPage && ( <Header introductionImageRef={introductionImageRef}/> )}
+
+
+
         <main >
           <AnimatePresence mode="wait">
             <motion.div
@@ -96,33 +130,41 @@ export default function App() {
               exit={{ opacity: 0, transition: { duration: 0.3 } }}
               >
               <SmoothScrollWrapper>
+
+                
                 <Routes location={location}>
-                  <Route path={ROUTES.ADMIN} element={<AdminPage/>}/>
+
+                  <Route path={ROUTES.ADMIN.PAGE} element={<AdminPage/>}>
+                    <Route path={ROUTES.ADMIN.LOGIN} element={<Admin_Login/>}/>
+                    <Route path={ROUTES.ADMIN.DASHBOARD} element={<Admin_Dashboard/>}/>
+                  </Route>
 
 
-                  <Route path={ROUTES.HOME} element={<HomePage introductionImageRef={introductionImageRef}/>}/> {/*Nettoyer*/}
+                  <Route path={ROUTES.HOME} element={<HomePage introductionImageRef={introductionImageRef}/>}/> 
 
-                  <Route path={ROUTES.PRESTATIONS.INDEX} element={<PrestationsIndexPage/>}/> {/*Nettoyer*/}
-                  <Route path={ROUTES.PRESTATIONS.ARTISAN} element={<PrestationPage/>}/> {/*Nettoyer*/}
-                  <Route path={ROUTES.PRESTATIONS.BOUDOIR} element={<PrestationPage/>}/> {/*Nettoyer*/}
-                  <Route path={ROUTES.PRESTATIONS.PORTRAIT} element={<PrestationPage/>}/> {/*Nettoyer*/}
+                  <Route path={ROUTES.PRESTATIONS.INDEX} element={<PrestationsIndexPage/>}/> 
+                  {prestations.map(prestation => (
+                    <Route key={prestation.id} path={`/Prestations/${prestation.name}`} element={<PrestationPage/>}/>
+                  ))}
 
-                  <Route path={ROUTES.PORTEFOLIOS.INDEX} element={<PortefoliosIndexPage />}/> {/*Nettoyer*/}
-                  <Route path={`${ROUTES.ARTISAN}/:artisanID`} element={<PortefoliosPage/>}/> {/*Nettoyer*/}
-                  <Route path={ROUTES.PORTEFOLIOS.STUDIO} element={<PortefoliosPage/>}/> {/*Nettoyer*/}
-                  <Route path={ROUTES.PORTEFOLIOS.FANTASTIQUE} element={<PortefoliosPage/>}/> {/*Nettoyer*/}
-                  <Route path={ROUTES.PORTEFOLIOS.COLLABORATION_ARTISTIQUE} element={<PortefoliosPage/>}/> {/*Nettoyer*/}
-                  <Route path={ROUTES.PORTEFOLIOS.LUMIERE_NATURELLE} element={<PortefoliosPage/>}/> {/*Nettoyer*/}
-                  <Route path={ROUTES.PORTEFOLIOS.NU_LINGERIE} element={<PortefoliosPage/>}/> {/*Nettoyer*/}
-                  <Route path={ROUTES.PORTEFOLIOS.RETOUCHE_CREATIVE} element={<PortefoliosPage/>}/> {/*Nettoyer*/}
+                  <Route path={ROUTES.PORTEFOLIOS.INDEX} element={<PortefoliosIndexPage />}/> 
+                  {artisans.map(artisan => (
+                    <Route key={artisan.id} path={`/Portefolios/${artisan.name}`} element={<PortefoliosPage artisanID={artisan.id} name={artisan.name}/>}/>
+                  ))}
+                  {portefolios.map(portefolio => (
+                    <Route key={portefolio.id} path={`/Portefolios/${portefolio.name}`} element={<PortefoliosPage portefolioID={portefolio.id} name={portefolio.name} />}/>
+                  ))}
                   
-                  <Route path={ROUTES.APROPOS} element={<AProposPage/>}/> {/*Nettoyer*/}
+                  <Route path={ROUTES.APROPOS} element={<AProposPage/>}/> 
 
-                  <Route path={ROUTES.CONTACT} element={<ContactPage/>}/> {/*Nettoyer*/}
+                  <Route path={ROUTES.CONTACT} element={<ContactPage/>}/> 
                 </Routes>
 
               </SmoothScrollWrapper>
-              <Footer/>
+
+
+              {!isAdminPage && (<Footer/>)}
+
             </motion.div>
 
           </AnimatePresence>
@@ -130,6 +172,8 @@ export default function App() {
         {mobile && (
           <PhoneMenuContainer/>
         )}
+        <ToastContainer transition={Flip} />
+
     </>
   )
 }

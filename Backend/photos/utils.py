@@ -3,7 +3,7 @@ import os
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from io import BytesIO
 
-def process_and_convert_image(uploaded_file, scale=0.33, quality=90):
+def process_and_convert_image(uploaded_file, scale=0.33, quality=95):
     """
     Traite une image uploadée :
       - Redimensionne l'image à 33% de ses dimensions d'origine

@@ -1,8 +1,9 @@
 # photos/views.py
-from rest_framework import viewsets, status
-from .models import Photo, Artisan
+from django.shortcuts import get_object_or_404
+from rest_framework import viewsets, status, permissions, generics
+from .models import Photo, Artisan, Portefolio, Prestation
 from django_filters.rest_framework import DjangoFilterBackend
-from .serializers import ArtisanPhotoSerializer, PhotoSerializer
+from .serializers import ArtisanPhotoSerializer, ArtisanSerializer, PhotoSerializer, PortefolioSerializer, PrestationSerializer
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from rest_framework.decorators import action
@@ -41,55 +42,156 @@ class PhotoViewSet(viewsets.ReadOnlyModelViewSet):
             return Response({"error": "Artisan non trouvé."}, status=status.HTTP_404_NOT_FOUND)
 
 
+class PortefoliosViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Portefolio.objects.all()
+    serializer_class = PortefolioSerializer
 
-        
-        
-
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        portefolio_id = self.request.query_params.get("id")
+        if portefolio_id:
+            queryset = queryset.filter(pk=portefolio_id)
+        return queryset
     
-class UploadPhotoViewSet(viewsets.ViewSet):
-    parser_classes = (MultiPartParser, FormParser)
+class PrestationsViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Prestation.objects.all()
+    serializer_class = PrestationSerializer
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        prestation_id = self.request.query_params.get("id")
+        if prestation_id:
+            queryset = queryset.filter(pk=prestation_id)
+        return queryset
     
-    def create(self, request, *args, **kwargs):
-        files = request.FILES.getlist("files")
-        type = request.data.get('type')
-        subject = request.data.get('subject')
-        artisan = request.data.get('artisan')
-        print("\n\n")
-        print(f"artisan ______________{artisan}")
-        uploaded_photos = []
-        for file in files:
-            # Détermine l'orientation de la photo paysage ou portrait
-            image = Image.open(file)
-            width, height = image.size
-            file.seek(0)
-            
-            if height > width:
-                orientation = 'portrait'
-            else:
-                orientation = 'paysage'
+class ArtisansViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Artisan.objects.all()
+    serializer_class = ArtisanSerializer
 
-            photo = Photo.objects.create(
-                image=file,
-                type=type,
-                subject=subject,
-                orientation=orientation
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        artisan_id = self.request.query_params.get("id")
+        if artisan_id:
+            queryset = queryset.filter(pk=artisan_id)
+        return queryset
+    
+        
+class AdminPortefolioViewSet(viewsets.ModelViewSet):
+    queryset = Portefolio.objects.all()
+    serializer_class = PortefolioSerializer
+    
+    @action(
+        detail=True,
+        methods=['delete'],
+        url_path=r'photos/(?P<photo_id>[^/.]+)',
+        url_name='delete-photo'  # facultatif, pour nommer le reverse
+    )
+    def delete_photo(self, request, pk=None, photo_id=None):
+        """
+        DELETE /admin/portefolios/{pk}/photos/{photo_id}/
+        """
+        portefolio = self.get_object()
+        photo = get_object_or_404(Photo, pk=photo_id, portefolios=portefolio)
+        photo.delete()
+        return Response(
+            {"success": True},
+            status=status.HTTP_200_OK
+        )
+    
+    @action(
+        detail=True,
+        methods=['post'],
+        parser_classes=[MultiPartParser, FormParser],
+        url_path='upload-photos'
+    )
+    def upload_photos(self, request, pk=None):
+        """
+        POST /api/portefolios/{pk}/upload-photos/
+        Attends un champ `files` (multipart/form-data)
+        Crée les Photo, détecte orientation et les associe au Portefolio.
+        """
+        portefolio = self.get_object()
+
+        files = request.FILES.getlist('files')
+        if not files:
+            return Response(
+                {"detail": "Aucun fichier reçu."},
+                status=status.HTTP_400_BAD_REQUEST
             )
-            
-            uploaded_photos.append(photo)
 
-        # Si l'ajout de photo concerne la prestation artisan, il faut associer ces photos à cet artisan
-        if artisan != None and subject == "pre_artisan":
-            try:
-                this_artisan = Artisan.objects.get(pk=artisan)
-                print(f"this_artisan ______________{this_artisan}")
-                for photo in uploaded_photos:
-                    this_artisan.photos.add(photo)
-                
-                print(f"this_artisan.photo_______________{this_artisan.photos.all()}")
-            except Artisan.DoesNotExist:
-                return Response({"error": "Artisan non trouvé."}, status=status.HTTP_404_NOT_FOUND)
-            
-        print("\n\n")
-            
-        return Response({"success": True}, status=status.HTTP_201_CREATED)
+        created = []
+        for f in files:
+            # optionnel : détection orientation
+            img = Image.open(f)
+            orientation = 'portrait' if img.height > img.width else 'paysage'
+            f.seek(0)
+
+            photo = Photo.objects.create(image=f, orientation=orientation)
+            portefolio.photos.add(photo)
+            created.append({
+                "id": photo.id,
+                "orientation": orientation,
+                "image": photo.image.url,
+                "position":photo.position
+            })
+
+        return Response(
+            {"datas": created},
+            status=status.HTTP_201_CREATED
+        )
+        
+    @action(
+        detail=True,
+        methods=['patch'],
+        url_path=r'photos/(?P<photo_id>\d+)/change-role',
+        url_name='change-photo-role'
+    )
+    def change_photo_role(self, request, pk=None, photo_id=None):
+        """
+        PATCH /admin/portefolios/{pk}/photos/{photo_id}/change-role/
+        Body attendu : { "role": "<nouveau_role>" }
+        """
+        portefolio = self.get_object()
+        # Vérifie que la photo appartient bien à ce portefolio
+        photo = get_object_or_404(Photo, pk=photo_id, portefolios=portefolio)
+
+        # Retire le role de la précédente photo s'il y en a
+        Photo.objects.filter(portefolios=portefolio, role="banner").update(role=None)
+        
+        # Met à jour et sauve
+        photo.role = "banner"
+        photo.save()
+
+        # Retourne la nouvelle valeur au client
+        return Response(
+            {"success":True},
+            status=status.HTTP_200_OK
+        )
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class AdminPhotoViewSet(viewsets.ViewSet):
+    queryset = Photo.objects.all()
+    serializer_class = PhotoSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    

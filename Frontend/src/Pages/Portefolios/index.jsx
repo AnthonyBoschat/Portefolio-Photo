@@ -1,79 +1,33 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import ROUTES from "@Constants/Routes";
 import ENDPOINT from "@Constants/Endpoint";
 import { useLocation, useParams } from "react-router-dom";
 import sortByPhotoType from "@Services/sortByPhotoType";
 import PortefolioLayout from "@Layout/Portefolio";
+import callBackend from "@Services/callBackend";
 
-export default function PortefoliosPage() {
+export default function PortefoliosPage({portefolioID = null, artisanID = null, name=null}) {
   const location = useLocation()
   const currentRoute = location.pathname
-  const { artisanID } = useParams()
   const [photos, setPhotos] = useState([]);
   const [portefolioType, setPortefolioType] = useState(null)
 
   useEffect(() => {
 
+    const loadDatas = async() => {
+      const endpoint = portefolioID ? ENDPOINT.PORTEFOLIOS.GET(portefolioID) : ENDPOINT.ARTISANS.GET(artisanID)
+      const response = await callBackend(endpoint)
+      const sortedPhotos = sortByPhotoType(response[0].photos)
+      setPhotos(sortedPhotos)
+    }
 
-    // Si le chargement de cette page concerne des artisans
-    if(currentRoute.startsWith("/Artisan") && artisanID){
-      fetch(ENDPOINT.getThisArtisanPhoto(artisanID))
-      .then(response => response.json())
-      .then(photos => {
-        const sortedPhotos = sortByPhotoType(photos)
-        setPhotos(sortedPhotos.map(photo => ({image:photo.image, orientation:photo.orientation})))
-      })
-    }
-    
-    // Si le chargement de cette page concerne des portefolios
-    else{
-        let portefolioType
-        let subject
-        switch(currentRoute){
-    
-          case ROUTES.PORTEFOLIOS.COLLABORATION_ARTISTIQUE:
-            subject="po_collaborationArtistique"
-            portefolioType = "Collaboration Artistique"
-            break
-          case ROUTES.PORTEFOLIOS.FANTASTIQUE:
-            subject="po_fantastique"
-            portefolioType = "Fantastique"
-            break
-          case ROUTES.PORTEFOLIOS.LUMIERE_NATURELLE:
-            subject="po_lumiereNaturelle"
-            portefolioType = "Lumière Naturelle"
-            break
-          case ROUTES.PORTEFOLIOS.NU_LINGERIE:
-            subject="po_nuLingerie"
-            portefolioType = "Nu - Lingerie"
-            break
-          case ROUTES.PORTEFOLIOS.STUDIO:
-            subject="po_studio"
-            portefolioType = "Studio"
-            break
-          case ROUTES.PORTEFOLIOS.RETOUCHE_CREATIVE:
-            subject="po_retoucheCreatives"
-            portefolioType = "Retouche Créative"
-            break
-          default:
-            return
-        }
-        if(subject && portefolioType){
-            setPortefolioType(portefolioType)
-            fetch(ENDPOINT.LOAD("portefolio", subject))
-            .then(response => response.json())
-            .then(photos => {
-              const sortedPhotos = sortByPhotoType(photos)
-              const photosArray = sortedPhotos.map(photo => ({image:photo.image, orientation:photo.orientation}))
-              setPhotos(photosArray)
-            })
-        }
-    }
+    loadDatas()
+
   }, [currentRoute])
 
 
   return (
-    <PortefolioLayout photos={photos} portefolioType={portefolioType} />
+    <PortefolioLayout photos={photos} portefolioType={name} />
+    // <h1>Fetch des données</h1>
   );
 }

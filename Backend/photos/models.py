@@ -1,3 +1,4 @@
+from os import name
 from django.db import models
 from django.db.models import Max
 
@@ -9,8 +10,6 @@ from django.conf import settings
 class Photo(models.Model):
     image = models.ImageField(upload_to="photos/")
     role = models.CharField(max_length=50, blank=True, null=True, choices=ROLE_CHOICES)
-    type = models.CharField(max_length=50, choices=TYPE_CHOICES)
-    subject = models.CharField(max_length=50, choices=SUBJECT_CHOICES)
     orientation = models.CharField(max_length=10, choices=ORIENTATION_CHOICES)
     position = models.IntegerField(blank=True, null=True) 
 
@@ -24,17 +23,6 @@ class Photo(models.Model):
     # Lorsqu'une photo est enregistrer en base
     def save(self, *args, **kwargs):
 
-
-        # Si la position n'est pas définie, on la calcule automatiquement
-        # Récupère la liste des photos de son type et de son subject
-        # Récupère la plus haute position connu de cette liste
-        # Attribut +1 à la photo qu'on enregistre
-        if self.position is None:
-            list_of_photo_similar = Photo.objects.filter(type=self.type, subject=self.subject)
-            highest_position = list_of_photo_similar.aggregate(Max('position'))['position__max'] or 0
-
-            self.position = highest_position + 1
-
         # Si la photo n'est pas en webp ( on considère qu'elle n'est pas compresser ), on la compresse + redimensionne + converti en webp
         if self.image and not self.image.name.lower().endswith('.webp'):
             self.image = process_and_convert_image(self.image)
@@ -44,7 +32,46 @@ class Photo(models.Model):
         
 class Artisan(models.Model):
     name=models.CharField(max_length=50, choices=ARTISAN_CHOICES)
-    photos = models.ManyToManyField(Photo, related_name="artisans", blank=True)
+    photos = models.ManyToManyField(
+        Photo, 
+        related_name="artisans", 
+        blank=True, 
+        help_text="Photos lié à cet artisan",
+    )
 
     def __str__(self):
         return self.name
+    
+    
+class Portefolio(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    photos = models.ManyToManyField(
+        Photo,
+        related_name="portefolios",
+        blank=True,
+        help_text="Photos incluses dans ce portefolio"
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+    
+class Prestation(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    price = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        default=0,
+    )
+    duration = models.CharField(max_length=100)
+    delivery = models.IntegerField()
+    description = models.TextField(default="")
+    photos = models.ManyToManyField(
+        Photo,
+        related_name="prestations",
+        blank=True,
+        help_text="Photos incluses dans cette prestation"
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+

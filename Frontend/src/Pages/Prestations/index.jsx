@@ -7,6 +7,7 @@ import ENDPOINT from "@Constants/Endpoint";
 import STATIC_PHOTOS from "@Constants/StaticPhotos/StaticPhotos";
 import sortByPhotoType from "@Services/sortByPhotoType";
 import { useLocation } from "react-router-dom";
+import callBackend from "@Services/callBackend";
 
 
 const boudoirPrestation = {
@@ -75,47 +76,44 @@ export default function PrestationPage(){
     // Charge dans le state les photos de la réponse
     useEffect(() => {
 
+        const loadDatas = async() => {
+
+            if(loading){
+    
+                let bannerPhotos
+                let informations
+                let description
         
-
-        if(loading){
-
-            let bannerPhotos
-            let informations
-            let description
-    
-            let endpoint = false
-            switch(currentRoute){
-                
-                case ROUTES.PRESTATIONS.PORTRAIT:
-                    endpoint = ENDPOINT.LOAD("prestation", "pre_portrait")
-                    bannerPhotos = portraitPrestation.banner
-                    informations = portraitPrestation.informations
-                    description = portraitPrestation.description
-                    break;
-    
-                case ROUTES.PRESTATIONS.ARTISAN:
-                    endpoint = ENDPOINT.getArtisans
-                    bannerPhotos = artisanPrestation.banner
-                    informations = artisanPrestation.informations
-                    description = artisanPrestation.description
-                    break
-    
-                case ROUTES.PRESTATIONS.BOUDOIR:
-                    endpoint = ENDPOINT.LOAD("prestation", "pre_boudoir")
-                    bannerPhotos = boudoirPrestation.banner
-                    informations = boudoirPrestation.informations
-                    description = boudoirPrestation.description
-                    break
-    
-                default:
-                    break
-            }
-    
-            if(endpoint){
-                fetch(endpoint)
-                .then(response => response.json())
-                .then(galeriePhotos => {
-                    // setGaleryPhotos(galeriePhotos.map((photo, index) => ({...photo, selected: index === 0})))
+                let endpoint = false
+                switch(currentRoute){
+                    
+                    case ROUTES.PRESTATIONS.PORTRAIT:
+                        endpoint = ENDPOINT.LOAD("prestation", "pre_portrait")
+                        bannerPhotos = portraitPrestation.banner
+                        informations = portraitPrestation.informations
+                        description = portraitPrestation.description
+                        break;
+        
+                    case ROUTES.PRESTATIONS.ARTISAN:
+                        endpoint = ENDPOINT.getArtisans
+                        bannerPhotos = artisanPrestation.banner
+                        informations = artisanPrestation.informations
+                        description = artisanPrestation.description
+                        break
+        
+                    case ROUTES.PRESTATIONS.BOUDOIR:
+                        endpoint = ENDPOINT.LOAD("prestation", "pre_boudoir")
+                        bannerPhotos = boudoirPrestation.banner
+                        informations = boudoirPrestation.informations
+                        description = boudoirPrestation.description
+                        break
+        
+                    default:
+                        break
+                }
+        
+                if(endpoint){
+                    const galeriePhotos = await callBackend(endpoint)
                     const sortedPhotos = sortByPhotoType(galeriePhotos, {
                         reverse: true,
                         portraitNumber: 2
@@ -125,14 +123,16 @@ export default function PrestationPage(){
                     setInformations(informations)
                     setDescription(description)
                     setLoading(false)
-                })
+                }
             }
         }
+        loadDatas()
+
     }, [loading, currentRoute])
 
     return(
         <>
-            {!loading && (
+            {/* {!loading && (
                 <PrestationsLayout 
                     description={description}
                     informations={informations}
@@ -141,7 +141,8 @@ export default function PrestationPage(){
                     bannerPhotos={bannerPhotos}
                     currentRoute={currentRoute}
                 />
-            )}
+            )} */}
+            coucou
         </>
     )
 }

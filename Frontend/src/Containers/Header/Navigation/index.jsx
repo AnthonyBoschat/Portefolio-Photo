@@ -4,7 +4,6 @@ import "./style.scss";
 import { setOpenPhoneMenu } from "@Redux/Slices/phoneState"
 import { useDispatch, useSelector } from "react-redux"
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { routesSlice } from "@Redux/Slices/routes";
 import React from "react";
 
 export default function Navigation(){
@@ -14,6 +13,8 @@ export default function Navigation(){
     const {routes, currentRoute} = useSelector(store => store.routes)
     const {pathname} = useLocation()
     const navigate = useNavigate()
+
+    
 
     const isSelectedRoute = (link) => {
         if(pathname.startsWith("/Artisan")){

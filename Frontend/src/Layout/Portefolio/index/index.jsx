@@ -16,10 +16,16 @@ export default function PortefolioIndexLayout({portefolioCategory}){
             hoverEffect
             render={(category) => (
                 <>
-                    <Link to={category.link}>
-                        <LazyImage src={category.representant} alt={`Photo représentative du portefolio '${category.label}'`} />
-                    </Link>
-                    <h2>{category.label}</h2>
+                    {category?.banner?.image && (
+                        <>
+                        <Link to={category.link}>
+                            <LazyImage src={category.banner.image} alt={`Photo représentative du portefolio '${category.label}'`} />
+                        </Link>
+                        <h2>{category.label}</h2>
+                        
+                        </>
+
+                    )}
                 </>
             )}
         />

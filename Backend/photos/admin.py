@@ -1,18 +1,18 @@
 from django.contrib import admin
-from .models import Photo, Artisan
+from .models import Photo, Artisan, Portefolio, Prestation
 from django.utils.html import format_html
 
 
 class PhotoAdmin(admin.ModelAdmin):
 
     # Définir les colonnes à afficher dans la liste
-    list_display = ('id', 'image', 'type', 'role', 'subject', 'orientation', 'position', 'image_preview')
+    list_display = ('id', 'image', 'role', 'orientation', 'position', 'image_preview')
     
     # Permettre la recherche sur certains champs
-    search_fields = ('type', 'subject', 'orientation', 'role')
+    search_fields = ('orientation', 'role')
     
     # Ajouter des filtres sur les colonnes
-    list_filter = ('type', 'subject', 'orientation', 'role', ('artisans', admin.RelatedOnlyFieldListFilter))
+    list_filter = ('orientation', 'role', ('artisans', admin.RelatedOnlyFieldListFilter))
 
     def image_preview(self, obj):
         if obj.image:
@@ -30,29 +30,49 @@ class PhotoAdmin(admin.ModelAdmin):
 
 
 
-class PhotoInline(admin.TabularInline):
-    model = Artisan.photos.through  # Utilise le modèle intermédiaire
-    extra = 0  # Pas de formulaires supplémentaires
-    readonly_fields = ('photo_preview',)  # Champ en lecture seule pour afficher la preview
+class BasePhotoInline(admin.TabularInline):
+    """
+    Inline abstrait pour afficher un aperçu des photos liées
+    via un modèle intermédiaire ManyToManyField.
+    """
+    extra = 0
+    readonly_fields = ('photo_preview',)
+    fields = ('photo_preview',)
 
     def photo_preview(self, obj):
+        # 'photo' est le nom du ForeignKey sur le modèle through
         if obj.photo.image:
             return format_html(
-                '<img src="{}" style="max-width: 100px; max-height: 100px;" />',
+                '<img src="{}" style="max-width:100px;max-height:100px;" />',
                 obj.photo.image.url
             )
         return "Aucune image"
-
     photo_preview.short_description = "Aperçu"
 
-    # Optionnel : si vous ne souhaitez pas afficher les autres champs (artisan/photo)
-    # vous pouvez définir fields pour n'afficher que la preview :
-    fields = ('photo_preview',)
+# On crée autant d’inlines que de relations ManyToManyField
+class ArtisanPhotoInline(BasePhotoInline):
+    model = Artisan.photos.through
+
+class PortefolioPhotoInline(BasePhotoInline):
+    model = Portefolio.photos.through
+
+class PrestationPhotoInline(BasePhotoInline):
+    model = Prestation.photos.through
 
 class ArtisanAdmin(admin.ModelAdmin):
-    inlines = [PhotoInline]
+    inlines = [ArtisanPhotoInline]
     list_display = ('id', 'name')
+    
+class PortefolioAdmin(admin.ModelAdmin):
+    inlines = [PortefolioPhotoInline]
+    list_display = ('id', 'name')
+    
+class PrestationAdmin(admin.ModelAdmin):
+    inlines = [PrestationPhotoInline]
+    list_display = ('id', 'name', "price", "duration", "delivery", "description")
     
 # Register your models here.
 admin.site.register(Photo, PhotoAdmin)
 admin.site.register(Artisan, ArtisanAdmin)
+admin.site.register(Portefolio, PortefolioAdmin)
+admin.site.register(Prestation, PrestationAdmin)

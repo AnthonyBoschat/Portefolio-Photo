@@ -1,0 +1,71 @@
+@use "@Sass/constants.scss" as v;
+
+#admin_login_main_container{
+    // background-color: rgba(0, 0, 0, 0.534);
+
+    display: flex;
+    align-items: center;
+    padding-top: 10vh;
+    // justify-content: center;
+    flex-direction: column;
+    gap: 5rem;
+    font-family: v.$font;
+
+    h2{
+        font-weight: 500;
+        letter-spacing: 2px;
+    }
+
+    form{
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+        gap: 1rem;
+
+        label.password{
+            position: relative;
+
+            i{
+                font-size: 1rem;
+                position: absolute;
+                right: 0.7rem;
+                top: 50%;
+                opacity: 0.6;
+                transform: translateY(-50%);
+                cursor: pointer;
+            }
+        }
+
+        label input{
+            border: none;
+            // background-color: rgb(129, 129, 129);
+            background-color: transparent;
+            // outline: 1px solid black;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.208);
+            width: 25rem;
+            padding: 0.6rem;
+            padding-left: 0.5rem;
+            border-radius: 3px;
+            font-size: 1.2rem;
+            // cursor: pointer;
+            &:focus{
+                outline: 1px solid black;
+            }
+        }
+
+        input[type="submit"]{
+            border: none;
+            // outline: 1px solid black;
+            background-color: transparent;
+            // background-color: rgba(47, 255, 110, 0.127);
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+            letter-spacing: 1px;
+            font-size: 1.1rem;
+            &:hover{
+                cursor: pointer;
+                text-decoration: underline;
+            }
+        }
+    }
+}

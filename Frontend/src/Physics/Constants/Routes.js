@@ -18,7 +18,11 @@ const ROUTES = {
     ARTISAN:`/Artisan`,
     APROPOS:"/APropos",
     CONTACT:"/Contact",
-    ADMIN:"/Admin"
+    ADMIN:{
+        PAGE:"/Admin",
+        LOGIN:"/Admin/Login",
+        DASHBOARD:"/Admin/Dashboard"
+    }
 }
 
 export default ROUTES

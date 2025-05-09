@@ -1,0 +1,129 @@
+div#admin-view-portefolio{
+
+    .actions{
+        display: flex;
+        gap: 1rem;
+        button{
+            padding: 0.5rem 2rem 0.5rem 2rem;
+            border-radius: 4px;
+            background-color: rgba(128, 128, 128, 0.1);
+            box-shadow: 0px 0px 4px black;
+            opacity: 0.4;
+            cursor: pointer;
+            transition: opacity 0.15s linear;
+            &:hover{
+                opacity: 1;
+            }
+            &.active{opacity: 1;}
+            &.save{background-color: rgba(81, 255, 81, 0.241);}
+            &.cancel{background-color: rgba(255, 131, 131, 0.389);}
+            &.banner{background-color: rgba(255, 200, 72, 0.612);}
+            &.delete{background-color: rgba(255, 131, 131, 0.389);}
+        }
+    }
+
+    .photoBanner{
+        margin-top: 1rem;
+        height: 20rem;
+        background-color: rgba(255, 200, 72, 0.612);
+        padding: 0.5rem;
+    }
+    .noPhotoBanner{
+        margin-top: 1rem;
+
+        height: 20rem;
+        width: 10rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0.5rem;
+        border: 0.5rem solid rgba(255, 200, 72, 0.612);
+
+        span{
+            text-align: center;
+        }
+    }
+    
+    ul.portefolio-galery-container{
+        margin-top: 1rem;
+        max-width: 100%;
+        overflow-y: auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+
+
+
+        .savedPhotos{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            height: fit-content;
+        }
+
+        .pendingPhotos{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            height: fit-content;
+        }
+
+        .paysage{
+            grid-column: span 2;
+        }
+    
+        li{
+            margin: 0.2rem;
+            // height: 15rem;
+            // width: 100%;
+            img{
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: all 0.15s linear;
+            }
+            &.banner{
+                img{
+                    background-color: rgba(255, 200, 72, 0.612);
+                    padding: 0.5rem;
+                }
+            }
+            &.pending{
+                img{
+                    background-color: rgb(0, 54, 107);
+                    padding: 0.5rem;
+                }
+            }
+            &.can_have_action{
+                position: relative;
+                button{
+                    opacity: 0;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    transition: opacity 0.15s linear;
+                    color: white;
+                    &.deleteMode{background-color: rgba(76, 0, 0, 0.563);}
+                    &.bannerMode{background-color: rgba(146, 102, 0, 0.564);}
+                    
+                }
+                &.active{
+                    &:hover{
+                        img{
+                            background-color: black;
+                            opacity: 0.5;
+                        }
+                        button{
+                            cursor: pointer;
+                            opacity: 1;
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+}
