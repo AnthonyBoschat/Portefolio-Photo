@@ -7,12 +7,15 @@ import callBackend from "@Services/callBackend";
 import { toast } from "react-toastify";
 import Admin_View_Portefolio from "../Views/Portefolio";
 import sortByPhotoType from "@Services/sortByPhotoType";
+import Admin_View_Prestation from "../Views/Prestation";
+import Admin_View_Artisan from "../Views/Artisan";
 
 export default function Admin_Dashboard(){
 
     const [dataLoaded, setDataLoaded] = useState(false)
 
     const [selectedContent, setSelectedContent] = useState(null)
+    const [selectedContentLabelID, setSelectedContentLabelID] = useState(null)
 
     const [portefolios, setPortefolios] = useState([])
     const [prestations, setPrestations] = useState([])
@@ -33,6 +36,7 @@ export default function Admin_Dashboard(){
             fetch(ENDPOINT.PRESTATIONS.LIST).then(response => response.json()),
             fetch(ENDPOINT.PORTEFOLIOS.LIST).then(response => response.json())
         ]).then(([artisans, prestations, portefolios]) => {
+            console.log(artisans)
             setArtisans(artisans)
             setPrestations(prestations)
             setPortefolios(portefolios)
@@ -43,6 +47,7 @@ export default function Admin_Dashboard(){
     const handleClick = (contentCategory, content) => {
         setPendingPhoto(null)
         setSelectedContent(content)
+        setSelectedContentLabelID(`${contentCategory}${content.id}`)
         setView(contentCategory)
         if(contentCategory === "portefolio"){
             const portefolio = portefolios.find(portefolio => portefolio === content)
@@ -52,6 +57,7 @@ export default function Admin_Dashboard(){
         }
         if(contentCategory === "prestation"){
             const prestation = prestations.find(prestation => prestation === content)
+            prestation.photos = sortByPhotoType(prestation.photos)
             setDatas(prestation)
             return
         }
@@ -84,7 +90,7 @@ export default function Admin_Dashboard(){
         );
     };
 
-    const isSelected = (content) => selectedContent === content ? "selected" : ""
+    const isSelected = (category, content) => selectedContentLabelID === `${category}${content.id}` ? "selected" : ""
 
     
 
@@ -107,7 +113,7 @@ export default function Admin_Dashboard(){
                         <h2>Portefolios</h2>
                         <ul>
                             {portefolios.map(portefolio => (
-                                <li className={isSelected(portefolio)} key={portefolio.id} onClick={() => handleClick("portefolio", portefolio)}>{portefolio.name}</li>
+                                <li className={isSelected("portefolio", portefolio)} key={portefolio.id} onClick={() => handleClick("portefolio", portefolio)}>{portefolio.name}</li>
                             ))}
                         </ul>
                     </div>
@@ -115,7 +121,7 @@ export default function Admin_Dashboard(){
                         <h2>Prestations</h2>
                         <ul>
                             {prestations.map(prestation => (
-                                <li className={isSelected(prestation)} key={prestation.id} onClick={() => handleClick("prestation", prestation)}>{prestation.name}</li>
+                                <li className={isSelected("prestation", prestation)} key={prestation.id} onClick={() => handleClick("prestation", prestation)}>{prestation.name}</li>
                             ))}
                         </ul>
                     </div>
@@ -123,7 +129,7 @@ export default function Admin_Dashboard(){
                         <h2>Artisans</h2>
                         <ul>
                             {artisans.map(artisan => (
-                                <li className={isSelected(artisan)} key={artisan.id} onClick={() => handleClick("artisan", artisan)}>{artisan.name}</li>
+                                <li className={isSelected("artisan", artisan)} key={artisan.id} onClick={() => handleClick("artisan", artisan)}>{artisan.name}</li>
                             ))}
                         </ul>
                     </div>
@@ -138,12 +144,40 @@ export default function Admin_Dashboard(){
             <div className="content-container">
                 {view === "portefolio" && (
                     <Admin_View_Portefolio
+                        key={selectedContent.id}
                         selectedContent={selectedContent}
                         datas={datas}
                         setDatas={setDatas}
                         setPendingPhoto={setPendingPhoto}
                         pendingPhotos={pendingPhotos}
                         handleClick_AddPhotos={handleClick_AddPhotos}
+                        setPortefolios={setPortefolios}
+
+                    />
+                )}
+                {view === "prestation" && (
+                    <Admin_View_Prestation
+                        key={selectedContent.id}
+                        selectedContent={selectedContent}
+                        datas={datas}
+                        setDatas={setDatas}
+                        setPendingPhoto={setPendingPhoto}
+                        pendingPhotos={pendingPhotos}
+                        handleClick_AddPhotos={handleClick_AddPhotos}
+                        setPrestations={setPrestations}
+                        setArtisans={setArtisans}
+                    />
+                )}
+                {view === "artisan" && (
+                    <Admin_View_Artisan
+                        key={selectedContent.id}
+                        selectedContent={selectedContent}
+                        datas={datas}
+                        setDatas={setDatas}
+                        setPendingPhoto={setPendingPhoto}
+                        pendingPhotos={pendingPhotos}
+                        handleClick_AddPhotos={handleClick_AddPhotos}
+                        setArtisans={setArtisans}
                     />
                 )}
             </div>

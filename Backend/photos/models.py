@@ -2,7 +2,7 @@ from os import name
 from django.db import models
 from django.db.models import Max
 
-from .choices import ARTISAN_CHOICES, ROLE_CHOICES, TYPE_CHOICES, ORIENTATION_CHOICES, SUBJECT_CHOICES
+from .choices import ROLE_CHOICES, ORIENTATION_CHOICES
 from .utils import process_and_convert_image
 from django.conf import settings
 
@@ -31,16 +31,25 @@ class Photo(models.Model):
         
         
 class Artisan(models.Model):
-    name=models.CharField(max_length=50, choices=ARTISAN_CHOICES)
+    name=models.CharField(max_length=100)
     photos = models.ManyToManyField(
         Photo, 
         related_name="artisans", 
         blank=True, 
         help_text="Photos lié à cet artisan",
+        
     )
 
     def __str__(self):
         return self.name
+
+    def delete(self, *args, **kwargs):
+        # On copie la liste avant suppression de l'Artisan
+        photos_to_delete = list(self.photos.all())
+        super().delete(*args, **kwargs)
+        # Puis on supprime chaque Photo
+        for photo in photos_to_delete:
+            photo.delete()
     
     
 class Portefolio(models.Model):

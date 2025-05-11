@@ -6,39 +6,23 @@ import { toast } from "react-toastify";
 import Loading from "@Components/Loading";
 import sortByPhotoType from "@Services/sortByPhotoType";
 
-export default function Admin_View_Portefolio({
+export default function Admin_View_Artisan({
     selectedContent, 
     datas, 
     setDatas, 
     setPendingPhoto, 
     pendingPhotos, 
     handleClick_AddPhotos,
-    setPortefolios
+    setArtisans
 }){
 
     const [sending, setSending] = useState(false)
     const [mode, setMode] = useState(null)
-    const [bannerPhotos, setBannerPhotos] = useState([])
     const [representantPhoto, setRepresentantPhoto] = useState(null)
 
 
     useEffect(() => {
-        const bannerPhotos = datas.photos.filter(photo => photo.role === "banner")
         const representantPhoto = datas.photos.find(photo => photo.role === "representant")
-        if(bannerPhotos){
-            const finalsBanner = []
-            for(let i = 0; i<3; i++){
-                if(bannerPhotos[i]){
-                    finalsBanner.push(bannerPhotos[i])
-                }else{
-                    finalsBanner.push({image:null})
-                }
-
-            }
-            setBannerPhotos(finalsBanner)
-        }else{
-            setBannerPhotos(null)
-        }
         if(representantPhoto){
             setRepresentantPhoto(representantPhoto)
         }else{
@@ -46,21 +30,20 @@ export default function Admin_View_Portefolio({
         }
     }, [datas])
 
-
     const handleClick_deletePhoto = async(photoID, photoRole) => {
         let answer = true
         if(isRepresentant(photoRole)){
-            answer = window.confirm("Vous êtes sur le point de supprimer la photo bannière de ce portefolio, elle n'apparaitra plus dans la liste des portefolios. Êtes vous sûr ?")
+            answer = window.confirm("Vous êtes sur le point de supprimer la photo bannière de cet artisan, elle n'apparaitra plus dans la prestation 'Artisans'. Êtes vous sûr ?")
         }
         if(answer){
             setSending(true)
-            const response = await callBackend(ENDPOINT.ADMIN.PORTEFOLIOS.DELETE(selectedContent.id, photoID), {method:"DELETE", secure:true})
+            const response = await callBackend(ENDPOINT.ADMIN.ARTISANS.DELETE(selectedContent.id, photoID), {method:"DELETE", secure:true})
             if(response.success){
                 toast.success("Photo supprimé avec succès")
                 const copyDatas = {...datas}
                 copyDatas.photos = copyDatas.photos.filter(photo => photo.id !== photoID)
                 setDatas(copyDatas)
-                setPortefolios(current => current.map(presta => presta.id === selectedContent.id ? { ...presta, photos: copyDatas.photos }: presta ));
+                setArtisans(current => current.map(presta => presta.id === selectedContent.id ? { ...presta, photos: copyDatas.photos }: presta ));
                 setSending(false)
             }
         }
@@ -70,7 +53,7 @@ export default function Admin_View_Portefolio({
         setSending(true)
         const formData = new FormData()
         pendingPhotos.forEach(photo => formData.append("files", photo.file))
-        const response = await callBackend(ENDPOINT.ADMIN.PORTEFOLIOS.UPLOAD(selectedContent.id), {method:"POST", secure:true, data:formData})
+        const response = await callBackend(ENDPOINT.ADMIN.ARTISANS.UPLOAD(selectedContent.id), {method:"POST", secure:true, data:formData})
         if(response){
 
             toast.success("Photo(s) ajouté avec succès")
@@ -87,14 +70,14 @@ export default function Admin_View_Portefolio({
 
     const handleClick_ChangeRole = async(photoID) => {
         setSending(true)
-        const response = await callBackend(ENDPOINT.ADMIN.PORTEFOLIOS.CHANGE_REPRESENTANT(selectedContent.id, photoID), {method:"PATCH", secure:true})
+        const response = await callBackend(ENDPOINT.ADMIN.ARTISANS.CHANGE_REPRESENTANT(selectedContent.id, photoID), {method:"PATCH", secure:true})
         if(response.success){
             if(response.success){
-                toast.success("Nouvelle photo représentante défini avec succès")
+                toast.success("Nouvelle bannière défini avec succès")
                 const copyDatas = {...datas}
                 copyDatas.photos = copyDatas.photos.map(photo => {
                     if(photo.id === photoID){
-                        photo.role = "representant"
+                        photo.role = "banner"
                     }else{
                         photo.role = null
                     }
@@ -110,10 +93,7 @@ export default function Admin_View_Portefolio({
 
 
     const roleClass = () =>  mode ? `${mode}Mode` : ""
-    const roleAction = (photo) => {
-        if(mode === "delete"){return ()  => handleClick_deletePhoto(photo.id, photo.role)}
-        if(mode === "representant"){return () => handleClick_ChangeRole(photo.id)}
-    }
+    const roleAction = (photo) => mode === "delete" ? () => handleClick_deletePhoto(photo.id, photo.role) : () => handleClick_ChangeRole(photo.id)
     const roleLabel = () => {
          if(mode === "delete"){return "Supprimer"}
         if(mode === "representant"){return "Définir comme représentante"}
@@ -122,29 +102,13 @@ export default function Admin_View_Portefolio({
     const modeActive = () => mode ? "active" : "" 
 
     return(
-        <div id="admin-view-portefolio">
-
+        <div id="admin-view-artisan">
             <div className="role-photos">
                 <div className="representant">
                     <span>Cette photo est la photo utiliser dans la page qui liste les différents portefolios (Photo représentante)</span>
                     <picture>
                         {representantPhoto && (<img className="photo" src={representantPhoto.image}/>)}
                         {!representantPhoto && <div className="noPhoto"><span>Pas de photo représentante</span></div>}
-                    </picture>
-                </div>
-                <div className="separator"></div>
-                <div className="banner">
-                    <span>Ces photos sont utilisé dans la page du portefolios en tant que bannière (Photos bannières)</span>
-                    <picture>
-                        {bannerPhotos.map((banner, index) => {
-                            if(banner.image){
-                                return <img key={index} src={banner.image} />
-                            }else{
-                                return <div key={index} className="noPhoto"><span>Pas de photo bannière</span></div>
-                            }
-                        })}
-                        {/* {representantPhoto && (<img className="photo" src={representantPhoto.image}/>)}
-                        {!representantPhoto && <div className="noPhoto"><span>Pas de photo bannière</span></div>} */}
                     </picture>
                 </div>
             </div>
@@ -166,17 +130,13 @@ export default function Admin_View_Portefolio({
                 {!pendingPhotos && <button onClick={() => setMode(current => current !== "representant" ? "representant" : null)} className={`action representant ${actionActive("representant")}`}>Définir une photo représentante</button>}
                 
             </div>
+            
 
-            
-            <div className="separator"/>
-            
-            
-            
             <ul className="galery-container">
 
                 <div className="savedPhotos">
                     {datas.photos.map((photo, index) => (
-                        <li key={index} className={`can_have_action ${modeActive()} ${photo.orientation}`} >
+                        <li key={index} className={`can_have_action ${modeActive()} ${photo.orientation}`}>
                             <img src={photo.image} />
                             <button className={roleClass()} onClick={roleAction(photo)}>
                                 {roleLabel()}

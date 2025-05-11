@@ -76,6 +76,63 @@ class ArtisansViewSet(viewsets.ReadOnlyModelViewSet):
         return queryset
     
         
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
 class AdminPortefolioViewSet(viewsets.ModelViewSet):
     queryset = Portefolio.objects.all()
     serializer_class = PortefolioSerializer
@@ -143,12 +200,12 @@ class AdminPortefolioViewSet(viewsets.ModelViewSet):
     @action(
         detail=True,
         methods=['patch'],
-        url_path=r'photos/(?P<photo_id>\d+)/change-role',
+        url_path=r'photos/(?P<photo_id>\d+)/change-role-representant',
         url_name='change-photo-role'
     )
     def change_photo_role(self, request, pk=None, photo_id=None):
         """
-        PATCH /admin/portefolios/{pk}/photos/{photo_id}/change-role/
+        PATCH /admin/portefolios/{pk}/photos/{photo_id}/change-role-representant/
         Body attendu : { "role": "<nouveau_role>" }
         """
         portefolio = self.get_object()
@@ -156,10 +213,10 @@ class AdminPortefolioViewSet(viewsets.ModelViewSet):
         photo = get_object_or_404(Photo, pk=photo_id, portefolios=portefolio)
 
         # Retire le role de la précédente photo s'il y en a
-        Photo.objects.filter(portefolios=portefolio, role="banner").update(role=None)
+        Photo.objects.filter(portefolios=portefolio, role="representant").update(role=None)
         
         # Met à jour et sauve
-        photo.role = "banner"
+        photo.role = "representant"
         photo.save()
 
         # Retourne la nouvelle valeur au client
@@ -167,7 +224,315 @@ class AdminPortefolioViewSet(viewsets.ModelViewSet):
             {"success":True},
             status=status.HTTP_200_OK
         )
+        
+        
+        
+        
+        
+class AdminPrestationViewSet(viewsets.ModelViewSet):
+    queryset = Prestation.objects.all()
+    serializer_class = PrestationSerializer
     
+    @action(
+        detail=True,
+        methods=['delete'],
+        url_path=r'photos/(?P<photo_id>[^/.]+)',
+        url_name='delete-photo'  # facultatif, pour nommer le reverse
+    )
+    def delete_photo(self, request, pk=None, photo_id=None):
+        """
+        DELETE /admin/prestations/{pk}/photos/{photo_id}/
+        """
+        prestation = self.get_object()
+        photo = get_object_or_404(Photo, pk=photo_id, prestations=prestation)
+        photo.delete()
+        return Response(
+            {"success": True},
+            status=status.HTTP_200_OK
+        )
+    
+    @action(
+        detail=True,
+        methods=['post'],
+        parser_classes=[MultiPartParser, FormParser],
+        url_path='upload-photos'
+    )
+    def upload_photos(self, request, pk=None):
+        """
+        POST /api/prestations/{pk}/upload-photos/
+        Attends un champ `files` (multipart/form-data)
+        Crée les Photo, détecte orientation et les associe à la Prestation.
+        """
+        prestation = self.get_object()
+
+        files = request.FILES.getlist('files')
+        if not files:
+            return Response(
+                {"detail": "Aucun fichier reçu."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        created = []
+        for f in files:
+            # optionnel : détection orientation
+            img = Image.open(f)
+            orientation = 'portrait' if img.height > img.width else 'paysage'
+            f.seek(0)
+
+            photo = Photo.objects.create(image=f, orientation=orientation)
+            prestation.photos.add(photo)
+            created.append({
+                "id": photo.id,
+                "orientation": orientation,
+                "image": photo.image.url,
+                "position":photo.position
+            })
+
+        return Response(
+            {"datas": created},
+            status=status.HTTP_201_CREATED
+        )
+        
+    @action(
+        detail=True,
+        methods=['patch'],
+        url_path=r'photos/(?P<photo_id>\d+)/change-role-representant',
+        url_name='change-photo-role'
+    )
+    def change_photo_role(self, request, pk=None, photo_id=None):
+        """
+        PATCH /admin/prestations/{pk}/photos/{photo_id}/change-role-representant/
+        Body attendu : { "role": "<nouveau_role>" }
+        """
+        prestation = self.get_object()
+        # Vérifie que la photo appartient bien à cette prestation
+        photo = get_object_or_404(Photo, pk=photo_id, prestations=prestation)
+
+        # Retire le role de la précédente photo s'il y en a
+        Photo.objects.filter(prestations=prestation, role="representant").update(role=None)
+        
+        # Met à jour et sauve
+        photo.role = "representant"
+        photo.save()
+
+        # Retourne la nouvelle valeur au client
+        return Response(
+            {"success":True},
+            status=status.HTTP_200_OK
+        )
+
+    @action(
+        detail=True,
+        methods=['patch'],
+        url_path=r'update-informations',
+        url_name='update_informations'
+    )
+    def update_informations(self, request, pk=None):
+
+        """
+        PATCH /admin/prestations/{pk}/update-informations/
+        Body attendu : { "data": "Nouvelles données" }
+        """
+        datas = request.data
+
+        new_name = datas.get("name")
+        new_duration = datas.get("duration")
+        new_price = datas.get("price")
+        new_delivery = datas.get("delivery")
+        new_description = datas.get("description")
+
+        prestation = self.get_object()
+        if new_name:
+            prestation.name = new_name
+        if new_duration:
+            prestation.duration = new_duration
+        if new_price:
+            prestation.price = new_price
+        if new_delivery:
+            prestation.delivery = new_delivery
+        if new_description:
+            prestation.description = new_description
+            
+        prestation.save()
+        
+
+        return Response(
+            {"success":True}
+        )
+        
+    
+    
+class AdminArtisanViewSet(viewsets.ModelViewSet):
+    queryset = Artisan.objects.all()
+    serializer_class = ArtisanSerializer
+    
+    @action(
+        detail=True,
+        methods=['delete'],
+        url_path=r'photos/(?P<photo_id>[^/.]+)',
+        url_name='delete-photo'  # facultatif, pour nommer le reverse
+    )
+    def delete_photo(self, request, pk=None, photo_id=None):
+        """
+        DELETE /admin/portefolios/{pk}/photos/{photo_id}/
+        """
+        artisan = self.get_object()
+        photo = get_object_or_404(Photo, pk=photo_id, artisans=artisan)
+        photo.delete()
+        return Response(
+            {"success": True},
+            status=status.HTTP_200_OK
+        )
+    
+    @action(
+        detail=True,
+        methods=['post'],
+        parser_classes=[MultiPartParser, FormParser],
+        url_path='upload-photos'
+    )
+    def upload_photos(self, request, pk=None):
+        """
+        POST /api/portefolios/{pk}/upload-photos/
+        Attends un champ `files` (multipart/form-data)
+        Crée les Photo, détecte orientation et les associe au Portefolio.
+        """
+        artisan = self.get_object()
+
+        files = request.FILES.getlist('files')
+        if not files:
+            return Response(
+                {"detail": "Aucun fichier reçu."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        created = []
+        for f in files:
+            # optionnel : détection orientation
+            img = Image.open(f)
+            orientation = 'portrait' if img.height > img.width else 'paysage'
+            f.seek(0)
+
+            photo = Photo.objects.create(image=f, orientation=orientation)
+            artisan.photos.add(photo)
+            created.append({
+                "id": photo.id,
+                "orientation": orientation,
+                "image": photo.image.url,
+                "position":photo.position
+            })
+
+        return Response(
+            {"datas": created},
+            status=status.HTTP_201_CREATED
+        )
+        
+    @action(
+        detail=True,
+        methods=['patch'],
+        url_path=r'photos/(?P<photo_id>\d+)/change-role-representant',
+        url_name='change-photo-role'
+    )
+    def change_photo_role(self, request, pk=None, photo_id=None):
+        """
+        PATCH /admin/portefolios/{pk}/photos/{photo_id}/change-role-representant/
+        Body attendu : { "role": "<nouveau_role>" }
+        """
+        artisan = self.get_object()
+        # Vérifie que la photo appartient bien à ce portefolio
+        photo = get_object_or_404(Photo, pk=photo_id, artisans=artisan)
+
+        # Retire le role de la précédente photo s'il y en a
+        Photo.objects.filter(artisans=artisan, role="representant").update(role=None)
+        
+        # Met à jour et sauve
+        photo.role = "representant"
+        photo.save()
+
+        # Retourne la nouvelle valeur au client
+        return Response(
+            {"success":True},
+            status=status.HTTP_200_OK
+        )
+
+
+    @action(
+        detail=False,          # <- on passe à False
+        methods=['post'],
+        url_path='add'         # pas besoin du slash
+    )
+    def add_artisan(self, request):
+
+        name = request.data.get("name")
+
+        if not name:
+            return Response(
+                {"success": False, "message": "Le champ 'name' est requis."},
+            )
+
+        artisan, created = Artisan.objects.get_or_create(name=name)
+        if not created:
+            return Response(
+                {"success": False, "message": "Un artisan avec ce nom existe déjà."},
+            )
+            
+        return Response(
+            {
+                "success": True,
+                "message": f"L'artisan {artisan.name} a été créé avec succès.",
+                "new_artisan":{
+                    "id":artisan.id,
+                    "name":artisan.name,
+                    "image":None,
+                }
+            },
+        )
+        
+        
+    @action(
+        detail=True,
+        methods=['delete'],
+        url_path='delete'
+    )
+    def delete_artisan(self, request, pk=None):
+        try:
+            artisan = Artisan.objects.get(pk=pk)
+        except Artisan.DoesNotExist:
+            return Response({"success": False, "message": "Artisan non trouvé."})
+        
+        deleted_name = artisan.name
+        deleted_id = artisan.id
+        artisan.delete()
+
+        return Response({
+            "success":True,
+            "message":f"L'artisan {deleted_name} a été supprimer avec succès",
+            "deleted_id":deleted_id
+        })
+        
+    @action(
+        detail=True,
+        methods=['patch'],
+        url_path='change_name'
+    )
+    def change_artisan_name(self, request, pk=None):
+        
+        new_name = request.data.get("name")
+        if not new_name:
+            return Response({"success": False, "message": "Le champ 'name' est requis."})
+            
+        if Artisan.objects.filter(name=new_name).exists():
+            return Response({"success": False, "message": "Un artisan avec ce nom existe déjà."})
+
+        artisan = self.get_object()
+        artisan.name = new_name
+        artisan.save()
+
+        return Response({
+            "success":True,
+            "artisan_id":artisan.id,
+            "artisan_new_name":artisan.name,
+            "message":f"L'artisan {artisan.name} a été mis à jour avec succès"
+        })
     
 
 

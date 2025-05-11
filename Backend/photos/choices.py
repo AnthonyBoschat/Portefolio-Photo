@@ -29,19 +29,3 @@ ORIENTATION_CHOICES = (
     ("portrait", "portrait"),
     ("paysage", "paysage"),
 )
-
-
-
-
-
-
-
-
-
-
-
-
-ARTISAN_CHOICES = (
-    ("Atelier by Lau", "Atelier by Lau"),
-    ("Autre", "Autre")
-)

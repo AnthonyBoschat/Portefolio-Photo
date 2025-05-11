@@ -21,7 +21,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 from rest_framework import routers
 from photos.email import sendEmailView
-from photos.views import AdminPortefolioViewSet, ArtisansViewSet, PhotoViewSet, PortefoliosViewSet, PrestationsViewSet
+from photos.views import AdminArtisanViewSet, AdminPortefolioViewSet, AdminPrestationViewSet, ArtisansViewSet, PhotoViewSet, PortefoliosViewSet, PrestationsViewSet
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
 
 router = routers.DefaultRouter()
@@ -29,9 +29,10 @@ router.register(r'photos', PhotoViewSet)
 router.register(r'portefolios', PortefoliosViewSet, basename="portefolios")
 router.register(r'prestations', PrestationsViewSet, basename="prestations")
 router.register(r'artisans', ArtisansViewSet, basename="artisans")
-# router.register(r"upload", UploadPhotoViewSet, basename="upload")
 
 router.register(r"admin/portefolios", AdminPortefolioViewSet, basename="admin-portefolios")
+router.register(r"admin/prestations", AdminPrestationViewSet, basename="admin-prestations")
+router.register(r"admin/artisans", AdminArtisanViewSet, basename="admin-artisans")
 
 # router.register()
 # router.register(r"sendmail", sendEmailView.as_view(), basename="sendmail")

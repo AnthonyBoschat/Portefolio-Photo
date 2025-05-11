@@ -1,4 +1,103 @@
-div#admin-view-portefolio{
+div#admin-view-prestation{
+
+
+
+    form{
+        // outline: 1px solid red;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        label{
+            letter-spacing: 2px;
+            font-size: 1.1rem;
+        }
+
+        .nameDurationPriceDelivery{
+            display: flex;
+            gap: 0.5rem;
+
+            >div{
+                display: flex;
+                flex-direction: column;
+                justify-content: end;
+                input{
+                    all:unset;
+                    margin-top: 0.2rem;
+                    letter-spacing: 1px;
+                    padding: 0.3rem 0.5rem 0.3rem 0.5rem;
+                    // outline: 1px solid black;
+                    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.14);
+                    background-color: white;
+                    transition: all 0.15s linear;
+                    &:hover{box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);}
+                    &:focus{outline: 1px solid rgba(0, 0, 0, 0.3);}
+                }
+            }
+        }
+
+        .description{
+            >div{
+                display: flex;
+                flex-direction: column;
+
+                textarea{
+                    
+                    all:unset;
+                    margin-top: 0.2rem;
+
+                    letter-spacing: 1px;
+                    height: 10rem;
+                    padding: 0.3rem 0.5rem 0.3rem 0.5rem;
+                    // outline: 1px solid black;
+                    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.14);
+                    background-color: white;
+                    transition: all 0.15s linear;
+
+                    &:hover{box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);}
+                    &:focus{outline: 1px solid rgba(0, 0, 0, 0.3);}
+                }
+            }
+        }
+
+
+        .actions{
+            all:unset;
+            display: flex;
+            gap: 1rem;
+            input{
+                border: none;
+                letter-spacing: 1px;
+                padding: 0.3rem 3rem 0.3rem 3rem;
+                background-color: white;
+                box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.141);
+                // background-color: rgb(238, 255, 238);
+                transition: all 0.15s linear;
+                &[type="submit"]{
+                    background-color: rgb(238, 255, 238);
+                    &:hover{ background-color: rgb(229, 255, 229);}
+                }
+                &[type="button"]{
+                    background-color: rgb(248, 238, 255);
+                    &:hover{ background-color: rgb(247, 229, 255);}
+                }
+                
+                &:hover{
+                    box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.2);
+                    cursor: pointer;
+                }
+    
+                &.disabled{
+                    opacity: 0.5;
+                    pointer-events: none;
+                }
+            }
+        }
+
+    }
+
+
+    
 
     .role-photos{
         margin-top: 2rem;
@@ -7,10 +106,10 @@ div#admin-view-portefolio{
         grid-template-columns: 30% 1px 70%;
         gap: 1rem;
         .separator{
-            height: 100%;
-            width: 1px;
-            background-color: rgba(0, 0, 0, 0.182);
-        }
+        height: 100%;
+        width: 1px;
+        background-color: rgba(0, 0, 0, 0.182);
+    }
         .representant{
             display: flex;
             flex-direction: column;
@@ -92,6 +191,8 @@ div#admin-view-portefolio{
         background-color: rgba(0, 0, 0, 0.182);
     }
 
+
+
     .actions{
         margin-top: 3rem;
         display: flex;
@@ -116,8 +217,6 @@ div#admin-view-portefolio{
         }
     }
 
-    
-    
     
     ul.galery-container{
         margin-top: 1rem;
@@ -198,6 +297,31 @@ div#admin-view-portefolio{
                     }
 
                 }
+            }
+        }
+    }
+
+
+
+    ul.artisan-container{
+        padding-top: 3rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        li{
+            display: flex;
+            gap: 1rem;
+            margin-left: 2rem;
+            .number{opacity: 0.7;}
+            .action{
+                opacity: 0.4;
+                transition: opacity 0.15s linear;
+                &:hover{cursor:pointer; opacity: 1;}
+                &.delete{color: rgba(76, 0, 0, 1);}
+                &.update{color: rgb(0, 120, 72);}
+            }
+            span{
+                letter-spacing: 2px;
             }
         }
     }

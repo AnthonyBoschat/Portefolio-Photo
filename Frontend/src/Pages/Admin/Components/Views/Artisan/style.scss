@@ -1,4 +1,4 @@
-div#admin-view-portefolio{
+div#admin-view-artisan{
 
     .role-photos{
         margin-top: 2rem;
@@ -46,45 +46,9 @@ div#admin-view-portefolio{
                 }
             }
         }
-        .banner{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            span{
-                width: 20rem;
-                text-align: center;
-            }
-            picture{
-                display: flex;
-                justify-content: center;
-                gap: 0.5rem;
-            }
-            // background-color: blue;
-            .photo{
-                margin-top: 1rem;
-                height: 20rem;
-                background-color: rgba(23, 0, 137, 0.616);
-                padding: 0.5rem;
-            }
-            .noPhoto{
-                margin-top: 1rem;
-        
-                height: 20rem;
-                width: 10rem;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                padding: 0.5rem;
-                border: 0.5rem solid rgba(23, 0, 137, 0.616);
-        
-                span{
-                    text-align: center;
-                }
-            }
-        }
     }
 
-    >.separator{
+    .separator{
         margin-top: 2rem;
         margin-bottom: 2rem;
         height: 1px;
@@ -93,7 +57,7 @@ div#admin-view-portefolio{
     }
 
     .actions{
-        margin-top: 3rem;
+        margin-top: 2rem;
         display: flex;
         gap: 1rem;
         button{
@@ -115,9 +79,6 @@ div#admin-view-portefolio{
             &.delete{background-color: rgba(255, 131, 131, 0.389);}
         }
     }
-
-    
-    
     
     ul.galery-container{
         margin-top: 1rem;
