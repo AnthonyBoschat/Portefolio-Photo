@@ -14,10 +14,6 @@ export default function PrestationsIndexPage(){
             setPrestationsCategory(portefolios.children)
         }
     }, [routes])
-
-    useEffect(() => {
-        console.log(prestationsCategory)
-    }, [prestationsCategory])
     
 
     return(

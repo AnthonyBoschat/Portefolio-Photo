@@ -5,11 +5,11 @@ import { createSlice } from '@reduxjs/toolkit';
 export const artisansSlice = createSlice({
   name: 'artisans',
   initialState: {
-    list:[]
+    collections:[]
   },
   reducers: {
     setArtisansList:(state,action) => {
-        state.list = action.payload
+        state.collections = action.payload
     }
   },
 });

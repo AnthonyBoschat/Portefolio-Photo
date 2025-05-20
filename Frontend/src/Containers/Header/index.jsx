@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import "./style.scss";
-import logo from "@Assets/logo.svg"
+// import logo from "@Assets/logo1.svg"
+import logo from "@Assets/logo2.png"
+// import logo from "@Assets/logo2.svg"
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import ROUTES from "@Constants/Routes";
 import BreadCrumbs from "@Components/BreadCumbs";
@@ -9,7 +11,7 @@ import { useSelector } from "react-redux";
 
 export default function Header({introductionImageRef}){
 
-  const headerRef = useRef()
+    const headerRef = useRef()
     const {pathname} = useLocation()
     const {mobile, desktop} = useSelector(store => store.app)
     const [introductionIsVisible, setIntroductionIsVisible] = useState(desktop ? pathname === "/" : false)
@@ -100,7 +102,9 @@ export default function Header({introductionImageRef}){
             <div className={containerClasses }>
                 <div className="logo-breadcrumbs-container">
                     <Link onClick={() => navigateTo(ROUTES.HOME)} to={ROUTES.HOME}>
-                        <img src={logo} alt="Logo du site internet" />
+                        <picture className="logo-container">
+                          <img className="logo" src={logo} alt="Logo du site internet" />
+                        </picture>
                     </Link>
                     {mobile && (
                         <BreadCrumbs/>

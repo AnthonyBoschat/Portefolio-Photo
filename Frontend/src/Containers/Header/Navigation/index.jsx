@@ -25,7 +25,7 @@ export default function Navigation(){
                 return true
             }
         }else{
-            return currentRoute === link
+            return decodeURIComponent(currentRoute) === link
         }
 
     }

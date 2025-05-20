@@ -214,12 +214,8 @@ export default function Admin_View_Prestation({
             }
         }
     }
-
+    
     useEffect(() => {
-        console.log("debug selectedBannerToSet", selectedBannerToSet)
-    }, [selectedBannerToSet])
-    useEffect(() => {
-        console.log("debug bannerPhotos", bannerPhotos)
         if(mode === "banner"){
             let found = false
             bannerPhotos.forEach((banner, index) => {

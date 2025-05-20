@@ -20,8 +20,7 @@ export const routesSlice = createSlice({
       const newChildren = []
       const portefolios = action.payload
       portefolios.forEach(portefolio => {
-        const banner = portefolio.photos.find(photo => photo.role === "banner")
-        newChildren.push({label:portefolio.name, link:`/Portefolios/${portefolio.name}`, id:portefolio.id, banner:banner})
+        newChildren.push({label:portefolio.name, link:`/Portefolios/${portefolio.name}`, id:portefolio.id})
       })
       const portefolioRouteIndex = state.routes.findIndex(route => route.label === "Portefolio")
       state.routes[portefolioRouteIndex].children = newChildren

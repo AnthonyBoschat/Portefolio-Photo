@@ -272,13 +272,6 @@ export default function Admin_View({
         setDescription(datas.description)
     }
 
-    useEffect(() => {
-        console.log(content)
-        console.log("galeryPhotos", galeryPhotos)
-        console.log("datas", datas)
-    }, [content, galeryPhotos, datas])
-
-
 
     return(
         <div id="admin_view_layout">

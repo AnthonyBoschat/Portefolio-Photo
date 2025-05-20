@@ -23,8 +23,8 @@ import AdminPage from "@Pages/Admin";
 import Admin_Login from "@Pages/Admin/Components/Login";
 import Admin_Dashboard from "@Pages/Admin/Components/Dashboard";
 import { Flip, ToastContainer } from "react-toastify";
-import { setPortefoliosList } from "@Redux/Slices/portefolios";
-import { setPrestationsList } from "@Redux/Slices/prestations";
+import { init_portefolios } from "@Redux/Slices/portefolios";
+import { init_prestations } from "@Redux/Slices/prestations";
 import ENDPOINT from "@Constants/Endpoint";
 import { setArtisansList } from "@Redux/Slices/artisans";
 
@@ -61,9 +61,9 @@ export default function App() {
   const pathname = location.pathname
   const dispatch = useDispatch()
   const {mobile, desktop} = useSelector(store => store.app)
-  const portefolios = useSelector(store => store.portefolios.list)
-  const prestations = useSelector(store => store.prestations.list)
-  const artisans = useSelector(store => store.artisans.list)
+  const portefolios = useSelector(store => store.portefolios.collections)
+  const prestations = useSelector(store => store.prestations.collections)
+  const artisans = useSelector(store => store.artisans.collections)
   const {routes} = useSelector(store => store.routes)
   
   
@@ -75,8 +75,8 @@ export default function App() {
         fetch(ENDPOINT.PRESTATIONS.LIST).then(response => response.json()),
         fetch(ENDPOINT.ARTISANS.LIST).then(response => response.json()),
     ]).then(([portefolios, prestations, artisans]) => {
-        dispatch(setPortefoliosList(portefolios))
-        dispatch(setPrestationsList(prestations))
+        dispatch(init_portefolios(portefolios))
+        dispatch(init_prestations(prestations))
         dispatch(setArtisansList(artisans))
 
         dispatch(setPortefoliosRoutes(portefolios))

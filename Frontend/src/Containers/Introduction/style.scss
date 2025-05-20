@@ -73,6 +73,7 @@ div#home-introduction{
             font-size: 20px;
 
             @include mixins.respond-to("desktop"){
+                text-shadow: 0px 0px 5px black;
                 bottom: 10rem;
                 right: 10rem;
                 font-size: 32px;

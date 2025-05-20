@@ -3,21 +3,21 @@ import "./style.scss";
 
 import Galery from "@Components/Galery";
 import LazyImage from "@Components/LazyImage";
-import Footer from "@Containers/Footer";
 
-export default function PortefolioLayout({photos, portefolioType}){
+export default function PortefolioLayout({collection, portefolioName}){
 
     const {zoomPhoto} = usePhoto()
+
 
     return( 
         <>
         
             <Galery 
                 id="portefolios-main-container"
-                elements={photos} 
+                elements={collection} 
                 hoverEffect
                 render={(photo, index) => (
-                    <LazyImage onClick={() => zoomPhoto(photos, index)} src={photo.image ? photo.image : photo} alt={`Photo de la categorie portefolio '${portefolioType}'`}/>
+                    <LazyImage onClick={() => zoomPhoto(collection, index)} src={photo.image ? photo.image : photo} alt={`Photo de la categorie portefolio '${portefolioName}'`}/>
                 )}
             />
         </>

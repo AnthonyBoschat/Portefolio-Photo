@@ -1,5 +1,8 @@
 import "./style.scss";
-import introductionImage from "./introduction.jpg"
+// import introductionImage from "./introduction1.jpg"
+// import introductionImage from "./introduction2.jpg"
+// import introductionImage from "./introduction3.jpg"
+import introductionImage from "./introduction4.jpg"
 import { useEffect, useState } from "react";
 import { RxDoubleArrowDown } from "react-icons/rx";
 
@@ -21,10 +24,6 @@ export default function IntroductionContainer({firstElementRef, introductionImag
     const transformStyle = {
         transform: `translateY( -${offset / 1.5}px`,
         height: `calc(100vh -${offset}px)`
-    }
-
-    const zoomStyle = {
-        transform: "scale(" + (1 + offset / 1000) + ")"
     }
 
     const textOpacity = Math.max(1 - offset / 600, 0);

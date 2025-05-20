@@ -3,7 +3,7 @@ import "./style.scss";
 import { Link } from "react-router-dom";
 import Galery from "@Components/Galery";
 
-export default function PortefolioIndexLayout({portefolioCategory}){
+export default function PortefolioIndexLayout({representantsPortefolios}){
 
     
 
@@ -12,16 +12,16 @@ export default function PortefolioIndexLayout({portefolioCategory}){
             
         <Galery
             id="portefolio-index"
-            elements={portefolioCategory}
+            elements={representantsPortefolios}
             hoverEffect
-            render={(category) => (
+            render={(portefolio) => (
                 <>
-                    {category?.banner?.image && (
+                    {portefolio?.image && (
                         <>
-                        <Link to={category.link}>
-                            <LazyImage src={category.banner.image} alt={`Photo représentative du portefolio '${category.label}'`} />
+                        <Link to={portefolio.link}>
+                            <LazyImage src={portefolio.image} alt={`Photo représentative du portefolio '${portefolio.label}'`} />
                         </Link>
-                        <h2>{category.label}</h2>
+                        <h2>{portefolio.label}</h2>
                         
                         </>
 

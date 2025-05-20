@@ -23,7 +23,6 @@ export const zoomSlice = createSlice({
         state.photoIndex = photoIndex
         state.photoURL = collection[photoIndex].image ? collection[photoIndex].image : collection[photoIndex]
         state.last = state.photoIndex === state.collection.length
-        console.log(state.collection.length)
         state.first = state.photoIndex === 0
     },
     nextPhoto:(state,action) => {

@@ -1,5 +1,5 @@
 import "./style.scss";
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 import Carousel from "@Components/Carousel";
@@ -20,6 +20,9 @@ export default function PrestationsHome({prestationsPhotos}){
     
     // Liste des prestations
     const [photos, setPhotos] = useState(prestationsPhotos)
+    useEffect(() => {
+        setPhotos(prestationsPhotos)
+    }, [prestationsPhotos])
 
     // Quand l'utilisateur clique sur le nom d'une prestation, modifie en conséquence la liste des prestations et le statut selected et fait se déplacer le slider
     const switchPhoto = (index) => {
@@ -54,7 +57,10 @@ export default function PrestationsHome({prestationsPhotos}){
                         <>
                             <div className="label">{photo.label}</div>
                             <Link to={photo.link || photo.url}>
-                                <LazyImage src={photo.image ? photo.image : photo} alt={`Photo représentative de la prestation ${photo.label}`}/>
+                                <picture className="photo-container">
+                                    <img src={photo.image} alt={`Photo représentative de la prestation ${photo.label}`} />
+                                </picture>
+                                {/* <LazyImage src={photo.image ? photo.image : photo} alt={`Photo représentative de la prestation ${photo.label}`}/> */}
                             </Link>
                         </>
                     )}
