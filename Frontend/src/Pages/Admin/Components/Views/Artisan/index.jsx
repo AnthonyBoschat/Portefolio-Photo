@@ -22,18 +22,18 @@ export default function Admin_View_Artisan({
 
 
     useEffect(() => {
-        const representantPhoto = datas.photos.find(photo => photo.role === "representant")
+        const representantPhoto = datas.photos.find(photo => photo.representant === true)
         if(representantPhoto){
             setRepresentantPhoto(representantPhoto)
         }else{
             setRepresentantPhoto(null)
         }
-    }, [datas])
+    }, [])
 
-    const handleClick_deletePhoto = async(photoID, photoRole) => {
+    const handleClick_deletePhoto = async(photoID, photoRepresentant) => {
         let answer = true
-        if(isRepresentant(photoRole)){
-            answer = window.confirm("Vous êtes sur le point de supprimer la photo bannière de cet artisan, elle n'apparaitra plus dans la prestation 'Artisans'. Êtes vous sûr ?")
+        if(photoRepresentant){
+            answer = window.confirm("Cette photo est une photo représentante de cet artisan. Vous êtes sur le point de la supprimer, le bon fonctionnement du site risque d'être impacter si elle n'est pas remplacer par la suite. Êtes vous sûr ?")
         }
         if(answer){
             setSending(true)
@@ -68,18 +68,20 @@ export default function Admin_View_Artisan({
         }
     }
 
-    const handleClick_ChangeRole = async(photoID) => {
+    const handleClick_ChangeRoleToRepresentant = async(photoID) => {
         setSending(true)
         const response = await callBackend(ENDPOINT.ADMIN.ARTISANS.CHANGE_REPRESENTANT(selectedContent.id, photoID), {method:"PATCH", secure:true})
         if(response.success){
             if(response.success){
+                setRepresentantPhoto(datas.photos.find(photo => photo.id === photoID))
+
                 toast.success("Nouvelle bannière défini avec succès")
                 const copyDatas = {...datas}
                 copyDatas.photos = copyDatas.photos.map(photo => {
                     if(photo.id === photoID){
-                        photo.role = "banner"
+                        photo.representant = true
                     }else{
-                        photo.role = null
+                        photo.representant = false
                     }
                     return photo
                 })
@@ -89,11 +91,10 @@ export default function Admin_View_Artisan({
         }
     }
 
-    const isRepresentant = (photoRole) => (photoRole === "representant" ? "representant" : "")
 
-
+    
     const roleClass = () =>  mode ? `${mode}Mode` : ""
-    const roleAction = (photo) => mode === "delete" ? () => handleClick_deletePhoto(photo.id, photo.role) : () => handleClick_ChangeRole(photo.id)
+    const roleAction = (photo) => mode === "delete" ? () => handleClick_deletePhoto(photo.id, photo.representant) : () => handleClick_ChangeRoleToRepresentant(photo.id)
     const roleLabel = () => {
          if(mode === "delete"){return "Supprimer"}
         if(mode === "representant"){return "Définir comme représentante"}
@@ -105,11 +106,11 @@ export default function Admin_View_Artisan({
         <div id="admin-view-artisan">
             <div className="role-photos">
                 <div className="representant">
-                    <span>Cette photo est la photo utiliser dans la page qui liste les différents portefolios (Photo représentante)</span>
-                    <picture>
-                        {representantPhoto && (<img className="photo" src={representantPhoto.image}/>)}
-                        {!representantPhoto && <div className="noPhoto"><span>Pas de photo représentante</span></div>}
-                    </picture>
+                    <span>Cette photo est la photo utiliser dans la prestation "artisans"</span>
+                    <div>
+                        {representantPhoto && (<picture className={`photo ${mode === "representant" ? "selected" : ""}`}><img  src={representantPhoto.image}/></picture>)}
+                        {!representantPhoto && <div className={`noPhoto ${mode === "representant" ? "selected" : ""}`}><span>Pas de photo représentante</span></div>}
+                    </div>
                 </div>
             </div>
 
@@ -136,7 +137,7 @@ export default function Admin_View_Artisan({
 
                 <div className="savedPhotos">
                     {datas.photos.map((photo, index) => (
-                        <li key={index} className={`can_have_action ${modeActive()} ${photo.orientation}`}>
+                        <li key={index} className={`can_have_action ${modeActive()} ${photo.orientation} ${photo.representant ? "representant" : ""}`}>
                             <img src={photo.image} />
                             <button className={roleClass()} onClick={roleAction(photo)}>
                                 {roleLabel()}

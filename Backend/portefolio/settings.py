@@ -13,9 +13,12 @@ from datetime import timedelta
 from pathlib import Path
 import os
 
+from dotenv import find_dotenv, load_dotenv
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+load_dotenv(find_dotenv())
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -180,3 +183,7 @@ EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = False  # MailHog ne nécessite pas TLS
 
 ADMIN_EMAIL = "destinataire@hotmail.fr"
+
+
+COMPRESS_IMAGES = os.getenv("COMPRESS_IMAGES", "False").lower() in ("1", "true", "yes")
+CONVERT_IMAGES  = os.getenv("CONVERT_IMAGES",  "False").lower() in ("1", "true", "yes")

@@ -9,6 +9,7 @@ import Admin_View_Portefolio from "../Views/Portefolio";
 import sortByPhotoType from "@Services/sortByPhotoType";
 import Admin_View_Prestation from "../Views/Prestation";
 import Admin_View_Artisan from "../Views/Artisan";
+import Admin_View from "../Views";
 
 export default function Admin_Dashboard(){
 
@@ -36,7 +37,6 @@ export default function Admin_Dashboard(){
             fetch(ENDPOINT.PRESTATIONS.LIST).then(response => response.json()),
             fetch(ENDPOINT.PORTEFOLIOS.LIST).then(response => response.json())
         ]).then(([artisans, prestations, portefolios]) => {
-            console.log(artisans)
             setArtisans(artisans)
             setPrestations(prestations)
             setPortefolios(portefolios)
@@ -142,7 +142,21 @@ export default function Admin_Dashboard(){
 
 
             <div className="content-container">
-                {view === "portefolio" && (
+
+                {view && (
+                    <Admin_View
+                        key={selectedContent?.id}
+                        datas={datas}
+                        setDatas={setDatas}
+                        selectedContent={selectedContent}
+                        view={view}
+                        setContent={view === "portefolio" ? setPortefolios : view === "prestation" ? setPrestations : setArtisans}
+                        content={view === "portefolio" ? portefolios : view === "prestation" ? prestations : artisans}
+                        setPrestations={setPrestations}
+                        setArtisans={setArtisans}
+                    />
+                )}
+                {/* {view === "portefolio" && (
                     <Admin_View_Portefolio
                         key={selectedContent.id}
                         selectedContent={selectedContent}
@@ -179,7 +193,7 @@ export default function Admin_Dashboard(){
                         handleClick_AddPhotos={handleClick_AddPhotos}
                         setArtisans={setArtisans}
                     />
-                )}
+                )} */}
             </div>
 
 

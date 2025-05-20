@@ -9,7 +9,7 @@ class PhotoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Photo
-        fields = ['id', 'image', 'orientation', 'position', "role"]
+        fields = ['id', 'image', 'orientation', 'position', "representant", "banner"]
 
     def get_image(self, obj):
         return obj.image.url
@@ -64,7 +64,7 @@ class PrestationSerializer(serializers.ModelSerializer):
         for artisan in artisans_qs:
             # Essaie de récupérer la photo de rôle "banner"
             try:
-                banner = artisan.photos.get(role='banner')
+                banner = artisan.photos.get(banner=True)
                 # On renvoie l'URL de l'image (ou .image.name si tu préfères le chemin)
                 photo_url = banner.image.url
             except Photo.DoesNotExist:

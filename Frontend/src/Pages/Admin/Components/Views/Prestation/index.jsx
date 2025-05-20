@@ -17,7 +17,6 @@ export default function Admin_View_Prestation({
     setArtisans,
 }){
 
-    console.log(datas)
     const [name, setName] = useState(datas.name)
     const [duration, setDuration] = useState(datas.duration)
     const [price, setPrice] = useState(datas.price)
@@ -30,11 +29,15 @@ export default function Admin_View_Prestation({
 
     const [bannerPhotos, setBannerPhotos] = useState([])
     const [representantPhoto, setRepresentantPhoto] = useState(null)
+    const [selectedBannerToSet, setSelectedBannerToSet] = useState(0)
+
+    
+
 
 
     useEffect(() => {
-        const bannerPhotos = datas.photos.filter(photo => photo.role === "banner")
-        const representantPhoto = datas.photos.find(photo => photo.role === "representant")
+        const bannerPhotos = datas.photos.filter(photo => photo.banner)
+        const representantPhoto = datas.photos.find(photo => photo.representant)
         if(bannerPhotos){
             const finalsBanner = []
             for(let i = 0; i<3; i++){
@@ -54,12 +57,17 @@ export default function Admin_View_Prestation({
         }else{
             setRepresentantPhoto(null)
         }
-    }, [datas])
+    }, [])
 
-    const handleClick_deletePhoto = async(photoID, photoRole) => {
+    const handleClick_deletePhoto = async(photoID, photoRepresentant, photoBanner) => {
         let answer = true
-        if(isRepresentant(photoRole)){
-            answer = window.confirm("Vous êtes sur le point de supprimer la photo bannière de cette prestation, elle n'apparaitra plus dans la liste des prestations. Êtes vous sûr ?")
+        if(photoRepresentant || photoBanner){
+            let roleMessage
+            if(photoRepresentant && !photoBanner){roleMessage = "représentante"}
+            if(!photoRepresentant && photoBanner){roleMessage = "bannière"}
+            if(photoRepresentant && photoBanner){roleMessage = "représentante et également bannière"}
+            // const message = `Cette photo est une photo ${representantMessage} ${}`
+            answer = window.confirm(`Cette photo est une photo ${roleMessage} de cette prestation. Vous êtes sur le point de la supprimer, le bon fonctionnement du site risque d'être impacter si elle n'est pas remplacer par la suite. Êtes vous sûr ?`)
         }
         if(answer){
             setSending(true)
@@ -68,8 +76,36 @@ export default function Admin_View_Prestation({
                 toast.success("Photo supprimé avec succès")
                 const copyDatas = {...datas}
                 copyDatas.photos = copyDatas.photos.filter(photo => photo.id !== photoID)
-                setDatas(copyDatas)
                 setPrestations(current => current.map(presta => presta.id === selectedContent.id ? { ...presta, photos: copyDatas.photos }: presta ));
+                if(photoRepresentant){
+                    setRepresentantPhoto(null)
+                    copyDatas.photos = copyDatas.photos.map(photo => {
+                        if(photo.id === photoID){
+                            photo.representant = false
+                        }
+                        return photo
+                    })
+                }
+                if(photoBanner){
+                    setBannerPhotos(prev =>
+                        prev.map((photo, index) => {
+                            // cas position (même 0)
+                            if (photo.id === photoID) {
+                                return { image:null };
+                            }
+                            // tous les autres restent inchangés
+                            return photo;
+                        })
+                    );
+                    copyDatas.photos = copyDatas.photos.map(photo => {
+                        if(photo.id === photoID){
+                            photo.banner = false
+                        }
+                        return photo
+                    })
+                }
+
+                setDatas(copyDatas)
                 setSending(false)
             }
         }
@@ -94,23 +130,27 @@ export default function Admin_View_Prestation({
         }
     }
 
-    const handleClick_ChangeRole = async(photoID) => {
+    const handleClick_ChangeRoleToRepresentant = async(photoID) => {
+        if(photoID === representantPhoto?.id){
+            return toast.error("Cette photo est déjà la photo représentante de cette prestation")
+        }
         setSending(true)
         const response = await callBackend(ENDPOINT.ADMIN.PRESTATIONS.CHANGE_REPRESENTANT(selectedContent.id, photoID), {method:"PATCH", secure:true})
         if(response.success){
             if(response.success){
-                toast.success("Nouvelle photo représentante défini avec succès")
+                setRepresentantPhoto(datas.photos.find(photo => photo.id === photoID))
                 const copyDatas = {...datas}
                 copyDatas.photos = copyDatas.photos.map(photo => {
                     if(photo.id === photoID){
-                        photo.role = "representant"
+                        photo.representant = true
                     }else{
-                        photo.role = null
+                        photo.representant = false
                     }
                     return photo
                 })
                 setDatas(current => ({ ...current, photos: copyDatas.photos }));
                 setSending(false)
+                toast.success(response.message)
             }
         }
     }
@@ -121,7 +161,7 @@ export default function Admin_View_Prestation({
             return toast.error("Le nom d'un artisan doit contenir au moins un caractère")
         }
         if(new_artisan_name){
-            const response = await callBackend(ENDPOINT.ADMIN.ARTISANS.ADD, {method:"POST", data:{name:new_artisan_name}, secure:true})
+            const response = await callBackend(ENDPOINT.ADMIN.PRESTATIONS.ADD_ARTISAN, {method:"POST", data:{name:new_artisan_name}, secure:true})
             if(response.success){
                 const copyArtisans = [...datas.artisans]
                 copyArtisans.push(response.new_artisan)
@@ -142,7 +182,7 @@ export default function Admin_View_Prestation({
     const handleClick_DeleteArtisan = async(artisanID) => {
         const confirm = window.confirm("Vous êtes sur le point de supprimer cet artisan, toutes les photos qui lui sont associés seronts supprimés également.\n\n Êtes vous sûr ?")
         if(confirm){
-            const response = await callBackend(ENDPOINT.ADMIN.ARTISANS.DELETE(artisanID), {method:"DELETE", secure:true})
+            const response = await callBackend(ENDPOINT.ADMIN.ARTISANS.DELETE_ARTISAN(artisanID), {method:"DELETE", secure:true})
             if(response.success){
                 setDatas(current => ({...current, artisans:current.artisans.filter(artisan => artisan.id !== response.deleted_id)}))
                 setPrestations(current => current.map(prestation => prestation.name === "Artisan" ? {...prestation, artisans: prestation.artisans.filter(artisan => artisan.id !== response.deleted_id)} : prestation))
@@ -163,7 +203,7 @@ export default function Admin_View_Prestation({
             return toast.error("Le nom de l'artisan doit être différent.")
         }
         if(new_artisan_name){
-            const response = await callBackend(ENDPOINT.ADMIN.ARTISANS.CHANGE_NAME(artisanID), {method:"PATCH", data:{name:new_artisan_name}, secure:true})
+            const response = await callBackend(ENDPOINT.ADMIN.PRESTATIONS.CHANGE_ARTISAN_NAME(artisanID), {method:"PATCH", data:{name:new_artisan_name}, secure:true})
             if(response.success){
                 setDatas(current => ({...current, artisans:current.artisans.map(artisan => artisan.id === response.artisan_id ? {...artisan, name:response.artisan_new_name} : artisan )}))
                 setPrestations(current => current.map(prestation => prestation.name === "Artisan" ? {...prestation, artisans: prestation.artisans.map(artisan => artisan.id === response.artisan_id ? {...artisan, name:response.artisan_new_name} : artisan)} : prestation))
@@ -173,6 +213,71 @@ export default function Admin_View_Prestation({
                 toast.error(response.message)
             }
         }
+    }
+
+    useEffect(() => {
+        console.log("debug selectedBannerToSet", selectedBannerToSet)
+    }, [selectedBannerToSet])
+    useEffect(() => {
+        console.log("debug bannerPhotos", bannerPhotos)
+        if(mode === "banner"){
+            let found = false
+            bannerPhotos.forEach((banner, index) => {
+                if(!banner.image && !found){
+                    found = true
+                    setSelectedBannerToSet(index)
+                    return
+                }
+            })
+        }
+    }, [mode, bannerPhotos])
+
+    const handleClick_ChangeRoleToBanner = async(photoID) => {
+        setSending(true)
+        const isReplace = bannerPhotos.find((photo, index) => (photo.image && index === selectedBannerToSet))
+        const payload = {}
+        if(bannerPhotos.find(banner => banner.id === photoID)){
+            return toast.error("Cette photo est déjà défini en tant que bannière")
+        }
+        if(isReplace){
+            payload.photo_to_replace_id = isReplace.id
+        }else{
+            payload.position = selectedBannerToSet
+        }
+        const response = await callBackend(ENDPOINT.ADMIN.PRESTATIONS.CHANGE_BANNER(selectedContent.id, photoID), {method:"PATCH", secure:true, data:payload})
+        if(response.success){
+            setBannerPhotos(prev =>
+                prev.map((photo, index) => {
+                    // cas position (même 0)
+                    if (response.position != null && index === response.position) {
+                        return { id: photoID, image: response.image };
+                    }
+                    // cas replaceID
+                    if (response.replaceID != null && photo.id === response.replaceID) {
+                        return { id: photoID, image: response.image };
+                    }
+                    // tous les autres restent inchangés
+                    return photo;
+                })
+            );
+            const copyDatas = {...datas}
+            copyDatas.photos = copyDatas.photos.map(photo => {
+                if(photo.id === photoID){
+                    photo.banner = true
+                }
+                if(response.replaceID){
+                    if(photo.id === response.replaceID){
+                        photo.banner = false
+                    }
+                }
+                return photo
+            })
+            setDatas(copyDatas)
+            toast.success(response.message)
+
+        }
+        setSending(false)
+
     }
 
     const handleSubmit = async(event) => {
@@ -206,8 +311,9 @@ export default function Admin_View_Prestation({
     const isRepresentant = (photoRole) => (photoRole === "representant" ? "representant" : "")
     const roleClass = () =>  mode ? `${mode}Mode` : ""
     const roleAction = (photo) => {
-        if(mode === "delete"){return ()  => handleClick_deletePhoto(photo.id, photo.role)}
-        if(mode === "representant"){return () => handleClick_ChangeRole(photo.id)}
+        if(mode === "delete"){return ()  => handleClick_deletePhoto(photo.id, photo.representant, photo.banner)}
+        if(mode === "representant"){return () => handleClick_ChangeRoleToRepresentant(photo.id)}
+        if(mode === "banner"){return () => handleClick_ChangeRoleToBanner(photo.id)}
     }
     // const roleLabel = () => mode ? mode === "delete" ? "Supprimer" : "Définir comme bannière" : ""
     const roleLabel = () => {
@@ -217,6 +323,8 @@ export default function Admin_View_Prestation({
     const actionActive = (actionMode) => actionMode === mode ? "active" : "" 
     const modeActive = () => mode ? "active" : "" 
     const isArtisanPrestation = () => datas?.name === "Artisan"
+    const isSelectedToBeSet = (bannerIndex) => mode === "banner" ? selectedBannerToSet === bannerIndex ? "selected" : "unselected" : ""
+
 
 
     const formDisabledClass = useCallback(() => {
@@ -294,10 +402,10 @@ export default function Admin_View_Prestation({
             <div className="role-photos">
                 <div className="representant">
                     <span>Cette photo est la photo utiliser dans la page qui liste les différents portefolios (Photo représentante)</span>
-                    <picture>
-                        {representantPhoto && (<img className="photo" src={representantPhoto.image}/>)}
-                        {!representantPhoto && <div className="noPhoto"><span>Pas de photo représentante</span></div>}
-                    </picture>
+                    <div>
+                         {representantPhoto && (<picture className={`photo ${mode === "representant" ? "selected" : ""}`}><img  src={representantPhoto.image}/></picture>)}
+                        {!representantPhoto && <div className={`noPhoto ${mode === "representant" ? "selected" : ""}`}><span>Pas de photo représentante</span></div>}
+                    </div>
                 </div>
                 <div className="separator"></div>
                 <div className="banner">
@@ -305,13 +413,11 @@ export default function Admin_View_Prestation({
                     <picture>
                         {bannerPhotos.map((banner, index) => {
                             if(banner.image){
-                                return <img key={index} src={banner.image} />
+                                return <picture onClick={() => setSelectedBannerToSet(index)} key={index} className={`photo ${isSelectedToBeSet(index)}`}><img  src={banner.image} /></picture>
                             }else{
-                                return <div key={index} className="noPhoto"><span>Pas de photo bannière</span></div>
+                                return <div onClick={() => setSelectedBannerToSet(index)} key={index} className={`noPhoto ${isSelectedToBeSet(index)}`}><span>Pas de photo bannière</span></div>
                             }
                         })}
-                        {/* {representantPhoto && (<img className="photo" src={representantPhoto.image}/>)}
-                        {!representantPhoto && <div className="noPhoto"><span>Pas de photo bannière</span></div>} */}
                     </picture>
                 </div>
             </div>
@@ -335,6 +441,7 @@ export default function Admin_View_Prestation({
                         )}
                         {!pendingPhotos && <button onClick={() => setMode(current => current !== "delete" ? "delete" : null)} className={`action delete ${actionActive("delete")}`}>Supprimer des photos</button>}
                         {!pendingPhotos && <button onClick={() => setMode(current => current !== "representant" ? "representant" : null)} className={`action representant ${actionActive("representant")}`}>Définir une photo représentante</button>}
+                        {!pendingPhotos && <button onClick={() => setMode(current => current !== "banner" ? "banner" : null)} className={`action banner ${actionActive("banner")}`}>Définir une photo bannière</button>}
                         
                     </div>
                     
@@ -343,9 +450,9 @@ export default function Admin_View_Prestation({
 
                         <div className="savedPhotos">
                             {datas.photos.map((photo, index) => (
-                                <li key={index} className={`can_have_action ${modeActive()} ${photo.orientation}`}>
+                                <li key={index} className={`can_have_action ${modeActive()} ${photo.orientation} ${photo.representant ? "representant" : photo.banner ? "banner" : ""}`}>
                                     <img src={photo.image} />
-                                    <button className={roleClass()} onClick={roleAction(photo)}>
+                                    <button className={`overlay ${roleClass()}`} onClick={roleAction(photo)}>
                                         {roleLabel()}
                                     </button>
                                 </li>

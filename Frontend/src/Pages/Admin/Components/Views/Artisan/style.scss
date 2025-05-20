@@ -1,5 +1,5 @@
 div#admin-view-artisan{
-
+    
     .role-photos{
         margin-top: 2rem;
         // background-color: red;
@@ -25,21 +25,58 @@ div#admin-view-artisan{
             }
             // background-color: blue;
             .photo{
+                position: relative;
+
                 margin-top: 1rem;
+                border: 2px solid rgb(98, 68, 0);
+                background-color: rgb(196, 144, 0);
+                padding: 2px;
                 height: 20rem;
-                background-color: rgba(255, 200, 72, 0.612);
-                padding: 0.5rem;
+                max-width: 15rem;
+                img{
+                    object-fit: cover;
+                    height: 100%;
+                }
+                &.selected{
+                    &::after{
+                        position: absolute;
+                        content: "";
+                        left: 50%;
+                        bottom: -1rem;
+                        width: 80%;
+                        height: 4px;
+                        background-color: rgb(196, 144, 0);
+                        border-radius: 8px;
+                        transform: translateX(-50%);
+                    }
+                }
             }
             .noPhoto{
                 margin-top: 1rem;
-        
+                position: relative;
+                
                 height: 20rem;
                 width: 10rem;
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 padding: 0.5rem;
-                border: 0.5rem solid rgba(255, 200, 72, 0.612);
+                color: white;
+                background-color: rgb(196, 144, 0);
+                border: 2px solid rgb(98, 68, 0);
+                &.selected{
+                    &::after{
+                        position: absolute;
+                        content: "";
+                        left: 50%;
+                        bottom: -1rem;
+                        width: 80%;
+                        height: 4px;
+                        background-color: rgb(196, 144, 0);
+                        border-radius: 8px;
+                        transform: translateX(-50%);
+                    }
+                }
         
                 span{
                     text-align: center;
@@ -117,10 +154,9 @@ div#admin-view-artisan{
                 transition: all 0.15s linear;
             }
             &.representant{
-                img{
-                    background-color: rgba(255, 200, 72, 0.612);
-                    padding: 0.5rem;
-                }
+                outline: 2px solid rgb(98, 68, 0);
+                background-color: rgb(196, 144, 0);
+                padding: 2px;
             }
             &.pending{
                 img{

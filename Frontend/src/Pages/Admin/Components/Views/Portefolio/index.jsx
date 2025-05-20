@@ -18,39 +18,25 @@ export default function Admin_View_Portefolio({
 
     const [sending, setSending] = useState(false)
     const [mode, setMode] = useState(null)
-    const [bannerPhotos, setBannerPhotos] = useState([])
     const [representantPhoto, setRepresentantPhoto] = useState(null)
 
 
     useEffect(() => {
-        const bannerPhotos = datas.photos.filter(photo => photo.role === "banner")
-        const representantPhoto = datas.photos.find(photo => photo.role === "representant")
-        if(bannerPhotos){
-            const finalsBanner = []
-            for(let i = 0; i<3; i++){
-                if(bannerPhotos[i]){
-                    finalsBanner.push(bannerPhotos[i])
-                }else{
-                    finalsBanner.push({image:null})
-                }
-
+        if(datas){
+            const representantPhoto = datas.photos.find(photo => photo.representant === true)
+            if(representantPhoto){
+                setRepresentantPhoto(representantPhoto)
+            }else{
+                setRepresentantPhoto(null)
             }
-            setBannerPhotos(finalsBanner)
-        }else{
-            setBannerPhotos(null)
         }
-        if(representantPhoto){
-            setRepresentantPhoto(representantPhoto)
-        }else{
-            setRepresentantPhoto(null)
-        }
-    }, [datas])
+    }, [])
 
 
-    const handleClick_deletePhoto = async(photoID, photoRole) => {
+    const handleClick_deletePhoto = async(photoID, photoRepresentant) => {
         let answer = true
-        if(isRepresentant(photoRole)){
-            answer = window.confirm("Vous êtes sur le point de supprimer la photo bannière de ce portefolio, elle n'apparaitra plus dans la liste des portefolios. Êtes vous sûr ?")
+        if(photoRepresentant){
+            answer = window.confirm("Cette photo est une photo représentante de cette prestation. Vous êtes sur le point de la supprimer, le bon fonctionnement du site risque d'être impacter si elle n'est pas remplacer par la suite. Êtes vous sûr ?")
         }
         if(answer){
             setSending(true)
@@ -59,8 +45,17 @@ export default function Admin_View_Portefolio({
                 toast.success("Photo supprimé avec succès")
                 const copyDatas = {...datas}
                 copyDatas.photos = copyDatas.photos.filter(photo => photo.id !== photoID)
-                setDatas(copyDatas)
                 setPortefolios(current => current.map(presta => presta.id === selectedContent.id ? { ...presta, photos: copyDatas.photos }: presta ));
+                if(photoRepresentant){
+                    setRepresentantPhoto(null)
+                    copyDatas.photos = copyDatas.photos.map(photo => {
+                        if(photo.id === photoID){
+                            photo.representant = false
+                        }
+                        return photo
+                    })
+                }
+                setDatas(copyDatas)
                 setSending(false)
             }
         }
@@ -85,34 +80,35 @@ export default function Admin_View_Portefolio({
         }
     }
 
-    const handleClick_ChangeRole = async(photoID) => {
+    const handleClick_ChangeRoleToRepresentant = async(photoID) => {
+        if(photoID === representantPhoto?.id){
+            return toast.error("Cette photo est déjà la photo représentante de cette prestation")
+        }
         setSending(true)
         const response = await callBackend(ENDPOINT.ADMIN.PORTEFOLIOS.CHANGE_REPRESENTANT(selectedContent.id, photoID), {method:"PATCH", secure:true})
         if(response.success){
-            if(response.success){
-                toast.success("Nouvelle photo représentante défini avec succès")
-                const copyDatas = {...datas}
-                copyDatas.photos = copyDatas.photos.map(photo => {
-                    if(photo.id === photoID){
-                        photo.role = "representant"
-                    }else{
-                        photo.role = null
-                    }
-                    return photo
-                })
-                setDatas(current => ({ ...current, photos: copyDatas.photos }));
-                setSending(false)
-            }
+            setRepresentantPhoto(datas.photos.find(photo => photo.id === photoID))
+            const copyDatas = {...datas}
+            copyDatas.photos = copyDatas.photos.map(photo => {
+                if(photo.id === photoID){
+                    photo.representant = true
+                }else{
+                    photo.representant = false
+                }
+                return photo
+            })
+            setDatas(current => ({ ...current, photos: copyDatas.photos }));
+            toast.success(response.message)
+            setSending(false)
+            
         }
     }
 
-    const isRepresentant = (photoRole) => (photoRole === "representant" ? "representant" : "")
-
-
+    
     const roleClass = () =>  mode ? `${mode}Mode` : ""
     const roleAction = (photo) => {
-        if(mode === "delete"){return ()  => handleClick_deletePhoto(photo.id, photo.role)}
-        if(mode === "representant"){return () => handleClick_ChangeRole(photo.id)}
+        if(mode === "delete"){return ()  => handleClick_deletePhoto(photo.id, photo.representant)}
+        if(mode === "representant"){return () => handleClick_ChangeRoleToRepresentant(photo.id)}
     }
     const roleLabel = () => {
          if(mode === "delete"){return "Supprimer"}
@@ -127,25 +123,10 @@ export default function Admin_View_Portefolio({
             <div className="role-photos">
                 <div className="representant">
                     <span>Cette photo est la photo utiliser dans la page qui liste les différents portefolios (Photo représentante)</span>
-                    <picture>
-                        {representantPhoto && (<img className="photo" src={representantPhoto.image}/>)}
-                        {!representantPhoto && <div className="noPhoto"><span>Pas de photo représentante</span></div>}
-                    </picture>
-                </div>
-                <div className="separator"></div>
-                <div className="banner">
-                    <span>Ces photos sont utilisé dans la page du portefolios en tant que bannière (Photos bannières)</span>
-                    <picture>
-                        {bannerPhotos.map((banner, index) => {
-                            if(banner.image){
-                                return <img key={index} src={banner.image} />
-                            }else{
-                                return <div key={index} className="noPhoto"><span>Pas de photo bannière</span></div>
-                            }
-                        })}
-                        {/* {representantPhoto && (<img className="photo" src={representantPhoto.image}/>)}
-                        {!representantPhoto && <div className="noPhoto"><span>Pas de photo bannière</span></div>} */}
-                    </picture>
+                    <div>
+                        {representantPhoto && (<picture className={`photo ${mode === "representant" ? "selected" : ""}`}><img  src={representantPhoto.image}/></picture>)}
+                        {!representantPhoto && <div className={`noPhoto ${mode === "representant" ? "selected" : ""}`}><span>Pas de photo représentante</span></div>}
+                    </div>
                 </div>
             </div>
 
@@ -176,9 +157,9 @@ export default function Admin_View_Portefolio({
 
                 <div className="savedPhotos">
                     {datas.photos.map((photo, index) => (
-                        <li key={index} className={`can_have_action ${modeActive()} ${photo.orientation}`} >
+                        <li key={index} className={`can_have_action ${modeActive()} ${photo.orientation} ${photo.representant ? "representant" : ""}`} >
                             <img src={photo.image} />
-                            <button className={roleClass()} onClick={roleAction(photo)}>
+                            <button className={`overlay ${roleClass()}`} onClick={roleAction(photo)}>
                                 {roleLabel()}
                             </button>
                         </li>

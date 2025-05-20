@@ -3,37 +3,60 @@ import os
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from io import BytesIO
 
-def process_and_convert_image(uploaded_file, scale=0.33, quality=95):
+def compress_image(uploaded_file, scale=0.33, quality=85):
     """
-    Traite une image uploadée :
-      - Redimensionne l'image à 33% de ses dimensions d'origine
-      - La convertit en WebP avec une qualité de 90%
-    Retourne un InMemoryUploadedFile prêt à être sauvegardé dans le modèle.
+    Redimensionne l'image puis la ré-enregistre dans son format d'origine
+    avec le niveau de qualité spécifié.
     """
-    # Ouvre l'image depuis l'upload
     img = Image.open(uploaded_file)
-    
-    # Calcul des nouvelles dimensions
-    new_width = int(img.width * scale)
-    new_height = int(img.height * scale)
-    
-    # Redimensionne l'image en conservant les proportions
-    resized_img = img.resize((new_width, new_height), Image.LANCZOS)
-    
-    # Sauvegarde dans un buffer en mémoire
+    new_size = (int(img.width * scale), int(img.height * scale))
+    resized = img.resize(new_size, Image.LANCZOS)
+
     buffer = BytesIO()
-    resized_img.save(buffer, format='WEBP', quality=quality)
+    fmt = img.format or 'JPEG'
+    resized.save(buffer, format=fmt, quality=quality)
     buffer.seek(0)
-    
-    # Crée un nouveau InMemoryUploadedFile
-    file_size = buffer.getbuffer().nbytes
-    new_file = InMemoryUploadedFile(
+
+    name, ext = os.path.splitext(uploaded_file.name)
+    new_name = f"{name}{ext}"  # même extension
+    size = buffer.getbuffer().nbytes
+
+    return InMemoryUploadedFile(
         file=buffer,
         field_name=getattr(uploaded_file, 'field_name', 'image'),
-        name=os.path.splitext(uploaded_file.name)[0] + '.webp',
-        content_type='image/webp',
-        size=file_size,
-        charset=None
+        name=new_name,
+        content_type=uploaded_file.content_type,
+        size=size,
+        charset=None,
     )
-    
-    return new_file
+  
+  
+def convert_to_webp(uploaded_file, quality=100, lossless=True):
+    """
+    Convertit une image dans n'importe quel format en WebP en qualité maximale.
+    Si lossless=True utilise le mode sans perte, sinon quality=100.
+    """
+    img = Image.open(uploaded_file)
+
+    buffer = BytesIO()
+    # Paramètres pour WebP en qualité max
+    save_kwargs = {'format': 'WEBP'}
+    if lossless:
+        save_kwargs['lossless'] = True
+    else:
+        save_kwargs['quality'] = quality
+
+    img.save(buffer, **save_kwargs)
+    buffer.seek(0)
+
+    name = os.path.splitext(uploaded_file.name)[0] + '.webp'
+    size = buffer.getbuffer().nbytes
+
+    return InMemoryUploadedFile(
+        file=buffer,
+        field_name=getattr(uploaded_file, 'field_name', 'image'),
+        name=name,
+        content_type='image/webp',
+        size=size,
+        charset=None,
+    )

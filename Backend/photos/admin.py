@@ -6,13 +6,13 @@ from django.utils.html import format_html
 class PhotoAdmin(admin.ModelAdmin):
 
     # Définir les colonnes à afficher dans la liste
-    list_display = ('id', 'image', 'role', 'orientation', 'position', 'image_preview')
+    list_display = ('id', 'image', "representant", 'banner', 'orientation', 'position', 'image_preview')
     
     # Permettre la recherche sur certains champs
     search_fields = ('orientation', 'role')
     
     # Ajouter des filtres sur les colonnes
-    list_filter = ('orientation', 'role', ('artisans', admin.RelatedOnlyFieldListFilter))
+    list_filter = ('orientation', 'banner', "representant", ('artisans', admin.RelatedOnlyFieldListFilter))
 
     def image_preview(self, obj):
         if obj.image:

@@ -3,13 +3,14 @@ from django.db import models
 from django.db.models import Max
 
 from .choices import ROLE_CHOICES, ORIENTATION_CHOICES
-from .utils import process_and_convert_image
+from .utils import compress_image, convert_to_webp
 from django.conf import settings
 
 # Create your models here.
 class Photo(models.Model):
     image = models.ImageField(upload_to="photos/")
-    role = models.CharField(max_length=50, blank=True, null=True, choices=ROLE_CHOICES)
+    representant = models.BooleanField(default=False)
+    banner = models.BooleanField(default=False)
     orientation = models.CharField(max_length=10, choices=ORIENTATION_CHOICES)
     position = models.IntegerField(blank=True, null=True) 
 
@@ -23,9 +24,17 @@ class Photo(models.Model):
     # Lorsqu'une photo est enregistrer en base
     def save(self, *args, **kwargs):
 
-        # Si la photo n'est pas en webp ( on considère qu'elle n'est pas compresser ), on la compresse + redimensionne + converti en webp
-        if self.image and not self.image.name.lower().endswith('.webp'):
-            self.image = process_and_convert_image(self.image)
+        print(f"settings.COMPRESS_IMAGES_________{settings.COMPRESS_IMAGES}")
+        print(f"settings.CONVERT_IMAGES_________{settings.CONVERT_IMAGES}")
+        if self.image:
+            img_file = self.image
+            
+            if settings.COMPRESS_IMAGES:
+                img_file = compress_image(img_file)
+            if settings.CONVERT_IMAGES:
+                img_file = convert_to_webp(img_file)
+
+            self.image = img_file
             
         super().save(*args, **kwargs)
         

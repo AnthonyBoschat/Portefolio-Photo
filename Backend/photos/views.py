@@ -151,7 +151,7 @@ class AdminPortefolioViewSet(viewsets.ModelViewSet):
         photo = get_object_or_404(Photo, pk=photo_id, portefolios=portefolio)
         photo.delete()
         return Response(
-            {"success": True},
+            {"success": True, "message":"Photo supprimé avec succès"},
             status=status.HTTP_200_OK
         )
     
@@ -162,11 +162,6 @@ class AdminPortefolioViewSet(viewsets.ModelViewSet):
         url_path='upload-photos'
     )
     def upload_photos(self, request, pk=None):
-        """
-        POST /api/portefolios/{pk}/upload-photos/
-        Attends un champ `files` (multipart/form-data)
-        Crée les Photo, détecte orientation et les associe au Portefolio.
-        """
         portefolio = self.get_object()
 
         files = request.FILES.getlist('files')
@@ -189,7 +184,9 @@ class AdminPortefolioViewSet(viewsets.ModelViewSet):
                 "id": photo.id,
                 "orientation": orientation,
                 "image": photo.image.url,
-                "position":photo.position
+                "position":photo.position,
+                "representant":photo.representant,
+                "banner":photo.banner,
             })
 
         return Response(
@@ -199,31 +196,121 @@ class AdminPortefolioViewSet(viewsets.ModelViewSet):
         
     @action(
         detail=True,
+        methods=['post'],
+        parser_classes=[MultiPartParser, FormParser],
+        url_path='upload-photos-representant'
+    )
+    def upload_photos_representant(self, request, pk=None):
+        portefolio = self.get_object()
+
+        file = request.FILES.get('files')
+        
+        if not file:
+            return Response(
+                {"detail": "Aucun fichier reçu."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # On détruit l'ancienne photo représentante si il y en a une
+        ols_representants = Photo.objects.filter(portefolios=portefolio, representant=True)
+        for representant in ols_representants:
+            # supprime le fichier sur le storage
+            representant.image.delete(save=False)
+            # supprime l’enregistrement
+            representant.delete()
+        
+        image = Image.open(file)
+        orientation = 'portrait' if image.height > image.width else 'paysage'
+        file.seek(0)
+        photo = Photo.objects.create(image=file, orientation=orientation, representant=True)
+        portefolio.photos.add(photo)
+        return Response(
+            {
+                "success": True, 
+                "photo": {
+                    "id": photo.id,
+                    "orientation": orientation,
+                    "image": photo.image.url,
+                    "position":photo.position,
+                    "representant":photo.representant,
+                    "banner":photo.banner,
+                },
+                "message":"Nouvelle photo représentante définie avec succès."
+            },
+            status=status.HTTP_201_CREATED
+        )
+        
+    
+        
+    @action(
+        detail=True,
         methods=['patch'],
         url_path=r'photos/(?P<photo_id>\d+)/change-role-representant',
-        url_name='change-photo-role'
+        url_name='change-photo-role-representant'
     )
-    def change_photo_role(self, request, pk=None, photo_id=None):
-        """
-        PATCH /admin/portefolios/{pk}/photos/{photo_id}/change-role-representant/
-        Body attendu : { "role": "<nouveau_role>" }
-        """
+    def change_photo_role_to_representant(self, request, pk=None, photo_id=None):
         portefolio = self.get_object()
         # Vérifie que la photo appartient bien à ce portefolio
         photo = get_object_or_404(Photo, pk=photo_id, portefolios=portefolio)
 
         # Retire le role de la précédente photo s'il y en a
-        Photo.objects.filter(portefolios=portefolio, role="representant").update(role=None)
+        Photo.objects.filter(portefolios=portefolio, representant=True).update(representant=False)
         
         # Met à jour et sauve
-        photo.role = "representant"
+        photo.representant = True
         photo.save()
 
         # Retourne la nouvelle valeur au client
         return Response(
-            {"success":True},
+            {"success":True, "message":"Nouvelle photo représentante défini avec succès"},
             status=status.HTTP_200_OK
         )
+        
+    @action(
+        detail=True,
+        methods=['patch'],
+        url_path=r'photos/(?P<photo_id>\d+)/change-role-banner',
+        url_name='change-photo-role-banner'
+    )
+    def change_photo_role_to_banner(self, request, pk=None, photo_id=None):
+        portefolio = self.get_object()
+        datas = request.data
+        position = datas.get("position")
+        photo_to_replace_id = datas.get("photo_to_replace_id")
+        
+        # 1) Validation : au moins l'un des deux champs doit être présent (même s'il vaut 0)
+        if position is None and photo_to_replace_id is None:
+            return Response(
+                {
+                    "success": False,
+                    "message": "Une erreur est survenue lors de la définition de la nouvelle bannière."
+                },
+            )
+
+        # 2) Si on a une nouvelle position (y compris 0 !)
+        if position is not None:
+            new_photo = get_object_or_404(Photo, pk=photo_id, portefolios=portefolio)
+            new_photo.banner = True
+            new_photo.position = position
+            new_photo.save()
+            return Response({"success": True, "position": position, "image":new_photo.image.url, "message": "Photo bannière définie avec succès"})
+
+        # 3) Sinon on a forcément photo_to_replace_id
+        photo_to_replace = get_object_or_404(Photo, pk=photo_to_replace_id, portefolios=portefolio)
+        old_position = photo_to_replace.position
+        photo_to_replace.banner = False
+        photo_to_replace.position = None
+        photo_to_replace.save()
+
+        new_photo = get_object_or_404(Photo, pk=photo_id, portefolios=portefolio)
+        new_photo.banner = True
+        new_photo.position = old_position
+        new_photo.save()
+        
+        return Response(
+            {"success": True, "replaceID": photo_to_replace.id, "image":new_photo.image.url, "message": "Photo bannière définie avec succès"}
+        )
+
         
         
         
@@ -247,7 +334,7 @@ class AdminPrestationViewSet(viewsets.ModelViewSet):
         photo = get_object_or_404(Photo, pk=photo_id, prestations=prestation)
         photo.delete()
         return Response(
-            {"success": True},
+            {"success": True, "message":"Photo supprimé avec succès"},
             status=status.HTTP_200_OK
         )
     
@@ -258,11 +345,6 @@ class AdminPrestationViewSet(viewsets.ModelViewSet):
         url_path='upload-photos'
     )
     def upload_photos(self, request, pk=None):
-        """
-        POST /api/prestations/{pk}/upload-photos/
-        Attends un champ `files` (multipart/form-data)
-        Crée les Photo, détecte orientation et les associe à la Prestation.
-        """
         prestation = self.get_object()
 
         files = request.FILES.getlist('files')
@@ -285,7 +367,9 @@ class AdminPrestationViewSet(viewsets.ModelViewSet):
                 "id": photo.id,
                 "orientation": orientation,
                 "image": photo.image.url,
-                "position":photo.position
+                "position":photo.position,
+                "representant":photo.representant,
+                "banner":photo.banner,
             })
 
         return Response(
@@ -295,30 +379,177 @@ class AdminPrestationViewSet(viewsets.ModelViewSet):
         
     @action(
         detail=True,
+        methods=['post'],
+        parser_classes=[MultiPartParser, FormParser],
+        url_path='upload-photos-representant'
+    )
+    def upload_photos_representant(self, request, pk=None):
+        prestation = self.get_object()
+
+        file = request.FILES.get('files')
+        
+        if not file:
+            return Response(
+                {"detail": "Aucun fichier reçu."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # On détruit l'ancienne photo représentante si il y en a une
+        ols_representants = Photo.objects.filter(prestations=prestation, representant=True)
+        for representant in ols_representants:
+            # supprime le fichier sur le storage
+            representant.image.delete(save=False)
+            # supprime l’enregistrement
+            representant.delete()
+        
+        image = Image.open(file)
+        orientation = 'portrait' if image.height > image.width else 'paysage'
+        file.seek(0)
+        photo = Photo.objects.create(image=file, orientation=orientation, representant=True)
+        prestation.photos.add(photo)
+        return Response(
+            {
+                "success": True, 
+                "photo": {
+                    "id": photo.id,
+                    "orientation": orientation,
+                    "image": photo.image.url,
+                    "position":photo.position,
+                    "representant":photo.representant,
+                    "banner":photo.banner,
+                },
+                "message":"Nouvelle photo représentante définie avec succès."
+            },
+            status=status.HTTP_201_CREATED
+        )
+        
+    @action(
+        detail=True,
+        methods=['post'],
+        parser_classes=[MultiPartParser, FormParser],
+        url_path='upload-photos-banner'
+    )
+    def upload_photos_banner(self, request, pk=None):
+        prestation = self.get_object()
+
+        file = request.FILES.get('files')
+        
+        if not file:
+            return Response(
+                {"detail": "Aucun fichier reçu."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        photo_to_replace_id     = request.data.get('photo_to_replace_id')  # ou None
+        position                = request.data.get('position')
+        
+        # 1) Validation : au moins l'un des deux champs doit être présent (même s'il vaut 0)
+        if position is None and photo_to_replace_id is None:
+            return Response(
+                {
+                    "success": False,
+                    "message": "Une erreur est survenue lors de la définition de la nouvelle bannière."
+                },
+            )
+
+        image = Image.open(file)
+        orientation = 'portrait' if image.height > image.width else 'paysage'
+        file.seek(0)
+        if photo_to_replace_id is not None:
+            old_banner_at_this_position = get_object_or_404(Photo, pk=photo_to_replace_id, banner=True)
+            old_position = old_banner_at_this_position.position
+            old_banner_at_this_position.delete()
+            old_banner_at_this_position.image.delete(save=False)
+            photo = Photo.objects.create(image=file, orientation=orientation, banner=True, position=old_position)
+        
+        if position is not None:
+            photo = Photo.objects.create(image=file, orientation=orientation, banner=True, position=position)
+
+        prestation.photos.add(photo)
+        return Response(
+            {
+                "success": True, 
+                "photo": {
+                    "id": photo.id,
+                    "orientation": orientation,
+                    "image": photo.image.url,
+                    "position":photo.position,
+                    "representant":photo.representant,
+                    "banner":photo.banner,
+                },
+                "message":"Nouvelle photo bannière définie avec succès."
+            },
+            status=status.HTTP_201_CREATED
+        )
+        
+    @action(
+        detail=True,
         methods=['patch'],
         url_path=r'photos/(?P<photo_id>\d+)/change-role-representant',
         url_name='change-photo-role'
     )
-    def change_photo_role(self, request, pk=None, photo_id=None):
-        """
-        PATCH /admin/prestations/{pk}/photos/{photo_id}/change-role-representant/
-        Body attendu : { "role": "<nouveau_role>" }
-        """
+    def change_photo_role_to_representant(self, request, pk=None, photo_id=None):
         prestation = self.get_object()
         # Vérifie que la photo appartient bien à cette prestation
         photo = get_object_or_404(Photo, pk=photo_id, prestations=prestation)
 
         # Retire le role de la précédente photo s'il y en a
-        Photo.objects.filter(prestations=prestation, role="representant").update(role=None)
+        Photo.objects.filter(prestations=prestation, representant=True).update(representant=False)
         
         # Met à jour et sauve
-        photo.role = "representant"
+        photo.representant = True
         photo.save()
 
         # Retourne la nouvelle valeur au client
         return Response(
-            {"success":True},
+            {"success":True, "message":"Nouvelle photo représentante défini avec succès"},
             status=status.HTTP_200_OK
+        )
+
+
+    @action(
+        detail=True,
+        methods=['patch'],
+        url_path=r'photos/(?P<photo_id>\d+)/change-role-banner',
+        url_name='change-photo-role-banner'
+    )
+    def change_photo_role_to_banner(self, request, pk=None, photo_id=None):
+        prestation = self.get_object()
+        datas = request.data
+        position = datas.get("position")
+        photo_to_replace_id = datas.get("photo_to_replace_id")
+        
+        # 1) Validation : au moins l'un des deux champs doit être présent (même s'il vaut 0)
+        if position is None and photo_to_replace_id is None:
+            return Response(
+                {
+                    "success": False,
+                    "message": "Une erreur est survenue lors de la définition de la nouvelle bannière."
+                },
+            )
+
+        # 2) Si on a une nouvelle position (y compris 0 !)
+        if position is not None:
+            new_photo = get_object_or_404(Photo, pk=photo_id, prestations=prestation)
+            new_photo.banner = True
+            new_photo.position = position
+            new_photo.save()
+            return Response({"success": True, "position": position, "image":new_photo.image.url, "message": "Photo bannière définie avec succès"})
+
+        # 3) Sinon on a forcément photo_to_replace_id
+        photo_to_replace = get_object_or_404(Photo, pk=photo_to_replace_id, prestations=prestation)
+        old_position = photo_to_replace.position
+        photo_to_replace.banner = False
+        photo_to_replace.position = None
+        photo_to_replace.save()
+
+        new_photo = get_object_or_404(Photo, pk=photo_id, prestations=prestation)
+        new_photo.banner = True
+        new_photo.position = old_position
+        new_photo.save()
+        
+        return Response(
+            {"success": True, "replaceID": photo_to_replace.id, "image":new_photo.image.url, "message": "Photo bannière définie avec succès"}
         )
 
     @action(
@@ -328,11 +559,6 @@ class AdminPrestationViewSet(viewsets.ModelViewSet):
         url_name='update_informations'
     )
     def update_informations(self, request, pk=None):
-
-        """
-        PATCH /admin/prestations/{pk}/update-informations/
-        Body attendu : { "data": "Nouvelles données" }
-        """
         datas = request.data
 
         new_name = datas.get("name")
@@ -380,7 +606,7 @@ class AdminArtisanViewSet(viewsets.ModelViewSet):
         photo = get_object_or_404(Photo, pk=photo_id, artisans=artisan)
         photo.delete()
         return Response(
-            {"success": True},
+            {"success": True, "message":"Photo supprimé avec succès"},
             status=status.HTTP_200_OK
         )
     
@@ -391,11 +617,6 @@ class AdminArtisanViewSet(viewsets.ModelViewSet):
         url_path='upload-photos'
     )
     def upload_photos(self, request, pk=None):
-        """
-        POST /api/portefolios/{pk}/upload-photos/
-        Attends un champ `files` (multipart/form-data)
-        Crée les Photo, détecte orientation et les associe au Portefolio.
-        """
         artisan = self.get_object()
 
         files = request.FILES.getlist('files')
@@ -418,11 +639,60 @@ class AdminArtisanViewSet(viewsets.ModelViewSet):
                 "id": photo.id,
                 "orientation": orientation,
                 "image": photo.image.url,
-                "position":photo.position
+                "position":photo.position,
+                "representant":photo.representant,
+                "banner":photo.banner,
             })
 
         return Response(
             {"datas": created},
+            status=status.HTTP_201_CREATED
+        )
+        
+        
+    @action(
+        detail=True,
+        methods=['post'],
+        parser_classes=[MultiPartParser, FormParser],
+        url_path='upload-photos-representant'
+    )
+    def upload_photos_representant(self, request, pk=None):
+        artisan = self.get_object()
+
+        file = request.FILES.get('files')
+        
+        if not file:
+            return Response(
+                {"detail": "Aucun fichier reçu."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # On détruit l'ancienne photo représentante si il y en a une
+        ols_representants = Photo.objects.filter(artisans=artisan, representant=True)
+        for representant in ols_representants:
+            # supprime le fichier sur le storage
+            representant.image.delete(save=False)
+            # supprime l’enregistrement
+            representant.delete()
+        
+        image = Image.open(file)
+        orientation = 'portrait' if image.height > image.width else 'paysage'
+        file.seek(0)
+        photo = Photo.objects.create(image=file, orientation=orientation, representant=True)
+        artisan.photos.add(photo)
+        return Response(
+            {
+                "success": True, 
+                "photo": {
+                    "id": photo.id,
+                    "orientation": orientation,
+                    "image": photo.image.url,
+                    "position":photo.position,
+                    "representant":photo.representant,
+                    "banner":photo.banner,
+                },
+                "message":"Nouvelle photo représentante définie avec succès."
+            },
             status=status.HTTP_201_CREATED
         )
         
@@ -432,20 +702,16 @@ class AdminArtisanViewSet(viewsets.ModelViewSet):
         url_path=r'photos/(?P<photo_id>\d+)/change-role-representant',
         url_name='change-photo-role'
     )
-    def change_photo_role(self, request, pk=None, photo_id=None):
-        """
-        PATCH /admin/portefolios/{pk}/photos/{photo_id}/change-role-representant/
-        Body attendu : { "role": "<nouveau_role>" }
-        """
+    def change_photo_role_to_representant(self, request, pk=None, photo_id=None):
         artisan = self.get_object()
         # Vérifie que la photo appartient bien à ce portefolio
         photo = get_object_or_404(Photo, pk=photo_id, artisans=artisan)
 
         # Retire le role de la précédente photo s'il y en a
-        Photo.objects.filter(artisans=artisan, role="representant").update(role=None)
+        Photo.objects.filter(artisans=artisan, representant=True).update(representant=False)
         
         # Met à jour et sauve
-        photo.role = "representant"
+        photo.representant = True
         photo.save()
 
         # Retourne la nouvelle valeur au client

@@ -68,3 +68,6 @@ coverage.xml
 .idea/
 *.swp
 *~
+
+
+.env
