@@ -53,96 +53,21 @@ const artisanPrestation = {
     ]
 }
 
-export default function PrestationPage(){
+export default function PrestationPage({prestationID = null, name=null}){
 
-    const location = useLocation()
-    const currentRoute = location.pathname
+
+    const { collections }               = useSelector(store => store.prestations)
+    const artisans                      = useSelector(store => store.artisans.collections)         
+    const prestation                    = collections.find(collection => collection?.id === prestationID)
+    const banners                       = prestation?.photos?.filter(photo => photo.banner)
+
     
-    const [loading, setLoading]= useState(true)
-
-    // Contient les photo de bannière
-    const [bannerPhotos, setBannerPhotos] = useState(null)
-    // Contient les photos de présentation
-    const [galeryPhotos, setGaleryPhotos] = useState(null)
-    // Contient les informations de la prestation
-    const [informations, setInformations] = useState(null)
-    // Contient la description de la prestation
-    const [description, setDescription] = useState(null)
-
-    useEffect(() => {
-        setLoading(true)
-    }, [currentRoute])
-
-    // Charge dans le state les photos de la réponse
-    useEffect(() => {
-
-        const loadDatas = async() => {
-
-            if(loading){
-    
-                let bannerPhotos
-                let informations
-                let description
-        
-                let endpoint = false
-                switch(currentRoute){
-                    
-                    case ROUTES.PRESTATIONS.PORTRAIT:
-                        endpoint = ENDPOINT.LOAD("prestation", "pre_portrait")
-                        bannerPhotos = portraitPrestation.banner
-                        informations = portraitPrestation.informations
-                        description = portraitPrestation.description
-                        break;
-        
-                    case ROUTES.PRESTATIONS.ARTISAN:
-                        endpoint = ENDPOINT.getArtisans
-                        bannerPhotos = artisanPrestation.banner
-                        informations = artisanPrestation.informations
-                        description = artisanPrestation.description
-                        break
-        
-                    case ROUTES.PRESTATIONS.BOUDOIR:
-                        endpoint = ENDPOINT.LOAD("prestation", "pre_boudoir")
-                        bannerPhotos = boudoirPrestation.banner
-                        informations = boudoirPrestation.informations
-                        description = boudoirPrestation.description
-                        break
-        
-                    default:
-                        break
-                }
-        
-                if(endpoint){
-                    const galeriePhotos = await callBackend(endpoint)
-                    const sortedPhotos = sortByPhotoType(galeriePhotos, {
-                        reverse: true,
-                        portraitNumber: 2
-                    })
-                    setGaleryPhotos(sortedPhotos)
-                    setBannerPhotos(bannerPhotos)
-                    setInformations(informations)
-                    setDescription(description)
-                    setLoading(false)
-                }
-            }
-        }
-        loadDatas()
-
-    }, [loading, currentRoute])
 
     return(
-        <>
-            {/* {!loading && (
-                <PrestationsLayout 
-                    description={description}
-                    informations={informations}
-                    galeryPhotos={galeryPhotos} 
-                    setGaleryPhotos={setGaleryPhotos}
-                    bannerPhotos={bannerPhotos}
-                    currentRoute={currentRoute}
-                />
-            )} */}
-            coucou
-        </>
+        <PrestationsLayout 
+            prestation={prestation}
+            banners={banners}
+            artisans={artisans}
+        />
     )
 }

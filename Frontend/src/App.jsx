@@ -144,12 +144,11 @@ export default function App() {
 
                   <Route path={ROUTES.PRESTATIONS.INDEX} element={<PrestationsIndexPage/>}/> 
                   {prestations.map(prestation => (
-                    <Route key={prestation.id} path={`/Prestations/${prestation.name}`} element={<PrestationPage/>}/>
+                    <Route key={prestation.id} path={`/Prestations/${prestation.name}`} element={<PrestationPage prestationID={prestation.id} name={prestation.name}/>}/>
                   ))}
-
                   <Route path={ROUTES.PORTEFOLIOS.INDEX} element={<PortefoliosIndexPage />}/> 
                   {artisans.map(artisan => (
-                    <Route key={artisan.id} path={`/Portefolios/${artisan.name}`} element={<PortefoliosPage artisanID={artisan.id} name={artisan.name}/>}/>
+                    <Route key={artisan.id} path={`/Artisan/${artisan.name}`} element={<PortefoliosPage artisanID={artisan.id} name={artisan.name}/>}/>
                   ))}
                   {portefolios.map(portefolio => (
                     <Route key={portefolio.id} path={`/Portefolios/${portefolio.name}`} element={<PortefoliosPage portefolioID={portefolio.id} name={portefolio.name} />}/>

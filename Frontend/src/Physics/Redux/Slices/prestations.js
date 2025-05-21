@@ -20,6 +20,7 @@ export const prestationsSlice = createSlice({
 
         const item          = {}
         item.name           = prestation?.name
+
         const representant  = prestation?.photos?.find(photo => photo?.representant)
         item.image          = representant?.image
         item.id             = representant?.id

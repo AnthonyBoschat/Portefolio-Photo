@@ -11,16 +11,18 @@ import { Link, useNavigate } from "react-router-dom";
 import Galery from "@Components/Galery";
 import usePhoto from "@Services/usePhoto";
 import Footer from "@Containers/Footer";
+import { useEffect, useState } from "react";
+import sortByPhotoType from "@Services/sortByPhotoType";
 
 
 
 // Composant charger d'afficher les photos bannières
-const BannerSection = ({ bannerPhotos, children }) => (
+const BannerSection = ({ banners, children }) => (
     <div className="photos_presentation-details-container">
         <ul className="photos_presentation">
-        {bannerPhotos.map((photo, index) => (
+        {banners.map((banner, index) => (
             <li key={index}>
-                <LazyImage src={photo} alt="Photo bannière de présentation de la prestation" />
+                <LazyImage src={banner.image} alt="Photo bannière de présentation de la prestation" />
             </li>
         ))}
         </ul>
@@ -29,74 +31,100 @@ const BannerSection = ({ bannerPhotos, children }) => (
 );
 
 // Composant charger de fournir les informations de la prestation
-const InformationSection = ({informations}) => {
+const InformationSection = ({prestation}) => {
+
+    const formatPrice = (price) => {
+        const amount = parseFloat(price.replace(',', '.'))
+        return Number.isInteger(amount) ? amount.toString() : amount.toFixed(2)
+    }
+
     return(
         <ul className="details-container">
             <li>
                 <img src={cameraIcon} alt="" />
-                <span>{informations?.photosProvide} photos retouchées</span>
+                <span>{prestation?.delivery} photos retouchées</span>
             </li>
             <li>
                 <img src={clockIcon} alt="" />
-                {informations?.duration?.length === 1 ? (
                 <span>
-                    {informations.duration[0]} heure{informations.duration[0] !== 1 && "s"} de prises de vue
+                    {prestation?.duration} heures de prises de vue
                 </span>
-                ) : (
-                <span>
-                    {informations.duration[0]} à {informations.duration[1]} heures de prises de vue
-                </span>
-                )}
             </li>
             <li>
                 <img src={dollarsIcon} alt="" />
-                <span>À partir de {informations?.price} dollars</span>
+                <span>À partir de {formatPrice(prestation?.price)} dollars</span>
             </li>
         </ul>
     )
 }
 
 // Composant charger de fournir la description de la prestation
-const DescriptionSection = ({ description }) => (
-    <>
-        <div className="prestation-description-container">
-            <p>
-                {description.map((sentence, index) => (
-                <span key={index}>{sentence}</span>
-                ))}
-            </p>
-        </div>
-        <ExploreButton position="center" style={{letterSpacing:"1px", marginTop:"2rem"}} navigate={ROUTES.CONTACT} text="Contact" />
-    </>
-);
+const DescriptionSection = ({ description }) => {
+
+    const formatDescription = (description) => description.split(/\r?\n/)
+
+    return(
+        <>
+            <div className="prestation-description-container">
+                <p>
+                    {description.split(/\r?\n/).map((sentence, index) => (
+                        <span key={index}>{sentence}</span>
+                    ))}
+                </p>
+            </div>
+            <ExploreButton position="center" style={{letterSpacing:"1px", marginTop:"2rem"}} navigate={ROUTES.CONTACT} text="Contact" />
+        </>
+    )
+}
 
 // Composant charger de fournir les photos galeries de la prestation
-const GalerySection = ({ currentRoute, galeryPhotos, setGaleryPhotos, navigate }) => {
+const GalerySection = ({ prestation, artisans }) => {
 
-    const {zoomPhoto} = usePhoto()
-    const artisanRoute = currentRoute === ROUTES.PRESTATIONS.ARTISAN
-    const photos = artisanRoute ? galeryPhotos.map((photo, index) => ({image:photo.image, orientation:index % 3 === 2 ? "paysage" : "portrait", artisan:photo.artisans[0]}))
-                                : galeryPhotos.map(photo => ({image:photo.image, orientation:photo.orientation}))
+    const {zoomPhoto}               = usePhoto()
+    const [datas, setDatas]         = useState([])
+    const isArtisan                 = prestation?.artisans !== null
+
+    useEffect(() => {
+        if(isArtisan){
+            const final_artisans    = []
+
+            artisans.map((artisan, index) => {
+
+                const item          = {}
+                item.name           = artisan?.name
+                item.id             = artisan?.id
+                item.image          = artisan?.photos.find(photo => photo.representant)?.image
+                item.orientation    = index % 3 === 2 ? "paysage" : "portrait"
+
+                final_artisans.push(item)
+            })
+
+            setDatas(final_artisans)
+        }else{
+            setDatas(sortByPhotoType(prestation?.photos.filter(photo => !photo.banner && !photo.representant)))
+        }
+    }, [isArtisan, prestation, artisans])
                                 
     return (
         <Galery
-            id={artisanRoute ? "artisan-galery-container" : "photos-galery-container"}
-            hoverEffect={photos.length !== 0}
-            hoverScale={photos.length === 1}
-            elements={photos}
+            id={isArtisan ? "artisan-galery-container" : "photos-galery-container"}
+            hoverEffect={datas.length !== 0}
+            hoverScale={datas.length === 1}
+            elements={datas}
             render={(element, index) => {
-                if(artisanRoute){
+                if(isArtisan){
+                    console.log("debug element", element)
                     return (
                         <>
-                            <span className="label">{element.artisan.name}</span>
-                            <Link to={`${ROUTES.ARTISAN}/${element.artisan.id}`}>
+                            <span className="label">{element.name}</span>
+                            <Link to={`${ROUTES.ARTISAN}/${element.name}`}>
                                 <LazyImage src={element.image}/>
                             </Link>
                         </>
                     )
                 }
                 else{
-                    return <LazyImage onClick={() => zoomPhoto(photos, index)} src={element.image}/>
+                    return <LazyImage onClick={() => zoomPhoto(datas, index)} src={element.image}/>
                 }
             }}
         />
@@ -104,28 +132,20 @@ const GalerySection = ({ currentRoute, galeryPhotos, setGaleryPhotos, navigate }
 };
 
 // Disposition des composants
-export default function PrestationsLayout({
-  description,
-  informations,
-  galeryPhotos,
-  setGaleryPhotos,
-  bannerPhotos,
-  currentRoute,
-}) {
-  const navigate = useNavigate();
+export default function PrestationsLayout({prestation, artisans, banners}) {
+
+    console.log(prestation?.description)
 
   return (
     <>
         <div id="prestations-main-container">
-            <BannerSection bannerPhotos={bannerPhotos}>
-                <InformationSection informations={informations}/>
+            <BannerSection banners={banners}>
+                <InformationSection prestation={prestation}/>
             </BannerSection>
-            <DescriptionSection description={description} />
+            <DescriptionSection description={prestation?.description} />
             <GalerySection
-                currentRoute={currentRoute}
-                galeryPhotos={galeryPhotos}
-                setGaleryPhotos={setGaleryPhotos}
-                navigate={navigate}
+                prestation={prestation}
+                artisans={artisans}
             />
         </div>
     </>
