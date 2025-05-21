@@ -5,17 +5,19 @@ import { createSlice } from '@reduxjs/toolkit';
 export const portefoliosSlice = createSlice({
   name: 'portefolios',
   initialState: {
-    collections:[],
-    representants:[],
-    labels:[]
+    collections:    [],
+    representants:  [],
+    labels:         [],
   },
   reducers: {
     init_portefolios:(state, action) => {
-      const portefolios = action.payload
-      state.collections = portefolios
+
+      const portefolios     = action.payload
+      state.collections     = portefolios
 
       const representants   = []
       const labels          = []
+
       portefolios.map(portefolio => {
         const item          = {}
         item.name           = portefolio?.name
@@ -26,9 +28,9 @@ export const portefoliosSlice = createSlice({
         labels.push(portefolio?.name)
         representants.push(item)
       })
-      state.representants = representants
-      state.labels        = labels
 
+      state.representants   = representants
+      state.labels          = labels
 
     },
   },

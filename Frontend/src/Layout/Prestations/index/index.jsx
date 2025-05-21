@@ -3,7 +3,7 @@ import "./style.scss";
 import { Link } from "react-router-dom";
 import Galery from "@Components/Galery";
 
-export default function PrestationsIndexLayout({prestationsCategory}){
+export default function PrestationsIndexLayout({representantsPrestations}){
 
     
 
@@ -12,14 +12,14 @@ export default function PrestationsIndexLayout({prestationsCategory}){
             
         <Galery
             id="prestation-index"
-            elements={prestationsCategory}
+            elements={representantsPrestations}
             hoverEffect
-            render={(category) => (
+            render={(prestation) => (
                 <>
-                    <Link to={category.link}>
-                        <LazyImage src={category.representant} alt={`Photo représentative du portefolio '${category.label}'`} />
+                    <Link to={prestation.link}>
+                        <LazyImage src={prestation.image} alt={`Photo représentative de la prestation '${prestation.label}'`} />
                     </Link>
-                    <h2>{category.label}</h2>
+                    <h2>{prestation.label}</h2>
                 </>
             )}
         />

@@ -3,6 +3,7 @@ import PortefolioLayout from "@Layout/Portefolio";
 import { useSelector } from "react-redux";
 
 export default function PortefoliosPage({portefolioID = null, artisanID = null, name=null}) {
+  
   const portefolios_collection  = useSelector(store => store.portefolios.collections)
   const artisans_collection     = useSelector(store => store.artisans.collections)
 

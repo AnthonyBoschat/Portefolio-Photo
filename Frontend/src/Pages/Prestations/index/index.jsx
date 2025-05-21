@@ -5,21 +5,21 @@ import PrestationsIndexLayout from "@Layout/Prestations/index/index.jsx";
 
 export default function PrestationsIndexPage(){
 
-    const routes = useSelector(store => store.routes.routes)
-    const [prestationsCategory, setPrestationsCategory] = useState([])
 
-    useEffect(() => {
-        if(routes){
-            const portefolios = routes.find(route => route.label === "Prestations")
-            setPrestationsCategory(portefolios.children)
-        }
-    }, [routes])
-    
+    const { representants, labels } = useSelector(store => store.prestations);
+
+    const extractImage  = (label) => representants?.find(representant => representant?.name === label)?.image;
+    const extractID     = (label) => representants?.find(representant => representant?.name === label)?.id
+
+    const representantsPrestations = labels.map(label => (
+        {label:label, link:`/Prestations/${label}`, id:extractID(label), image:extractImage(label)}
+    ))
+
 
     return(
         <>
-            {prestationsCategory.length > 0 && (
-                <PrestationsIndexLayout prestationsCategory={prestationsCategory}/>
+            {representantsPrestations.length > 0 && (
+                <PrestationsIndexLayout representantsPrestations={representantsPrestations}/>
             )}
         </>
     )
