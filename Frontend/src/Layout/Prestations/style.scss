@@ -109,7 +109,7 @@ div#prestations-main-container{
             @include mixins.respond-to("desktop"){
                 font-size: 18px;
                 width: 60%;
-                gap: 2rem;
+                gap: 1.5rem;
 
             }
         }

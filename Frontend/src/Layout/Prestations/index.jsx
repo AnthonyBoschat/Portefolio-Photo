@@ -61,8 +61,6 @@ const InformationSection = ({prestation}) => {
 // Composant charger de fournir la description de la prestation
 const DescriptionSection = ({ description }) => {
 
-    const formatDescription = (description) => description.split(/\r?\n/)
-
     return(
         <>
             <div className="prestation-description-container">

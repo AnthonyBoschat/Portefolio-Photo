@@ -68,6 +68,10 @@ export default function App() {
   
   
   const isAdminPage = useMemo(() => pathname.includes(ROUTES.ADMIN.PAGE),[pathname])
+  const isIndexPage = useMemo(() => (pathname === ROUTES.PORTEFOLIOS.INDEX || pathname === ROUTES.PRESTATIONS.INDEX ), [pathname])
+  console.log("debug pathname", pathname)
+  console.log("debug ROUTES.PORTEFOLIOS.INDEX", ROUTES.PORTEFOLIOS.INDEX)
+  console.log("debug isIndexPage", isIndexPage)
 
   useEffect(() => {
     Promise.all([
@@ -121,7 +125,7 @@ export default function App() {
 
 
 
-        <main >
+        <main>
           <AnimatePresence mode="wait">
             <motion.div
               key={location.pathname}
@@ -162,7 +166,7 @@ export default function App() {
               </SmoothScrollWrapper>
 
 
-              {!isAdminPage && (<Footer/>)}
+              {(!isAdminPage && !isIndexPage) && (<Footer/>)}
 
             </motion.div>
 

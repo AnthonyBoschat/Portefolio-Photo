@@ -12,15 +12,21 @@ export default function PhoneMenuContainer(){
     const currentRoute = useSelector(store => store.routes.currentRoute)
     const dispatch = useDispatch()
     const routes = useSelector(store => store.routes.routes)
-
+    const {pathname} = useLocation()
 
 
     const isSelectedRoute = (link) => {
-        if(currentRoute === link ){
-            return true
+        if(pathname.startsWith("/Artisan")){
+            if(link === "/Prestations"){
+                return true
+            }
+            if(link.includes("Artisan")){
+                return true
+            }
         }else{
-            return false
+            return decodeURIComponent(currentRoute) === link
         }
+
     }
 
 

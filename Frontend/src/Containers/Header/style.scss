@@ -74,22 +74,28 @@ header{
             align-items: center;
 
             .logo-container{
-                // outline: 1px solid red;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                // width: 1rem;
-                padding: 0.7rem 0.3rem 0.7rem 0.3rem;
                 background-color: v.$dark-light;
                 border-radius: 4px;
-                // box-shadow: -4px 0px 1px 0px rgb(255, 255, 255);
                 box-shadow: 0px 2px 4px -2px v.$dark;
+                
+                padding: 0.5rem 0.2rem 0.5rem 0.2rem;
+                .logo{
+                    width: 1.8rem;
+                    height: auto;
+                }
+
+                @include mixins.respond-to("desktop"){
+                    padding: 0.7rem 0.3rem 0.7rem 0.3rem;
+                    .logo{
+                        width: 2.5rem;
+                    }
+                }
 
             }
-            .logo{
-                width: 2.5rem;
-                height: auto;
-            }
+            
 
             &:hover{
                 cursor: pointer;
