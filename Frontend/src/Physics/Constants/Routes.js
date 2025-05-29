@@ -22,7 +22,9 @@ const ROUTES = {
         PAGE:"/Admin",
         LOGIN:"/Admin/Login",
         DASHBOARD:"/Admin/Dashboard"
-    }
+    },
+    MENTION_LEGAL:"/MentionsLegales",
+    POLITICS:"/PolitiqueDeConfidentialite",
 }
 
 export default ROUTES

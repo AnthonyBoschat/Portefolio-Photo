@@ -9,7 +9,7 @@ import PortefoliosPage from "@Pages/Portefolios";
 import PortefoliosIndexPage from "@Pages/Portefolios/index/index.jsx";
 import ROUTES from "@Constants/Routes";
 import AProposPage from "@Pages/APropos";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { setOpenPhoneMenu } from "@Redux/Slices/phoneState";
@@ -27,6 +27,7 @@ import { init_portefolios } from "@Redux/Slices/portefolios";
 import { init_prestations } from "@Redux/Slices/prestations";
 import ENDPOINT from "@Constants/Endpoint";
 import { setArtisansList } from "@Redux/Slices/artisans";
+import LegalPage from "@Pages/Legal";
 
 // Composant wrapper qui permet d'avoir un scroll fluide
 function SmoothScrollWrapper({ children }) {
@@ -60,11 +61,10 @@ export default function App() {
   const location = useLocation()
   const pathname = location.pathname
   const dispatch = useDispatch()
-  const {mobile, desktop} = useSelector(store => store.app)
+  const {mobile} = useSelector(store => store.app)
   const portefolios = useSelector(store => store.portefolios.collections)
   const prestations = useSelector(store => store.prestations.collections)
   const artisans = useSelector(store => store.artisans.collections)
-  const {routes} = useSelector(store => store.routes)
   
   
   const isAdminPage = useMemo(() => pathname.includes(ROUTES.ADMIN.PAGE),[pathname])
@@ -159,6 +159,10 @@ export default function App() {
                   <Route path={ROUTES.APROPOS} element={<AProposPage/>}/> 
 
                   <Route path={ROUTES.CONTACT} element={<ContactPage/>}/> 
+
+
+                  <Route path={ROUTES.MENTION_LEGAL} element={<LegalPage/>}/> 
+                  <Route path={ROUTES.POLITICS} element={<LegalPage/>}/> 
                 </Routes>
 
               </SmoothScrollWrapper>

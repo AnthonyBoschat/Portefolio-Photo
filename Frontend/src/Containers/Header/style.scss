@@ -88,7 +88,7 @@ header{
                 }
 
                 @include mixins.respond-to("desktop"){
-                    padding: 0.7rem 0.3rem 0.7rem 0.3rem;
+                    padding: 0.7rem 0.2rem 0.7rem 0.2rem;
                     .logo{
                         width: 2.5rem;
                     }

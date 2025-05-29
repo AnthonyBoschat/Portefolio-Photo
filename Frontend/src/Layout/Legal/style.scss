@@ -1,0 +1,102 @@
+@use "@Sass/constants.scss" as v;
+
+#legal-main-container{
+    display: flex;
+    justify-content: center;
+
+    .container{
+        padding-top: 6rem;
+        padding-bottom: 16rem;
+        width: 45%;
+        min-width: 40rem; //
+        display: flex;
+        flex-direction: column;
+        gap: 4rem;
+        letter-spacing: 1px;
+
+
+        .title-container{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            h1{
+                font-weight: 400;
+                padding: 0;
+            }
+            span{
+                opacity: 0.8;
+            }
+        }
+
+        .introduction-container{
+            padding-top: 4rem;
+            
+        }
+
+
+
+
+        .sections-container{
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+
+            .section{
+                display: flex;
+                flex-direction: column;
+                gap: 0.8rem;
+
+                .list{
+                    display: flex;
+                    flex-direction: column;
+                    padding-left: 2rem;
+                }
+
+                .detail{
+                    color: rgb(0, 111, 152);
+                }
+
+                a{
+                    opacity: 0.8;
+                    transition: opacity 0.15s linear;
+                    &:hover{
+                        cursor: pointer;
+                        opacity: 1;
+                        text-decoration: underline;
+                    }
+                }
+                
+                h2{
+                    color: rgb(17, 67, 42);
+                    font-weight: 500;
+                    text-decoration: underline;
+                }
+
+                p{
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1rem;
+                }
+            }
+        }
+
+
+        .logo-container{
+            display: flex;
+            justify-content: center;
+            padding-top: 7rem;
+            // opacity: 0.1;
+            picture{
+                background-color: v.$dark-light;
+                border-radius: 4px;
+                padding: 2rem 0.2rem 2rem 0.2rem;
+                box-shadow: 0px 2px 4px -2px v.$dark,;
+                img{
+                    width: 6rem;
+                    height: auto;
+                }
+            }
+        }
+    }
+}

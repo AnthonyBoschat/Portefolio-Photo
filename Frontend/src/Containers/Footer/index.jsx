@@ -8,12 +8,12 @@ import logo from "@Assets/logo.png"
 
 export default function Footer(){
 
+    const {pathname}                    = useLocation()
     const {routes}                      = useSelector(store => store.routes)
     const {desktop}                     = useSelector(store => store.app)
     const {isSelectedRoute, navigateTo} = useRoutes()
 
     const selectedRouteClassName = (route) => (isSelectedRoute(route.link) || route.open) ? "selected" : "" 
-
 
     return(
 
@@ -43,8 +43,8 @@ export default function Footer(){
                 <div className="section">
                     <h1>Informations</h1>
                     <ul>
-                        <li><Link to={ROUTES.HOME}>Mentions légales</Link></li>
-                        <li><Link to={ROUTES.HOME}>Politique de confidentialité</Link></li>
+                        <li><Link className={`${pathname === ROUTES.MENTION_LEGAL ? "selected" : ""}`} to={ROUTES.MENTION_LEGAL}>Mentions légales</Link></li>
+                        <li><Link className={`${pathname === ROUTES.POLITICS ? "selected" : ""}`} to={ROUTES.POLITICS}>Politique de confidentialité</Link></li>
                     </ul>
                 </div>
 
