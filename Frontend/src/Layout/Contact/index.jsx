@@ -3,6 +3,7 @@ import "./style.scss"
 import Medias from "@Containers/Media";
 import { useSelector } from "react-redux";
 import Footer from "@Containers/Footer";
+import image from "@Assets/Photos/Home/Portefolio/1.jpg"
 
 export default function ContactLayout(){
 
@@ -16,7 +17,7 @@ export default function ContactLayout(){
             <div className="contact">
                 {desktop && (
                     <picture>
-                        {/* <img src="" alt="qzdqzd" /> */}
+                        <img src={image} alt="qzdqzd" />
                     </picture>
                 )}
                 <div>

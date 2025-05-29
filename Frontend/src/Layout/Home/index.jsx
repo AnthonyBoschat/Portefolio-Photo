@@ -11,12 +11,13 @@ import { setOpenPhoneMenu } from "@Redux/Slices/phoneState";
 import { openSubMenuForce } from "@Redux/Slices/routes";
 import Galery from "@Components/Galery";
 import LazyImage from "@Components/LazyImage";
-import Footer from "@Containers/Footer";
+import image from "@Assets/Photos/Home/Portefolio/9.jpg"
+
 
 
 
 export default function HomeLayout({
-    prestationsPhotos,
+    representantsPhotos,
     portefolioPhotos,
     aproposPhoto,
     firstElementRef
@@ -32,7 +33,7 @@ export default function HomeLayout({
 
                 <SectionComponent style={{marginTop:"70px"}} label="Prestations" customClass="home-prestation">
                     <div className="content">
-                        <PrestationsHome prestationsPhotos={prestationsPhotos}/>
+                        <PrestationsHome representantsPhotos={representantsPhotos}/>
                     </div>
                 </SectionComponent>
                 
@@ -65,7 +66,7 @@ export default function HomeLayout({
                                 <Galery
                                     id={"home-portefolio-galery"}
                                     elements={portefolioPhotos}
-                                    render={(photo, index) => (
+                                    render={(photo) => (
                                         <LazyImage src={photo.image}/>
                                     )}
                                 />
@@ -79,7 +80,7 @@ export default function HomeLayout({
                     <div className="content">
                         {desktop && (
                             <picture>
-                                {/* <img src="" alt="qzdqzd" /> */}
+                                <img src={image} />
                             </picture>
                         )}
                         <div>

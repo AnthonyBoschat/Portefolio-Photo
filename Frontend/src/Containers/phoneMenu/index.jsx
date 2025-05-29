@@ -1,33 +1,19 @@
 import { useDispatch, useSelector } from "react-redux";
 import "./style.scss";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { setOpenPhoneMenu } from "@Redux/Slices/phoneState";
-import { Link, useLocation } from "react-router-dom";
-import { closeSubMenu, openSubMenu } from "@Redux/Slices/routes";
+import { Link } from "react-router-dom";
+import { openSubMenu } from "@Redux/Slices/routes";
 import Medias from "@Containers/Media";
+import useRoutes from "@Services/useRoutes";
 
 export default function PhoneMenuContainer(){
 
-    const phoneMenuOpen = useSelector(store => store.phoneState.menuOpen)
-    const currentRoute = useSelector(store => store.routes.currentRoute)
-    const dispatch = useDispatch()
-    const routes = useSelector(store => store.routes.routes)
-    const {pathname} = useLocation()
-
-
-    const isSelectedRoute = (link) => {
-        if(pathname.startsWith("/Artisan")){
-            if(link === "/Prestations"){
-                return true
-            }
-            if(link.includes("Artisan")){
-                return true
-            }
-        }else{
-            return decodeURIComponent(currentRoute) === link
-        }
-
-    }
+    const dispatch          = useDispatch()
+    const {isSelectedRoute} = useRoutes()
+    const phoneMenuOpen     = useSelector(store => store.phoneState.menuOpen)
+    const currentRoute      = useSelector(store => store.routes.currentRoute)
+    const routes            = useSelector(store => store.routes.routes)
 
 
     useEffect(() => {

@@ -11,18 +11,17 @@ import { setOpenPhoneMenu } from "@Redux/Slices/phoneState";
 import { Link, useNavigate } from "react-router-dom";
 import Galery from "@Components/Galery";
 
+    // useEffect(() => {
+    //     setPhotos(representantsPhotos)
+    // }, [representantsPhotos])
 
-
-export default function PrestationsHome({prestationsPhotos}){
+export default function PrestationsHome({representantsPhotos}){
     
-    const {desktop, mobile} = useSelector(store => store.app)
-    const dispatch = useDispatch()
+    const {desktop, mobile}     = useSelector(store => store.app)
+    const dispatch              = useDispatch()
     
     // Liste des prestations
-    const [photos, setPhotos] = useState(prestationsPhotos)
-    useEffect(() => {
-        setPhotos(prestationsPhotos)
-    }, [prestationsPhotos])
+    const [photos, setPhotos]   = useState(representantsPhotos || [])
 
     // Quand l'utilisateur clique sur le nom d'une prestation, modifie en conséquence la liste des prestations et le statut selected et fait se déplacer le slider
     const switchPhoto = (index) => {
@@ -60,7 +59,6 @@ export default function PrestationsHome({prestationsPhotos}){
                                 <picture className="photo-container">
                                     <img src={photo.image} alt={`Photo représentative de la prestation ${photo.label}`} />
                                 </picture>
-                                {/* <LazyImage src={photo.image ? photo.image : photo} alt={`Photo représentative de la prestation ${photo.label}`}/> */}
                             </Link>
                         </>
                     )}

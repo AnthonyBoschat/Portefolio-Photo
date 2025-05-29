@@ -47,7 +47,7 @@ const InformationSection = ({prestation}) => {
             <li>
                 <img src={clockIcon} alt="" />
                 <span>
-                    {prestation?.duration} heures de prises de vue
+                    {prestation?.duration} de prise de vue
                 </span>
             </li>
             <li>
@@ -111,7 +111,6 @@ const GalerySection = ({ prestation, artisans }) => {
             elements={datas}
             render={(element, index) => {
                 if(isArtisan){
-                    console.log("debug element", element)
                     return (
                         <>
                             <span className="label">{element.name}</span>
@@ -131,8 +130,6 @@ const GalerySection = ({ prestation, artisans }) => {
 
 // Disposition des composants
 export default function PrestationsLayout({prestation, artisans, banners}) {
-
-    console.log(prestation?.description)
 
   return (
     <>

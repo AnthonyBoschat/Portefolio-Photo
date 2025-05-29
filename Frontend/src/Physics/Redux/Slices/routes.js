@@ -7,9 +7,9 @@ export const routesSlice = createSlice({
   initialState: {
     routes:[
         {label:"Accueil", link:ROUTES.HOME, subMenu:false},
-        {label:"Portefolio", link:"/Portefolios", subMenu:true, open:false, children:[]},
-        {label:"Prestations", link:"/Prestations", subMenu:true, open:false, children:[]},
-        {label:"Artisan", link:"/Artisan", subMenu:true, open:false, hidden:true, children:[]},
+        {label:"Portefolio", link:ROUTES.PORTEFOLIOS.INDEX, subMenu:true, open:false, children:[]},
+        {label:"Prestations", link:ROUTES.PRESTATIONS.INDEX, subMenu:true, open:false, children:[]},
+        // {label:"Artisan", link:ROUTES.ARTISAN, subMenu:true, open:false, hidden:true, children:[]},
         {label:"À propos", link:ROUTES.APROPOS, subMenu:false},
         {label:"Contact", link:ROUTES.CONTACT, subMenu:false},
     ],
@@ -34,15 +34,15 @@ export const routesSlice = createSlice({
       const prestationRouteIndex = state.routes.findIndex(route => route.label === "Prestations")
       state.routes[prestationRouteIndex].children = newChildren
     },
-    setArtisansRoutes:(state, action) => {
-      const newChildren = []
-      const artisans = action.payload
-      artisans.forEach(artisan => {
-        newChildren.push({label:artisan.name, link:`/Artisans/${artisan.name}`, id:artisan.id})
-      })
-      const artisanRouteIndex = state.routes.findIndex(route => route.label === "Artisan")
-      state.routes[artisanRouteIndex].children = newChildren
-    },
+    // setArtisansRoutes:(state, action) => {
+    //   const newChildren = []
+    //   const artisans = action.payload
+    //   artisans.forEach(artisan => {
+    //     newChildren.push({label:artisan.name, link:`/Artisans/${artisan.name}`, id:artisan.id})
+    //   })
+    //   const artisanRouteIndex = state.routes.findIndex(route => route.label === "Artisan")
+    //   state.routes[artisanRouteIndex].children = newChildren
+    // },
     openSubMenu:(state,action) => {
       state.routes = state.routes.map(route => {
           if(route.label === action.payload){
@@ -83,7 +83,7 @@ export const {
 
   setPortefoliosRoutes,
   setPrestationsRoutes,
-  setArtisansRoutes,
+  // setArtisansRoutes,
 } = routesSlice.actions;
 
 export const routesReducer = routesSlice.reducer;

@@ -13,7 +13,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { setOpenPhoneMenu } from "@Redux/Slices/phoneState";
-import { setArtisansRoutes, setCurrentRoute, setPortefoliosRoutes, setPrestationsRoutes } from "@Redux/Slices/routes";
+import { setCurrentRoute, setPortefoliosRoutes, setPrestationsRoutes } from "@Redux/Slices/routes";
 import { setScreenSize } from "@Redux/Slices/App";
 import Lenis from "lenis";
 import ZoomOverlay from "@Containers/ZoomOverlay";
@@ -69,9 +69,6 @@ export default function App() {
   
   const isAdminPage = useMemo(() => pathname.includes(ROUTES.ADMIN.PAGE),[pathname])
   const isIndexPage = useMemo(() => (pathname === ROUTES.PORTEFOLIOS.INDEX || pathname === ROUTES.PRESTATIONS.INDEX ), [pathname])
-  console.log("debug pathname", pathname)
-  console.log("debug ROUTES.PORTEFOLIOS.INDEX", ROUTES.PORTEFOLIOS.INDEX)
-  console.log("debug isIndexPage", isIndexPage)
 
   useEffect(() => {
     Promise.all([
@@ -85,13 +82,16 @@ export default function App() {
 
         dispatch(setPortefoliosRoutes(portefolios))
         dispatch(setPrestationsRoutes(prestations))
-        dispatch(setArtisansRoutes(artisans))
+        // dispatch(setArtisansRoutes(artisans))
     })
 }, [])
 
   // A chaque changement d'url ( de page ) 
   useEffect(() => {
-      window.scrollTo({top: 0, behavior: 'smooth'}); // Repositionne la vue utilisateur en haut de l'écran
+    window.scrollTo({top: 0, behavior: 'smooth'}); // Repositionne la vue utilisateur en haut de l'écran
+    setTimeout(() => {
+      window.scrollTo({top: 0, behavior: 'instant'}); // Repositionne la vue utilisateur en haut de l'écran
+    }, 300);
       dispatch(setOpenPhoneMenu(false)) // Ferme le menu de navigation téléphone
       dispatch(setCurrentRoute(pathname)) // set dans le store routes le currentRoute
   }, [pathname]);
@@ -122,8 +122,6 @@ export default function App() {
 
 
         {!isAdminPage && ( <Header introductionImageRef={introductionImageRef}/> )}
-
-
 
         <main>
           <AnimatePresence mode="wait">

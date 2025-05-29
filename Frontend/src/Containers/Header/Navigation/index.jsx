@@ -3,40 +3,18 @@ import "./style.scss";
 
 import { setOpenPhoneMenu } from "@Redux/Slices/phoneState"
 import { useDispatch, useSelector } from "react-redux"
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React from "react";
+import useRoutes from "@Services/useRoutes";
 
 export default function Navigation(){
 
-    const dispatch = useDispatch()
-    const {mobile, desktop} = useSelector(store => store.app)
-    const {routes, currentRoute} = useSelector(store => store.routes)
-    const {pathname} = useLocation()
-    const navigate = useNavigate()
-
+    const navigate                      = useNavigate()
+    const dispatch                      = useDispatch()
+    const {mobile, desktop}             = useSelector(store => store.app)
+    const {routes}                      = useSelector(store => store.routes)
+    const {isSelectedRoute, navigateTo} = useRoutes()
     
-
-    const isSelectedRoute = (link) => {
-        if(pathname.startsWith("/Artisan")){
-            if(link === "/Prestations"){
-                return true
-            }
-            if(link.includes("Artisan")){
-                return true
-            }
-        }else{
-            return decodeURIComponent(currentRoute) === link
-        }
-
-    }
-
-    const navigateTo = (routeLink) => {
-        if(currentRoute === routeLink){
-            window.scrollTo({top: 0, behavior: 'smooth'})
-        }else{
-            navigate(routeLink)
-        }
-    }
 
     return(
         <>
