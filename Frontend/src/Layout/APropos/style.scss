@@ -63,7 +63,7 @@ div#apropos-container{
                 padding-top: 8rem;
                 padding-bottom: 8rem;
                 color: v.$light;
-                margin-bottom: 5rem;
+                margin-bottom: 5rem; // TEST
                 box-shadow: none;
 
                 .background{
@@ -102,17 +102,19 @@ div#apropos-container{
                             content: "";
                             z-index: -1;
                             position: absolute;
-                            left: -10%;
+                            left: -50%;
+                            // left: -10%;
                             top: -5%;
                             height: 115%;
-                            width: 110%;
+                            width: 150%;
+                            // width: 110%;
                             background-color: v.$dark-light;
                         }
                     }
                     
                     &.black{
                         z-index: 10;
-                        color: v.$dark;
+                        color: v.$dark; // TEST
                         text-shadow: none;
                     }
 
