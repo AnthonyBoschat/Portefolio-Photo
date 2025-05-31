@@ -20,11 +20,12 @@ export default function HomeLayout({
     representantsPhotos,
     portefolioPhotos,
     aproposPhoto,
-    firstElementRef
+    firstElementRef,
+    ready
 }){
 
     const {mobile, desktop} = useSelector(store => store.app)
-    const dispatch = useDispatch()
+    const dispatch          = useDispatch()
 
     return(
         <>
@@ -33,7 +34,7 @@ export default function HomeLayout({
 
                 <SectionComponent style={{marginTop:"70px"}} label="Prestations" customClass="home-prestation">
                     <div className="content">
-                        <PrestationsHome representantsPhotos={representantsPhotos}/>
+                        <PrestationsHome ready={ready} representantsPhotos={representantsPhotos}/>
                     </div>
                 </SectionComponent>
                 

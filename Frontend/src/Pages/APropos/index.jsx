@@ -8,7 +8,7 @@ export default function AProposPage(){
         jesahelPhoto:STATIC_PHOTOS.APROPOS.JESAHEL,
         naturalLight:STATIC_PHOTOS.APROPOS.NATURAL_LIGHT,
         artisanPhoto:STATIC_PHOTOS.APROPOS.ARTISAN,
-    }), [])
+    }), [STATIC_PHOTOS])
 
     return(
         <AProposLayout aproposPhoto={aproposPhoto}/>

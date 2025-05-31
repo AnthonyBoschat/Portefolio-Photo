@@ -15,13 +15,19 @@ import Galery from "@Components/Galery";
     //     setPhotos(representantsPhotos)
     // }, [representantsPhotos])
 
-export default function PrestationsHome({representantsPhotos}){
+export default function PrestationsHome({representantsPhotos, ready}){
     
     const {desktop, mobile}     = useSelector(store => store.app)
     const dispatch              = useDispatch()
     
     // Liste des prestations
     const [photos, setPhotos]   = useState(representantsPhotos || [])
+
+    useEffect(() => {
+        if(ready){
+            setPhotos(representantsPhotos)
+        }
+    }, [ready])
 
     // Quand l'utilisateur clique sur le nom d'une prestation, modifie en conséquence la liste des prestations et le statut selected et fait se déplacer le slider
     const switchPhoto = (index) => {

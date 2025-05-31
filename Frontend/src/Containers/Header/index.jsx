@@ -86,7 +86,6 @@ export default function Header({introductionImageRef}){
         ${introductionIsVisible ? "transparentStyle" : ""}`
     }, [introductionIsVisible, mounted, scrolling, pathname, desktop])
 
-
     return(
         <header ref={headerRef}>
             <div className={containerClasses }>

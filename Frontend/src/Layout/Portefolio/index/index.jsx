@@ -18,11 +18,10 @@ export default function PortefolioIndexLayout({representantsPortefolios}){
                 <>
                     {portefolio?.image && (
                         <>
-                        <Link to={portefolio.link}>
-                            <LazyImage src={portefolio.image} alt={`Photo représentative du portefolio '${portefolio.label}'`} />
-                        </Link>
-                        <h2>{portefolio.label}</h2>
-                        
+                            <Link to={portefolio.link}>
+                                <LazyImage src={portefolio.image} alt={`Photo représentative du portefolio '${portefolio.label}'`} />
+                            </Link>
+                            <h2>{portefolio.label}</h2>
                         </>
 
                     )}

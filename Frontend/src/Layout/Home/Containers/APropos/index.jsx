@@ -40,9 +40,6 @@ export default function AProposHome({aproposPhoto}){
                             </div>
                         )}
                     </div>
-                    {/* {mobile && (
-                        <ExploreButton navigate={ROUTES.APROPOS} text={"Lire plus"}/>
-                    )} */}
                 </>
             )}
         </>

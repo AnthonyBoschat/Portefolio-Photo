@@ -92,12 +92,14 @@ export default function App() {
 
   // A chaque changement d'url ( de page ) 
   useEffect(() => {
-    window.scrollTo({top: 0, behavior: 'smooth'}); // Repositionne la vue utilisateur en haut de l'écran
+
+    // window.scrollTo({top: 0, behavior: 'smooth'}); // Repositionne la vue utilisateur en haut de l'écran
+
     setTimeout(() => {
       window.scrollTo({top: 0, behavior: 'instant'}); // Après la durée d'animation de sortie en ms, déplace immédiatement en haut de l'écran
     }, (animation_out * 1000));
-      dispatch(setOpenPhoneMenu(false)) // Ferme le menu de navigation téléphone
-      dispatch(setCurrentRoute(pathname)) // set dans le store routes le pathname
+    dispatch(setOpenPhoneMenu(false)) // Ferme le menu de navigation téléphone
+    dispatch(setCurrentRoute(pathname)) // set dans le store routes le pathname
   }, [pathname]);
   
   
@@ -123,12 +125,65 @@ export default function App() {
 
         <main>
           <AnimatePresence mode="wait">
-            <motion.div
-              key={location.pathname}
+            {/* <motion.div
+              key={pathname}
               initial={{ opacity: 0}}
               animate={{ opacity: 1, transition: { duration: animation_in } }}
-              exit={{ opacity: 0, transition: { duration: animation_out } }}
+              exit={{ opacity: 0, transition: {duration: animation_out} }}
+              > */}
+
+
+            {/* <motion.div
+              key={pathname}
+              initial={{ opacity: 0}}
+              animate={{ opacity: 1, transition: { duration: animation_in } }}
+              exit={{ opacity: 0, x: "-10%", transition: { 
+                duration: animation_out,
+                x: { 
+                  duration: 0.5,  // translation en 0.5s
+                  ease: "easeOut",
+                  delay: 0.1  // commence après 0.1s
+                }
+                },  
+              }}
+              > */}
+
+              <motion.div
+                key={pathname}
+                initial={{ 
+                  opacity: 0,
+                  x: pathname === "/" ? "0%" : "10%"  // Commence décalé vers la droite
+                }}
+                animate={{ 
+                  opacity: 1, 
+                  x: 0,  // Revient au centre
+                  transition: { 
+                    duration: animation_in,
+                    opacity: {
+                      duration: 0.3,
+                      ease: "easeOut"
+                    },
+                    x: {
+                      duration: 0.5,
+                      ease: "easeOut",
+                      delay: 0  // Le mouvement commence légèrement après l'opacité
+                    }
+                  } 
+                }}
+                exit={{ 
+                  opacity: 0, 
+                  x: "-10%",  // Part vers la gauche
+                  transition: { 
+                    duration: animation_out,
+                    x: { 
+                      duration: 0.5,
+                      ease: "easeIn",
+                      delay: 0.1
+                    }
+                  }
+                }}
               >
+
               <SmoothScrollWrapper>
 
                 

@@ -1,5 +1,5 @@
 import HomeLayout from "@Layout/Home";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useRef } from "react";
 import STATIC_PHOTOS from "@Constants/StaticPhotos/StaticPhotos";
 import ROUTES from "@Constants/Routes";
 import { useSelector } from "react-redux";
@@ -30,11 +30,12 @@ export default function HomePage({introductionImageRef}){
     
     const ready                 = !!(representants && portefolioPhotos && aproposPhoto && portraitImage && artisanImage && boudoirImage);
 
-    if (!ready) return null;
+    // if (!ready) return null;
     return (
         <>
             <IntroductionContainer firstElementRef={firstElementRef} introductionImageRef={introductionImageRef} />
             <HomeLayout
+                ready={ready}
                 representantsPhotos={representantsPhotos}
                 portefolioPhotos={portefolioPhotos}
                 aproposPhoto={aproposPhoto}

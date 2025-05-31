@@ -1,14 +1,8 @@
-import AdminPage_Old from "@Pages/Admin/Old/old_index";
 import "./style.scss";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import ENDPOINT from "@Constants/Endpoint";
 import Loading from "@Components/Loading";
-import callBackend from "@Services/callBackend";
-import { toast } from "react-toastify";
-import Admin_View_Portefolio from "../Views/Portefolio";
 import sortByPhotoType from "@Services/sortByPhotoType";
-import Admin_View_Prestation from "../Views/Prestation";
-import Admin_View_Artisan from "../Views/Artisan";
 import Admin_View from "../Views";
 
 export default function Admin_Dashboard(){
@@ -22,12 +16,8 @@ export default function Admin_Dashboard(){
     const [prestations, setPrestations] = useState([])
     const [artisans, setArtisans] = useState([])
 
-    const [pendingPhotos, setPendingPhoto] = useState(null)
-
     const [view, setView] = useState(null)
     const [datas, setDatas] = useState(null)
-
-    const fileInputRef = useRef(null);
 
 
     // 1️⃣ Charger les listes au montage
@@ -45,7 +35,6 @@ export default function Admin_Dashboard(){
     }, [])
 
     const handleClick = (contentCategory, content) => {
-        setPendingPhoto(null)
         setSelectedContent(content)
         setSelectedContentLabelID(`${contentCategory}${content.id}`)
         setView(contentCategory)
@@ -69,27 +58,6 @@ export default function Admin_Dashboard(){
 
     }
 
-    const handleClick_AddPhotos = () => {
-        fileInputRef.current.click();
-    }
-
-    const handleFiles = async(e) => {
-        const files = Array.from(e.target.files);
-        if(!files.length){
-            return
-        }
-        const photosPromises = files.map(async (file) => {
-            const bitmap = await createImageBitmap(file);
-            const orientation = bitmap.width > bitmap.height ? 'paysage' : 'portrait';
-            const url = URL.createObjectURL(file);
-            return { file, url, orientation };
-        });
-        const photos = await Promise.all(photosPromises);
-        setPendingPhoto(current =>
-            current ? sortByPhotoType([...current, ...photos]) : sortByPhotoType(photos)
-        );
-    };
-
     const isSelected = (category, content) => selectedContentLabelID === `${category}${content.id}` ? "selected" : ""
 
     
@@ -97,15 +65,6 @@ export default function Admin_Dashboard(){
 
     return(
         <div id="admin-dashboard-container" >
-
-            <input
-                type="file"
-                ref={fileInputRef}
-                multiple
-                style={{ display: 'none' }}
-                onChange={handleFiles}
-            />
-
 
             {dataLoaded ? (
                 <div className="categories-container">
@@ -156,44 +115,6 @@ export default function Admin_Dashboard(){
                         setArtisans={setArtisans}
                     />
                 )}
-                {/* {view === "portefolio" && (
-                    <Admin_View_Portefolio
-                        key={selectedContent.id}
-                        selectedContent={selectedContent}
-                        datas={datas}
-                        setDatas={setDatas}
-                        setPendingPhoto={setPendingPhoto}
-                        pendingPhotos={pendingPhotos}
-                        handleClick_AddPhotos={handleClick_AddPhotos}
-                        setPortefolios={setPortefolios}
-
-                    />
-                )}
-                {view === "prestation" && (
-                    <Admin_View_Prestation
-                        key={selectedContent.id}
-                        selectedContent={selectedContent}
-                        datas={datas}
-                        setDatas={setDatas}
-                        setPendingPhoto={setPendingPhoto}
-                        pendingPhotos={pendingPhotos}
-                        handleClick_AddPhotos={handleClick_AddPhotos}
-                        setPrestations={setPrestations}
-                        setArtisans={setArtisans}
-                    />
-                )}
-                {view === "artisan" && (
-                    <Admin_View_Artisan
-                        key={selectedContent.id}
-                        selectedContent={selectedContent}
-                        datas={datas}
-                        setDatas={setDatas}
-                        setPendingPhoto={setPendingPhoto}
-                        pendingPhotos={pendingPhotos}
-                        handleClick_AddPhotos={handleClick_AddPhotos}
-                        setArtisans={setArtisans}
-                    />
-                )} */}
             </div>
 
 

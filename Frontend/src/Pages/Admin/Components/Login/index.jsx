@@ -9,12 +9,12 @@ import callBackend from "@Services/callBackend";
 
 export default function Admin_Login(){
 
-    const emailInputRef = useRef(null)
-    const passwordInputRef = useRef(null)
+    const {setTokens}           = useAuth()
+    const navigate              = useNavigate()
+    const emailInputRef         = useRef(null)
+    const passwordInputRef      = useRef(null)
     const [passwordHidden, setPasswordHidden] = useState(true)
 
-    const {setTokens} = useAuth()
-    const navigate = useNavigate()
 
     const handleSubmit = async(e) => {
         e.preventDefault()

@@ -11,13 +11,8 @@ export default function PortefolioIndexPage(){
     const extractID     = (label) => representants?.find(representant => representant?.name === label)?.id
     
     
-    const representantsPortefolios = labels.map(label => (
-        {label:label, link:`/Portefolios/${label}`, id:extractID(label), image:extractImage(label)}
-    ))
+    const representantsPortefolios = labels.map(label => ({label:label, link:`/Portefolios/${label}`, id:extractID(label), image:extractImage(label)}))
 
-
-    
-    
 
     return(
         <>

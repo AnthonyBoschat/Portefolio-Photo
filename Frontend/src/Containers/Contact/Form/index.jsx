@@ -1,6 +1,5 @@
-import { useRef, useState } from "react";
 import "./style.scss";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setFormData } from "@Redux/Slices/Contact";
 import contactOptions from "@Constants/ContactOptions";
 import { SpinnerCircular } from "spinners-react";

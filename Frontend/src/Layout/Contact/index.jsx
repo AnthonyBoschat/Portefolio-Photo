@@ -1,9 +1,8 @@
 import ContactContainer from "@Containers/Contact";
 import "./style.scss"
-import Medias from "@Containers/Media";
 import { useSelector } from "react-redux";
-import Footer from "@Containers/Footer";
-import image from "@Assets/Photos/Home/Portefolio/1.jpg"
+import image from "@Assets/Photos/Home/Portefolio/9.jpg"
+
 
 export default function ContactLayout(){
 

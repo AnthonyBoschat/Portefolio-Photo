@@ -8,12 +8,12 @@ import csrfFetch from "@Services/csrfCookie"
 
 export default function ContactContainer(){
 
-    const formData = useSelector(store => store.contact.formData)
-    const dispatch = useDispatch()
-    const formRef = useRef()
-    const emailSendReportRef = useRef()
+    const formData                  = useSelector(store => store.contact.formData)
+    const dispatch                  = useDispatch()
+    const formRef                   = useRef()
+    const emailSendReportRef        = useRef()
 
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading]     = useState(false)
     const [emailSend, setEmailSend] = useState(false)
    
 
@@ -29,14 +29,13 @@ export default function ContactContainer(){
 
                 setTimeout(() => {
                     setEmailSend(false)
-                    
                 }, 200);
             }, 5000);
         }
     }, [emailSend])
 
     const sendMail = () => {
-        // setLoading(true)
+        setLoading(true)
         if(formRef.current.reportValidity()){
             const sendFormData = new FormData()
             for(const key in formData){
@@ -50,7 +49,7 @@ export default function ContactContainer(){
             .then(result => {
                 if(result.success){
                     setEmailSend(true)
-                    // setLoading(false)
+                    setLoading(false)
                     dispatch(resetFormData(true))
                 }
             })

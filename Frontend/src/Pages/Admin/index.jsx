@@ -5,7 +5,7 @@ import useAuth from "@Services/useAuth";
 
 export default function AdminPage(){
 
-    const {verifyToken} = useAuth()
+    const {verifyToken}         = useAuth()
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
