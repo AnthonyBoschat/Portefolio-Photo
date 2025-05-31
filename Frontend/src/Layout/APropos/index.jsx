@@ -79,7 +79,7 @@ export default function AProposLayout({aproposPhoto}){
                 <>
                     <div className="section white">
                         <div className="presentation">
-                            <section>
+                            <section className="test">
                                 <h2>{sections.univers.title}</h2>
                                 <p>
                                     {generateContent(sections.univers.text)}
@@ -93,14 +93,18 @@ export default function AProposLayout({aproposPhoto}){
                             </section>
                         </div>
                         <div className="image">
-                            <img loading="lazy" src={aproposPhoto.jesahelPhoto} alt={"Photo de la photographe Jesahel"}></img>
+                            <picture>
+                                <img loading="lazy" src={aproposPhoto.jesahelPhoto} alt={"Photo de la photographe Jesahel"}></img>
+                            </picture>
                         </div>
                     </div>
 
                     <div className="section black">
                         <div className="background"></div>
                         <div className="image">
-                            <img src={aproposPhoto.naturalLight} alt={"Photo d'extérieur en lumière naturelle"}></img>
+                            <picture>
+                                <img src={aproposPhoto.naturalLight} alt={"Photo d'extérieur en lumière naturelle"}></img>
+                            </picture>
                         </div>
                         <div className="presentation">
                             <section>
@@ -122,3 +126,5 @@ export default function AProposLayout({aproposPhoto}){
         </div>
     )
 }
+
+// Pour supprimer le test visuel -> Supprimer la div class background et le classname test, et ce qui va avec dans le fichier scss
