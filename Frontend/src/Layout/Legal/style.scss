@@ -1,14 +1,23 @@
 @use "@Sass/constants.scss" as v;
+@use "@Sass/mixins.scss" as mixins;
+
+
 
 #legal-main-container{
     display: flex;
     justify-content: center;
 
+    
+
     .container{
         padding-top: 6rem;
-        padding-bottom: 16rem;
-        width: 45%;
-        min-width: 40rem; //
+        padding-bottom: 8rem;
+        width: 80%;
+        @include mixins.respond-to("desktop"){
+            padding-bottom: 16rem;
+            width: 45%;
+            min-width: 40rem; //
+        }
         display: flex;
         flex-direction: column;
         gap: 4rem;
@@ -22,7 +31,12 @@
 
             h1{
                 font-weight: 400;
+                font-size: 1.7rem;
                 padding: 0;
+                @include mixins.respond-to("desktop"){
+                    font-size: 2rem;
+                }
+                text-wrap: nowrap;
             }
             span{
                 opacity: 0.8;
@@ -85,18 +99,34 @@
         .logo-container{
             display: flex;
             justify-content: center;
-            padding-top: 7rem;
-            // opacity: 0.1;
+            padding-top: 4rem;
+
             picture{
                 background-color: v.$dark-light;
                 border-radius: 4px;
-                padding: 2rem 0.2rem 2rem 0.2rem;
+                padding: 1.5rem 0.2rem 1.5rem 0.2rem;
                 box-shadow: 0px 2px 4px -2px v.$dark,;
                 img{
-                    width: 6rem;
+                    width: 3rem;
                     height: auto;
                 }
             }
+            @include mixins.respond-to("desktop"){
+                padding-top: 7rem;
+
+                picture{
+                    background-color: v.$dark-light;
+                    border-radius: 4px;
+                    padding: 2rem 0.2rem 2rem 0.2rem;
+                    box-shadow: 0px 2px 4px -2px v.$dark,;
+                    img{
+                        width: 6rem;
+                        height: auto;
+                    }
+                }
+            }
+            
+            
         }
     }
 }

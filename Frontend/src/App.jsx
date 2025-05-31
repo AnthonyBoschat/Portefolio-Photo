@@ -28,6 +28,7 @@ import { init_prestations } from "@Redux/Slices/prestations";
 import ENDPOINT from "@Constants/Endpoint";
 import { setArtisansList } from "@Redux/Slices/artisans";
 import LegalPage from "@Pages/Legal";
+import BackToTopButton from "@Components/BackToTopButton";
 
 // Composant wrapper qui permet d'avoir un scroll fluide
 function SmoothScrollWrapper({ children }) {
@@ -58,42 +59,45 @@ function SmoothScrollWrapper({ children }) {
 
 export default function App() {
 
-  const location = useLocation()
-  const pathname = location.pathname
-  const dispatch = useDispatch()
-  const {mobile} = useSelector(store => store.app)
-  const portefolios = useSelector(store => store.portefolios.collections)
-  const prestations = useSelector(store => store.prestations.collections)
-  const artisans = useSelector(store => store.artisans.collections)
+  const animation_out         = 0.3 // ms
+  const animation_in          = 0.6 // ms
+  const introductionImageRef  = useRef(null);
+  const location              = useLocation()
+  const pathname              = location.pathname
+  const dispatch              = useDispatch()
+  const {mobile, desktop}     = useSelector(store => store.app)
+  const portefolios           = useSelector(store => store.portefolios.collections)
+  const prestations           = useSelector(store => store.prestations.collections)
+  const artisans              = useSelector(store => store.artisans.collections)
   
   
   const isAdminPage = useMemo(() => pathname.includes(ROUTES.ADMIN.PAGE),[pathname])
   const isIndexPage = useMemo(() => (pathname === ROUTES.PORTEFOLIOS.INDEX || pathname === ROUTES.PRESTATIONS.INDEX ), [pathname])
 
+  // Requête initial pour récupérer toutes les données du backend
+  // Stock ces données dans les stores reduxs
   useEffect(() => {
-    Promise.all([
-        fetch(ENDPOINT.PORTEFOLIOS.LIST).then(response => response.json()),
-        fetch(ENDPOINT.PRESTATIONS.LIST).then(response => response.json()),
-        fetch(ENDPOINT.ARTISANS.LIST).then(response => response.json()),
-    ]).then(([portefolios, prestations, artisans]) => {
-        dispatch(init_portefolios(portefolios))
-        dispatch(init_prestations(prestations))
-        dispatch(setArtisansList(artisans))
-
-        dispatch(setPortefoliosRoutes(portefolios))
-        dispatch(setPrestationsRoutes(prestations))
-        // dispatch(setArtisansRoutes(artisans))
-    })
-}, [])
+      Promise.all([
+          fetch(ENDPOINT.PORTEFOLIOS.LIST).then(response => response.json()),
+          fetch(ENDPOINT.PRESTATIONS.LIST).then(response => response.json()),
+          fetch(ENDPOINT.ARTISANS.LIST).then(response => response.json()),
+      ]).then(([portefolios, prestations, artisans]) => {
+          dispatch(init_portefolios(portefolios))
+          dispatch(init_prestations(prestations))
+          dispatch(setArtisansList(artisans))
+          dispatch(setPortefoliosRoutes(portefolios))
+          dispatch(setPrestationsRoutes(prestations))
+      })
+  }, [])
 
   // A chaque changement d'url ( de page ) 
   useEffect(() => {
     window.scrollTo({top: 0, behavior: 'smooth'}); // Repositionne la vue utilisateur en haut de l'écran
     setTimeout(() => {
-      window.scrollTo({top: 0, behavior: 'instant'}); // Repositionne la vue utilisateur en haut de l'écran
-    }, 300);
+      window.scrollTo({top: 0, behavior: 'instant'}); // Après la durée d'animation de sortie en ms, déplace immédiatement en haut de l'écran
+    }, (animation_out * 1000));
       dispatch(setOpenPhoneMenu(false)) // Ferme le menu de navigation téléphone
-      dispatch(setCurrentRoute(pathname)) // set dans le store routes le currentRoute
+      dispatch(setCurrentRoute(pathname)) // set dans le store routes le pathname
   }, [pathname]);
   
   
@@ -101,19 +105,13 @@ export default function App() {
   // Enregistre le dimensionnement de la fenêtre pour gérer l'affichage dynamique de composant
   useEffect(() => {
     dispatch(setScreenSize(window.innerWidth));
-    const setSize = () => {
-      dispatch(setScreenSize(window.innerWidth))
-    }
+    const setSize = () => dispatch(setScreenSize(window.innerWidth))
+
     window.addEventListener("resize", setSize)
-    
+
     return () => window.removeEventListener("resize", setSize)
   }, [])
 
-  // Paramètre d'animation de transition entre les pages
-  const shouldReduceMotion = useReducedMotion();
-  const duration = shouldReduceMotion ? 0 : 0.5;
-
-  const introductionImageRef = useRef(null);
   
   
   return (
@@ -128,8 +126,8 @@ export default function App() {
             <motion.div
               key={location.pathname}
               initial={{ opacity: 0}}
-              animate={{ opacity: 1, transition: { duration: 0.6 } }}
-              exit={{ opacity: 0, transition: { duration: 0.3 } }}
+              animate={{ opacity: 1, transition: { duration: animation_in } }}
+              exit={{ opacity: 0, transition: { duration: animation_out } }}
               >
               <SmoothScrollWrapper>
 
@@ -174,11 +172,9 @@ export default function App() {
 
           </AnimatePresence>
         </main>
-        {mobile && (
-          <PhoneMenuContainer/>
-        )}
+        {mobile && (<PhoneMenuContainer/>)}
         <ToastContainer transition={Flip} />
-
+        {desktop && (<BackToTopButton/>)}
     </>
   )
 }

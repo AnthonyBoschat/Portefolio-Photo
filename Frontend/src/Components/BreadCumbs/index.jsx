@@ -16,7 +16,11 @@ export default function BreadCrumbs(){
 
     // Génère le fil d'ariane
     useEffect(() => {
-        const firstLevelRoute = routes.find(route => route.link === currentRoute)
+        console.log(routes)
+        console.log(currentRoute)
+        console.log(decodeURIComponent(currentRoute))
+
+        const firstLevelRoute = routes.find(route => route.link === decodeURIComponent(currentRoute))
         if(firstLevelRoute){
             if(firstLevelRoute.link === "/"){
                 setBreadcrumbs({
@@ -30,11 +34,11 @@ export default function BreadCrumbs(){
                 })
             }
         }else{
-            const secondLevelRoute = routes.find(route => route.children && route.children.find(child => child.link === currentRoute))
+            const secondLevelRoute = routes.find(route => route.children && route.children.find(child => child.link === decodeURIComponent(currentRoute)))
             if(secondLevelRoute){
                 setBreadcrumbs({
                     first:secondLevelRoute.label,
-                    second:secondLevelRoute.children.find(child => child.link === currentRoute).label
+                    second:secondLevelRoute.children.find(child => child.link === decodeURIComponent(currentRoute)).label
                 })
             }
         }

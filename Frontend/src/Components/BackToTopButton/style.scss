@@ -1,0 +1,40 @@
+@use "@Sass/constants.scss" as v;
+
+
+
+#backToTopButton-main-container{
+    position: fixed;
+    left: 5rem;
+    bottom: 5rem;
+    outline: 1px solid red;
+    width: 1.8rem;
+    height: 1.8rem;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    outline: 1px solid v.$dark-light;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.15s linear;
+    background-color: v.$light;
+
+    &.scrolling{
+        opacity: 0.3;
+        pointer-events: all;
+    }
+
+    i{
+        font-size: 0.8rem;
+        transform: translateY(1px);
+        transition: transform 0.15s linear;
+    }
+
+    &:hover{
+        cursor: pointer;
+        opacity: 0.8;
+        i{
+            transform: translateY(-1px);
+        }
+    }
+}
