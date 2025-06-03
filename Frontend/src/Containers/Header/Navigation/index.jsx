@@ -32,7 +32,7 @@ export default function Navigation(){
                                 <React.Fragment key={index}>
                                     {route.subMenu && (
                                         <div key={index} className="button-list-container">
-                                            <button onClick={route.label === "Portefolio" ? () => navigate(ROUTES.PORTEFOLIOS.INDEX) : route.label === "Prestations" ? () => navigate(ROUTES.PRESTATIONS.INDEX) : undefined} className={isSelectedRoute(route.link) || route.open ? "active" : ""}>
+                                            <button onClick={route.label === "Portefolio" ? () => navigateTo(ROUTES.PORTEFOLIOS.INDEX) : route.label === "Prestations" ? () => navigateTo(ROUTES.PRESTATIONS.INDEX) : undefined} className={isSelectedRoute(route.link) || route.open ? "active" : ""}>
                                                 {route.label}
                                                 {route.subMenu && (
                                                     <i className="fa-solid fa-caret-down"></i>
@@ -40,18 +40,18 @@ export default function Navigation(){
                                             </button>
                                             <div className="child-list">
                                                 {route.children.map((route, index) => (
-                                                    <Link onClick={() => navigateTo(route.link)} key={index} className={isSelectedRoute(route.link) ? "active" : ""} to={route.link}>{route.label}</Link>
+                                                    <button onClick={() => navigateTo(route.link)} key={index} className={isSelectedRoute(route.link) ? "active" : ""}>{route.label}</button>
                                                 ))}
                                             </div>
                                         </div>
                                     )}
                                     {!route.subMenu && (
-                                        <Link onClick={() => navigateTo(route.link)} key={index} to={route.link} className={isSelectedRoute(route.link) ? "active" : ""}>
+                                        <button onClick={() => navigateTo(route.link)} key={index} className={isSelectedRoute(route.link) ? "active" : ""}>
                                             {route.label}
                                             {route.subMenu && (
                                                 <i className="fa-solid fa-caret-down"></i>
                                             )}
-                                        </Link>
+                                        </button>
                                     )}
 
 

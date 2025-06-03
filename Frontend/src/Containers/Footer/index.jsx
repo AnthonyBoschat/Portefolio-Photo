@@ -34,7 +34,7 @@ export default function Footer(){
                         <h1>Navigation</h1>
                         <ul>
                             {routes.map(route => (
-                                <li onClick={() => navigateTo(route.link)} key={route.label}><Link className={selectedRouteClassName(route)}>{route.label}</Link></li>
+                                <li onClick={() => navigateTo(route.link)} key={route.label}><button className={selectedRouteClassName(route)}>{route.label}</button></li>
                             ))}
                         </ul>
                     </div>
@@ -43,8 +43,8 @@ export default function Footer(){
                 <div className="section">
                     <h1>Informations</h1>
                     <ul>
-                        <li><Link className={`${pathname === ROUTES.MENTION_LEGAL ? "selected" : ""}`} to={ROUTES.MENTION_LEGAL}>Mentions légales</Link></li>
-                        <li><Link className={`${pathname === ROUTES.POLITICS ? "selected" : ""}`} to={ROUTES.POLITICS}>Politique de confidentialité</Link></li>
+                        <li><button onClick={() => navigateTo(ROUTES.MENTION_LEGAL)} className={`${pathname === ROUTES.MENTION_LEGAL ? "selected" : ""}`} >Mentions légales</button></li>
+                        <li><button onClick={() => navigateTo(ROUTES.POLITICS)} className={`${pathname === ROUTES.POLITICS ? "selected" : ""}`}>Politique de confidentialité</button></li>
                     </ul>
                 </div>
 

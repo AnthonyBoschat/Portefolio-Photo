@@ -10,6 +10,7 @@ import { openSubMenuForce } from "@Redux/Slices/routes";
 import { setOpenPhoneMenu } from "@Redux/Slices/phoneState";
 import { Link, useNavigate } from "react-router-dom";
 import Galery from "@Components/Galery";
+import useRoutes from "@Services/useRoutes";
 
     // useEffect(() => {
     //     setPhotos(representantsPhotos)
@@ -19,9 +20,8 @@ export default function PrestationsHome({representantsPhotos, ready}){
     
     const {desktop, mobile}     = useSelector(store => store.app)
     const dispatch              = useDispatch()
-    
-    // Liste des prestations
-    const [photos, setPhotos]   = useState(representantsPhotos || [])
+    const {navigateTo}          = useRoutes()
+    const [photos, setPhotos]   = useState(representantsPhotos || []) // Liste des prestations
 
     useEffect(() => {
         if(ready){
@@ -61,11 +61,11 @@ export default function PrestationsHome({representantsPhotos, ready}){
                     render={(photo) => (
                         <>
                             <div className="label">{photo.label}</div>
-                            <Link to={photo.link || photo.url}>
+                            <button onClick={() => navigateTo(photo.link)}>
                                 <picture className="photo-container">
                                     <img src={photo.image} alt={`Photo représentative de la prestation ${photo.label}`} />
                                 </picture>
-                            </Link>
+                            </button>
                         </>
                     )}
                 />

@@ -16,10 +16,6 @@ export default function BreadCrumbs(){
 
     // Génère le fil d'ariane
     useEffect(() => {
-        console.log(routes)
-        console.log(currentRoute)
-        console.log(decodeURIComponent(currentRoute))
-
         const firstLevelRoute = routes.find(route => route.link === decodeURIComponent(currentRoute))
         if(firstLevelRoute){
             if(firstLevelRoute.link === "/"){

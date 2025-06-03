@@ -13,7 +13,11 @@ export const routesSlice = createSlice({
         {label:"À propos", link:ROUTES.APROPOS, subMenu:false},
         {label:"Contact", link:ROUTES.CONTACT, subMenu:false},
     ],
-    currentRoute:ROUTES.HOME
+    currentRoute:ROUTES.HOME,
+    pageDirectionConfig:{
+      initial_x:"0%",
+      exit_x:"-10%"
+    },
   },
   reducers: {
     setPortefoliosRoutes:(state, action) => {
@@ -34,15 +38,6 @@ export const routesSlice = createSlice({
       const prestationRouteIndex = state.routes.findIndex(route => route.label === "Prestations")
       state.routes[prestationRouteIndex].children = newChildren
     },
-    // setArtisansRoutes:(state, action) => {
-    //   const newChildren = []
-    //   const artisans = action.payload
-    //   artisans.forEach(artisan => {
-    //     newChildren.push({label:artisan.name, link:`/Artisans/${artisan.name}`, id:artisan.id})
-    //   })
-    //   const artisanRouteIndex = state.routes.findIndex(route => route.label === "Artisan")
-    //   state.routes[artisanRouteIndex].children = newChildren
-    // },
     openSubMenu:(state,action) => {
       state.routes = state.routes.map(route => {
           if(route.label === action.payload){
@@ -71,6 +66,9 @@ export const routesSlice = createSlice({
           route.open = false
           return route
       })
+    },
+    setPageDirectionConfig:(state,action) => {
+      state.pageDirectionConfig = action.payload
     }
   },
 });
@@ -84,6 +82,8 @@ export const {
   setPortefoliosRoutes,
   setPrestationsRoutes,
   // setArtisansRoutes,
+
+  setPageDirectionConfig
 } = routesSlice.actions;
 
 export const routesReducer = routesSlice.reducer;

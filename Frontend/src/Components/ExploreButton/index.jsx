@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
 import "./style.scss";
 import { useSelector } from "react-redux";
+import useRoutes from "@Services/useRoutes";
 
 export default function ExploreButton({text, onClick, navigate, style, position = "center"}){
 
     const {desktop} = useSelector(store => store.app)
+    const {navigateTo} = useRoutes()
 
     
     return(
@@ -13,7 +15,7 @@ export default function ExploreButton({text, onClick, navigate, style, position 
                 <button style={style ? {...style} : {}} className={`${desktop ? "desktop" : "mobile"}`} onClick={() => onClick()}>{text}</button>
             )}
             {navigate && (
-                <Link style={style ? {...style} : {}} className={`${desktop ? "desktop" : "mobile"}`} to={navigate}>{text}</Link>
+                <button onClick={() => navigateTo(navigate)} style={style ? {...style} : {}} className={`${desktop ? "desktop" : "mobile"}`} >{text}</button>
             )}
         </div>
     )

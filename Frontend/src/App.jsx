@@ -9,8 +9,8 @@ import PortefoliosPage from "@Pages/Portefolios";
 import PortefoliosIndexPage from "@Pages/Portefolios/index/index.jsx";
 import ROUTES from "@Constants/Routes";
 import AProposPage from "@Pages/APropos";
-import { useEffect, useMemo, useRef } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { AnimatePresence, delay, motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { setOpenPhoneMenu } from "@Redux/Slices/phoneState";
 import { setCurrentRoute, setPortefoliosRoutes, setPrestationsRoutes } from "@Redux/Slices/routes";
@@ -59,6 +59,7 @@ function SmoothScrollWrapper({ children }) {
 
 export default function App() {
 
+  const animation_duration    = 0.5
   const animation_out         = 0.3 // ms
   const animation_in          = 0.6 // ms
   const introductionImageRef  = useRef(null);
@@ -69,6 +70,17 @@ export default function App() {
   const portefolios           = useSelector(store => store.portefolios.collections)
   const prestations           = useSelector(store => store.prestations.collections)
   const artisans              = useSelector(store => store.artisans.collections)
+  const {pageDirectionConfig} = useSelector(store => store.routes)
+
+
+
+  // TEST
+  const isFirstRender         = useRef(true)
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+    }
+  });
   
   
   const isAdminPage = useMemo(() => pathname.includes(ROUTES.ADMIN.PAGE),[pathname])
@@ -95,9 +107,12 @@ export default function App() {
 
     // window.scrollTo({top: 0, behavior: 'smooth'}); // Repositionne la vue utilisateur en haut de l'écran
 
+    // setTimeout(() => {
+    //   window.scrollTo({top: 0, behavior: 'instant'}); // Après la durée d'animation de sortie en ms, déplace immédiatement en haut de l'écran
+    // }, (animation_out * 1000));
     setTimeout(() => {
       window.scrollTo({top: 0, behavior: 'instant'}); // Après la durée d'animation de sortie en ms, déplace immédiatement en haut de l'écran
-    }, (animation_out * 1000));
+    }, (animation_duration * 1000));
     dispatch(setOpenPhoneMenu(false)) // Ferme le menu de navigation téléphone
     dispatch(setCurrentRoute(pathname)) // set dans le store routes le pathname
   }, [pathname]);
@@ -113,6 +128,7 @@ export default function App() {
 
     return () => window.removeEventListener("resize", setSize)
   }, [])
+
 
   
   
@@ -148,15 +164,16 @@ export default function App() {
               }}
               > */}
 
-              <motion.div
+              {/* <motion.div
                 key={pathname}
                 initial={{ 
-                  opacity: 0,
-                  x: pathname === "/" ? "0%" : "10%"  // Commence décalé vers la droite
+                  opacity: isFirstRender.current ? 1 : 0,
+                  x: location.pathname === "/" ? "0%" : "5rem",  // Commence décalé vers la droite
                 }}
                 animate={{ 
                   opacity: 1, 
                   x: 0,  // Revient au centre
+                  z: 0,
                   transition: { 
                     duration: animation_in,
                     opacity: {
@@ -164,28 +181,70 @@ export default function App() {
                       ease: "easeOut"
                     },
                     x: {
-                      duration: 0.5,
+                      duration: 0.3,
                       ease: "easeOut",
-                      delay: 0  // Le mouvement commence légèrement après l'opacité
+                    },
+                  } 
+                }}
+                exit={{ 
+                  opacity: 0, 
+                  x: "-5rem",
+                  transition: { 
+                    duration: animation_out,
+                    x: { 
+                      duration: 0.3,
+                      ease: "easeIn",
+                    },
+                  }
+                }}
+              > */}
+
+              <motion.div
+                key={pathname}
+                initial={{ 
+                  opacity: isFirstRender.current ? 1 : 0,
+                  x: pageDirectionConfig.initial_x,
+                  y: pageDirectionConfig.initial_y ? pageDirectionConfig.initial_y : "0rem",
+                }}
+                animate={{ 
+                  opacity: 1, 
+                  x: 0,  // Revient au centre
+                  y: 0,
+                  transition: { 
+                    duration: animation_duration,
+                    opacity: {
+                      duration: animation_duration,
+                      ease: "easeOut"
+                    },
+                    x: {
+                      duration: animation_duration,
+                      ease: "easeOut",
+                    },
+                    y: {
+                      duration: animation_duration,
+                      ease: "easeOut",
                     }
                   } 
                 }}
                 exit={{ 
                   opacity: 0, 
-                  x: "-10%",  // Part vers la gauche
+                  x: pageDirectionConfig.exit_x,
+                  y: pageDirectionConfig.exit_y ? pageDirectionConfig.exit_y : "0rem",
                   transition: { 
-                    duration: animation_out,
+                    duration: animation_duration,
                     x: { 
-                      duration: 0.5,
+                      duration: animation_duration,
                       ease: "easeIn",
-                      delay: 0.1
-                    }
+                    },
+                    y: { 
+                      duration: animation_duration,
+                      ease: "easeIn",
+                    },
                   }
                 }}
               >
 
               <SmoothScrollWrapper>
-
                 
                 <Routes location={location}>
 
